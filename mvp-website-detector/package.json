@@ -1,0 +1,28 @@
+{
+  "name": "mvp-website-detector",
+  "version": "1.0.0",
+  "description": "MVP para detectar qué sitios web populares se pueden scrapear con Playwright",
+  "type": "module",
+  "main": "src/main.ts",
+  "scripts": {
+    "demo": "bunx tsx src/main.ts",
+    "start": "bunx tsx src/main.ts",
+    "proxy-sites": "bunx tsx src/main.ts --proxy-sites",
+    "test-excellent": "bunx tsx src/main.ts --excellent-only",
+    "test": "bunx tsx src/detector.ts",
+    "dev": "bunx tsx --watch src/main.ts"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "chalk": "^5.4.1",
+    "tsx": "^4.11.2"
+  },
+  "keywords": [
+    "playwright",
+    "scraping",
+    "website-detection",
+    "typescript"
+  ],
+  "author": "Scraper Proxies Team",
+  "license": "MIT"
+} 

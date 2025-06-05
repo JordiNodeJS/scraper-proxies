@@ -1,0 +1,122 @@
+{
+  "summary": {
+    "totalTested": 2,
+    "accessible": 2,
+    "blocked": 0,
+    "withCloudflare": 2,
+    "withCaptcha": 0,
+    "withRateLimit": 0,
+    "viabilityBreakdown": {
+      "excellent": 0,
+      "good": 0,
+      "difficult": 2,
+      "impossible": 0
+    },
+    "categoryBreakdown": {
+      "proxy": {
+        "total": 2,
+        "accessible": 2,
+        "blocked": 0
+      }
+    },
+    "averageResponseTime": 1974,
+    "recommendations": [
+      "🛡️ Más del 50% de sitios usan Cloudflare - considera usar proxies residenciales"
+    ],
+    "timestamp": "2025-06-05T20:39:56.239Z"
+  },
+  "results": [
+    {
+      "website": {
+        "name": "SPYS.ONE",
+        "url": "https://spys.one/en/free-proxy-list/",
+        "description": "Lista de proxies gratuitos con información detallada",
+        "category": "proxy",
+        "expectedSelectors": [
+          "table",
+          ".proxy-table",
+          "td",
+          "[title*=\"proxy\"]",
+          "tr:has(td:contains(\":\"))"
+        ],
+        "blockedIndicators": [
+          "text=Access denied",
+          "text=Rate limited",
+          "text=Cloudflare",
+          "text=DDoS protection",
+          "text=Please wait",
+          ".cf-wrapper",
+          "#cf-wrapper"
+        ],
+        "riskLevel": "medium"
+      },
+      "accessible": true,
+      "blocked": false,
+      "hasCloudflare": true,
+      "hasCaptcha": false,
+      "hasRateLimit": false,
+      "responseTime": 2069,
+      "statusCode": 200,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+      "screenshots": {},
+      "detectedProtections": [
+        "cloudflare"
+      ],
+      "scrapingViability": "difficult",
+      "notes": [
+        "Título: \"Free proxy list, public proxy servers list online, live proxies\"",
+        "🛡️ Cloudflare detectado",
+        "✅ Elementos esperados encontrados: 3/5 (60%)"
+      ],
+      "timestamp": "2025-06-05T20:39:46.021Z"
+    },
+    {
+      "website": {
+        "name": "Proxy List Download",
+        "url": "https://www.proxy-list.download/HTTPS",
+        "description": "Lista de proxies HTTPS con información de velocidad y país",
+        "category": "proxy",
+        "expectedSelectors": [
+          "table",
+          "#proxiesTable",
+          ".proxy-table",
+          "td",
+          "tbody tr",
+          "[data-label=\"IP Address\"]"
+        ],
+        "blockedIndicators": [
+          "text=Access denied",
+          "text=Rate limited",
+          "text=Cloudflare",
+          "text=Security check",
+          "text=DDoS protection",
+          "text=Unable to load the full list",
+          "text=Some ad blockers may interfere",
+          ".cf-wrapper"
+        ],
+        "riskLevel": "medium"
+      },
+      "accessible": true,
+      "blocked": false,
+      "hasCloudflare": true,
+      "hasCaptcha": false,
+      "hasRateLimit": false,
+      "responseTime": 1879,
+      "statusCode": 200,
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+      "screenshots": {},
+      "detectedProtections": [
+        "cloudflare"
+      ],
+      "scrapingViability": "difficult",
+      "notes": [
+        "Título: \"SSL/HTTPS Proxy List\"",
+        "🛡️ Cloudflare detectado",
+        "✅ Elementos esperados encontrados: 3/6 (50%)"
+      ],
+      "timestamp": "2025-06-05T20:39:53.182Z"
+    }
+  ],
+  "generatedAt": "2025-06-05T20:39:56.245Z",
+  "version": "1.0.0"
+}
