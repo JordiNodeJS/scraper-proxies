@@ -1,0 +1,18 @@
+{
+  "name": "scraper-proxies-working",
+  "version": "1.0.0",
+  "description": "MVP funcional con fuentes de proxies sin Cloudflare Enterprise",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/main.ts",
+    "test": "bun run src/test-sources.ts",
+    "validate": "bun run src/validate-proxies.ts"
+  },
+  "dependencies": {
+    "ora": "^8.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3"
+  }
+}

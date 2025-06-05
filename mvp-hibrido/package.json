@@ -19,9 +19,8 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@playwright/test": "^1.52.0",
-    "chalk": "^5.4.1",
-    "cheerio": "^1.0.0",
-    "readline-sync": "^1.4.10"
+    "ora": "^8.0.1",
+    "readline-sync": "^1.4.10",
+    "tsx": "^4.19.4"
   }
 }

@@ -1,0 +1,183 @@
+{
+  "session": {
+    "id": "session-1749126460548",
+    "startTime": "2025-06-05T12:27:40.548Z",
+    "sources": [
+      {
+        "source": "Proxy List Download HTTP",
+        "success": true,
+        "proxies": [],
+        "responseTime": 439,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download HTTPS",
+        "success": true,
+        "proxies": [],
+        "responseTime": 277,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download SOCKS4",
+        "success": true,
+        "proxies": [],
+        "responseTime": 248,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download SOCKS5",
+        "success": true,
+        "proxies": [],
+        "responseTime": 263,
+        "totalFound": 0
+      },
+      {
+        "source": "Free Proxy List",
+        "success": true,
+        "proxies": [],
+        "responseTime": 374,
+        "totalFound": 0
+      },
+      {
+        "source": "Free Proxy List SSL",
+        "success": true,
+        "proxies": [],
+        "responseTime": 137,
+        "totalFound": 0
+      },
+      {
+        "source": "GeoNode Proxy API",
+        "success": true,
+        "proxies": [],
+        "responseTime": 391,
+        "totalFound": 0
+      },
+      {
+        "source": "ProxyScrape HTTP",
+        "success": true,
+        "proxies": [],
+        "responseTime": 140,
+        "totalFound": 0
+      },
+      {
+        "source": "ProxyScrape SOCKS4",
+        "success": true,
+        "proxies": [],
+        "responseTime": 37,
+        "totalFound": 0
+      },
+      {
+        "source": "ProxyScrape SOCKS5",
+        "success": true,
+        "proxies": [],
+        "responseTime": 69,
+        "totalFound": 0
+      },
+      {
+        "source": "Spys One",
+        "success": true,
+        "proxies": [],
+        "responseTime": 265,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy Nova",
+        "success": true,
+        "proxies": [],
+        "responseTime": 387,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download HTTP",
+        "success": true,
+        "proxies": [],
+        "responseTime": 46,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download HTTPS",
+        "success": true,
+        "proxies": [],
+        "responseTime": 68,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download SOCKS4",
+        "success": true,
+        "proxies": [],
+        "responseTime": 35,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy List Download SOCKS5",
+        "success": true,
+        "proxies": [],
+        "responseTime": 33,
+        "totalFound": 0
+      },
+      {
+        "source": "Free Proxy List",
+        "success": true,
+        "proxies": [],
+        "responseTime": 361,
+        "totalFound": 0
+      },
+      {
+        "source": "Free Proxy List SSL",
+        "success": true,
+        "proxies": [],
+        "responseTime": 33,
+        "totalFound": 0
+      },
+      {
+        "source": "GeoNode Proxy API",
+        "success": true,
+        "proxies": [],
+        "responseTime": 192,
+        "totalFound": 0
+      },
+      {
+        "source": "ProxyScrape HTTP",
+        "success": true,
+        "proxies": [],
+        "responseTime": 44,
+        "totalFound": 0
+      },
+      {
+        "source": "ProxyScrape SOCKS4",
+        "success": true,
+        "proxies": [],
+        "responseTime": 35,
+        "totalFound": 0
+      },
+      {
+        "source": "ProxyScrape SOCKS5",
+        "success": true,
+        "proxies": [],
+        "responseTime": 44,
+        "totalFound": 0
+      },
+      {
+        "source": "Spys One",
+        "success": true,
+        "proxies": [],
+        "responseTime": 63,
+        "totalFound": 0
+      },
+      {
+        "source": "Proxy Nova",
+        "success": true,
+        "proxies": [],
+        "responseTime": 133,
+        "totalFound": 0
+      }
+    ],
+    "totalProxies": 0,
+    "workingProxies": 0,
+    "status": "completed",
+    "endTime": "2025-06-05T12:28:52.464Z"
+  },
+  "proxies": [],
+  "generatedAt": "2025-06-05T12:28:52.465Z",
+  "totalCount": 0
+}

@@ -1,0 +1,20 @@
+{
+  "timestamp": "2025-06-05T12:30:22.388Z",
+  "duration": 37008,
+  "totalProxies": 0,
+  "proxiesPerSecond": 0,
+  "memoryUsage": {
+    "rss": 247992320,
+    "heapTotal": 4861952,
+    "heapUsed": 4393918,
+    "external": 1717838,
+    "arrayBuffers": 0
+  },
+  "sourceBreakdown": {},
+  "countryBreakdown": {},
+  "uniqueness": {
+    "uniqueIPs": 0,
+    "uniqueEndpoints": 0,
+    "ratio": null
+  }
+}
