@@ -44,13 +44,13 @@
         "blocked": 0
       }
     },
-    "averageResponseTime": 3755,
+    "averageResponseTime": 3947.5,
     "recommendations": [
       "🤖 Detectados CAPTCHAs - implementar servicios de resolución automática",
       "✅ Algunos sitios son fáciles de scrapear - prioriza estos para MVPs",
       "⚠️ Muchos sitios son difíciles - considera arquitectura distribuida"
     ],
-    "timestamp": "2025-06-05T14:09:13.584Z"
+    "timestamp": "2025-06-05T20:27:11.706Z"
   },
   "results": [
     {
@@ -77,7 +77,7 @@
       "hasCloudflare": false,
       "hasCaptcha": false,
       "hasRateLimit": false,
-      "responseTime": 15142,
+      "responseTime": 15134,
       "statusCode": null,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {},
@@ -89,7 +89,7 @@
         "Error de conexión: TimeoutError: page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.amazon.com/\", waiting until \"networkidle\"\u001b[22m\n"
       ],
       "error": "TimeoutError: page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://www.amazon.com/\", waiting until \"networkidle\"\u001b[22m\n",
-      "timestamp": "2025-06-05T14:08:19.657Z"
+      "timestamp": "2025-06-05T20:26:16.184Z"
     },
     {
       "website": {
@@ -114,11 +114,11 @@
       "hasCloudflare": false,
       "hasCaptcha": true,
       "hasRateLimit": false,
-      "responseTime": 2593,
+      "responseTime": 3068,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {
-        "blocked": "blocked-twitter-x-2025-06-05T14-08-27-329Z.png"
+        "blocked": "blocked-twitter-x-2025-06-05T20-26-24-356Z.png"
       },
       "detectedProtections": [
         "captcha"
@@ -129,9 +129,9 @@
         "Redirigido a: https://x.com/",
         "🤖 CAPTCHA detectado",
         "✅ Elementos esperados encontrados: 3/3 (100%)",
-        "📸 Screenshot guardado: blocked-twitter-x-2025-06-05T14-08-27-329Z.png"
+        "📸 Screenshot guardado: blocked-twitter-x-2025-06-05T20-26-24-356Z.png"
       ],
-      "timestamp": "2025-06-05T14:08:27.407Z"
+      "timestamp": "2025-06-05T20:26:24.429Z"
     },
     {
       "website": {
@@ -156,7 +156,7 @@
       "hasCloudflare": false,
       "hasCaptcha": false,
       "hasRateLimit": false,
-      "responseTime": 1371,
+      "responseTime": 1574,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {},
@@ -167,7 +167,7 @@
         "Redirigido a: https://www.google.com/",
         "✅ Elementos esperados encontrados: 2/3 (67%)"
       ],
-      "timestamp": "2025-06-05T14:08:33.851Z"
+      "timestamp": "2025-06-05T20:26:31.079Z"
     },
     {
       "website": {
@@ -192,11 +192,11 @@
       "hasCloudflare": false,
       "hasCaptcha": true,
       "hasRateLimit": false,
-      "responseTime": 3220,
+      "responseTime": 3623,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {
-        "blocked": "blocked-youtube-2025-06-05T14-08-42-182Z.png"
+        "blocked": "blocked-youtube-2025-06-05T20-26-39-808Z.png"
       },
       "detectedProtections": [
         "captcha"
@@ -207,9 +207,9 @@
         "Redirigido a: https://www.youtube.com/",
         "🤖 CAPTCHA detectado",
         "✅ Elementos esperados encontrados: 2/3 (67%)",
-        "📸 Screenshot guardado: blocked-youtube-2025-06-05T14-08-42-182Z.png"
+        "📸 Screenshot guardado: blocked-youtube-2025-06-05T20-26-39-808Z.png"
       ],
-      "timestamp": "2025-06-05T14:08:42.288Z"
+      "timestamp": "2025-06-05T20:26:39.907Z"
     },
     {
       "website": {
@@ -233,7 +233,7 @@
       "hasCloudflare": false,
       "hasCaptcha": false,
       "hasRateLimit": false,
-      "responseTime": 2045,
+      "responseTime": 1769,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {},
@@ -244,7 +244,7 @@
         "Redirigido a: https://en.wikipedia.org/wiki/Main_Page",
         "✅ Elementos esperados encontrados: 2/3 (67%)"
       ],
-      "timestamp": "2025-06-05T14:08:49.448Z"
+      "timestamp": "2025-06-05T20:26:46.772Z"
     },
     {
       "website": {
@@ -269,7 +269,7 @@
       "hasCloudflare": false,
       "hasCaptcha": false,
       "hasRateLimit": false,
-      "responseTime": 3084,
+      "responseTime": 2082,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {},
@@ -280,7 +280,7 @@
         "Redirigido a: https://github.com/",
         "✅ Elementos esperados encontrados: 3/3 (100%)"
       ],
-      "timestamp": "2025-06-05T14:08:57.799Z"
+      "timestamp": "2025-06-05T20:26:54.130Z"
     },
     {
       "website": {
@@ -305,7 +305,7 @@
       "hasCloudflare": false,
       "hasCaptcha": false,
       "hasRateLimit": false,
-      "responseTime": 1541,
+      "responseTime": 2605,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {},
@@ -316,7 +316,7 @@
         "Redirigido a: https://developer.mozilla.org/es/",
         "✅ Elementos esperados encontrados: 2/3 (67%)"
       ],
-      "timestamp": "2025-06-05T14:09:04.440Z"
+      "timestamp": "2025-06-05T20:27:01.849Z"
     },
     {
       "website": {
@@ -340,7 +340,7 @@
       "hasCloudflare": false,
       "hasCaptcha": false,
       "hasRateLimit": false,
-      "responseTime": 1044,
+      "responseTime": 1725,
       "statusCode": 200,
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
       "screenshots": {},
@@ -351,9 +351,9 @@
         "Redirigido a: https://arxiv.org/",
         "✅ Elementos esperados encontrados: 1/3 (33%)"
       ],
-      "timestamp": "2025-06-05T14:09:10.554Z"
+      "timestamp": "2025-06-05T20:27:08.664Z"
     }
   ],
-  "generatedAt": "2025-06-05T14:09:13.593Z",
+  "generatedAt": "2025-06-05T20:27:11.722Z",
   "version": "1.0.0"
 }

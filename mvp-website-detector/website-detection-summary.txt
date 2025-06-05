@@ -8,7 +8,7 @@
    Con Cloudflare: 0 (0%)
    Con CAPTCHA: 2 (25%)
    Con Rate Limiting: 0 (0%)
-   Tiempo promedio de respuesta: 3755ms
+   Tiempo promedio de respuesta: 3948ms
 
 🎯 Viabilidad de Scraping:
    Excelente: 1 sitios
@@ -35,7 +35,7 @@
 🎯 EXCELLENT (1 sitios):
    • GitHub (https://github.com)
      Categoría: tech
-     Tiempo de respuesta: 3084ms
+     Tiempo de respuesta: 2082ms
      Status: 200
      Notas: Título: "GitHub · Build and ship software on a single, collaborative platform · GitHub" | Redirigido a: https://github.com/
 
@@ -43,25 +43,25 @@
 🎯 DIFFICULT (4 sitios):
    • Google (https://www.google.com)
      Categoría: search
-     Tiempo de respuesta: 1371ms
+     Tiempo de respuesta: 1574ms
      Status: 200
      Notas: Título: "Google" | Redirigido a: https://www.google.com/
 
    • Wikipedia (https://en.wikipedia.org)
      Categoría: academic
-     Tiempo de respuesta: 2045ms
+     Tiempo de respuesta: 1769ms
      Status: 200
      Notas: Título: "Wikipedia, the free encyclopedia" | Redirigido a: https://en.wikipedia.org/wiki/Main_Page
 
    • MDN Web Docs (https://developer.mozilla.org)
      Categoría: tech
-     Tiempo de respuesta: 1541ms
+     Tiempo de respuesta: 2605ms
      Status: 200
      Notas: Título: "MDN Web Docs" | Redirigido a: https://developer.mozilla.org/es/
 
    • ArXiv (https://arxiv.org)
      Categoría: academic
-     Tiempo de respuesta: 1044ms
+     Tiempo de respuesta: 1725ms
      Status: 200
      Notas: Título: "arXiv.org e-Print archive" | Redirigido a: https://arxiv.org/
 
@@ -69,7 +69,7 @@
 🎯 IMPOSSIBLE (3 sitios):
    • Amazon (https://www.amazon.com)
      Categoría: ecommerce
-     Tiempo de respuesta: 15142ms
+     Tiempo de respuesta: 15134ms
      Status: N/A
      Protecciones: connection_error
      Notas: Error de conexión: TimeoutError: page.goto: Timeout 15000ms exceeded.
@@ -79,14 +79,14 @@ Call log:
 
    • Twitter/X (https://x.com)
      Categoría: social
-     Tiempo de respuesta: 2593ms
+     Tiempo de respuesta: 3068ms
      Status: 200
      Protecciones: captcha
      Notas: Título: "X. Es lo que está pasando / X" | Redirigido a: https://x.com/
 
    • YouTube (https://www.youtube.com)
      Categoría: entertainment
-     Tiempo de respuesta: 3220ms
+     Tiempo de respuesta: 3623ms
      Status: 200
      Protecciones: captcha
      Notas: Título: "YouTube" | Redirigido a: https://www.youtube.com/
