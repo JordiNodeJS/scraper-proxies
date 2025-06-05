@@ -62,31 +62,37 @@ bun run mvp:hibrido    # MVP híbrido (usuario + automatización)
 ```
 
 # Testing
-bun run test         # Ejecutar tests
-bunx vitest          # Tests en modo watch
+
+bun run test # Ejecutar tests
+bunx vitest # Tests en modo watch
 
 # Linting
-bun run lint         # ESLint
-bun run lint:fix     # Auto-fix de ESLint
+
+bun run lint # ESLint
+bun run lint:fix # Auto-fix de ESLint
 
 # MVP Testing
-cd mvp && bunx tsx src/scraper-test.ts  # Test básico de scraping
+
+cd mvp && bunx tsx src/scraper-test.ts # Test básico de scraping
+
 ```
 
 ## 📁 Estructura del Proyecto
 
 ```
+
 scraper-proxies/
 ├── src/
-│   ├── components/     # Componentes React
-│   ├── hooks/          # Custom hooks
-│   ├── services/       # Lógica de negocio
-│   ├── types/          # Definiciones TypeScript
-│   └── utils/          # Utilidades y helpers
-├── docs/               # Documentación técnica
-├── mvp/                # Prueba de concepto mínima
-└── .github/            # Configuración GitHub Copilot
-```
+│ ├── components/ # Componentes React
+│ ├── hooks/ # Custom hooks
+│ ├── services/ # Lógica de negocio
+│ ├── types/ # Definiciones TypeScript
+│ └── utils/ # Utilidades y helpers
+├── docs/ # Documentación técnica
+├── mvp/ # Prueba de concepto mínima
+└── .github/ # Configuración GitHub Copilot
+
+````
 
 ## 🔧 Configuración
 
@@ -99,7 +105,7 @@ VITE_SCRAPING_DELAY=2000
 VITE_VALIDATION_TIMEOUT=10000
 VITE_MAX_CONCURRENT_VALIDATIONS=5
 VITE_RESULTS_CACHE_TTL=3600000
-```
+````
 
 ### GitHub Copilot
 

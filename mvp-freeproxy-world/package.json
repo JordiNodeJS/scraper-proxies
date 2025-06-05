@@ -1,0 +1,15 @@
+{
+  "name": "mvp-freeproxy-world",
+  "type": "module",
+  "scripts": {
+    "start": "bunx tsx src/main.ts",
+    "scraper": "bunx tsx src/scraper.ts",
+    "validator": "bunx tsx src/validator.ts",
+    "test": "bunx tsx src/test.ts",
+    "test:html": "bunx tsx src/test-html.ts"
+  },
+  "dependencies": {
+    "@types/node": "^22.7.3",
+    "tsx": "^4.18.0"
+  }
+} 

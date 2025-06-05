@@ -3,15 +3,17 @@
 ## 📊 Antes vs Después
 
 ### ❌ Estado Anterior (Ineficiente)
+
 ```
 mvp-playwright/node_modules/     ~57MB
-mvp-hibrido/node_modules/        ~58MB  
+mvp-hibrido/node_modules/        ~58MB
 mvp-working/node_modules/        ~45MB
 ──────────────────────────────────────
 Total desperdiciado:             ~160MB
 ```
 
 ### ✅ Estado Actual (Optimizado)
+
 ```
 node_modules/ (centralizado)     ~149MB
 mvp-working/node_modules/        ~2.5MB (solo ora)
@@ -23,11 +25,13 @@ Ahorro:                          ~8.5MB + mejor organización
 ## 🔧 Cambios Implementados
 
 ### 1. **Workspace de Bun Configurado**
+
 - ✅ `workspaces: ["mvp-*"]` en package.json raíz
 - ✅ Dependencias comunes centralizadas
 - ✅ Scripts unificados para ejecutar MVPs
 
 ### 2. **Dependencias Centralizadas**
+
 ```json
 "dependencies": {
   "react": "^19.1.0",
@@ -39,30 +43,35 @@ Ahorro:                          ~8.5MB + mejor organización
 ```
 
 ### 3. **MVPs Limpiados**
+
 - ✅ Removidas dependencias duplicadas
 - ✅ Solo dependencias específicas por MVP
 - ✅ Heredan automáticamente del workspace root
 
 ### 4. **Scripts Unificados**
+
 ```bash
 bun run mvp:working    # MVP funcional
-bun run mvp:playwright # MVP con Playwright  
+bun run mvp:playwright # MVP con Playwright
 bun run mvp:hibrido    # MVP híbrido
 ```
 
 ## 🎯 Beneficios Obtenidos
 
 ### 🚀 **Performance**
+
 - **Installs más rápidos**: Una sola resolución de dependencias
 - **Builds optimizados**: Sin duplicaciones
 - **CI/CD mejorado**: Menos descarga de paquetes
 
 ### 🧹 **Mantenimiento**
+
 - **Una sola fuente de verdad** para versiones
 - **Updates centralizados** de dependencias críticas
 - **Consistencia garantizada** entre MVPs
 
 ### 💾 **Espacio en Disco**
+
 - **8.5MB menos** de node_modules duplicados
 - **Playwright instalado una vez** (~200MB de binarios)
 - **Escalabilidad mejorada** para futuros MVPs
@@ -70,11 +79,13 @@ bun run mvp:hibrido    # MVP híbrido
 ## ✅ Validación
 
 ### Tests Realizados
+
 - ✅ **mvp:working**: 1295 proxies extraídos exitosamente
 - ✅ **mvp:playwright**: Ejecuta correctamente (con limitaciones normales de Cloudflare)
 - ✅ **Dependencies**: Todas las dependencias se resuelven desde el root
 
 ### Compatibilidad
+
 - ✅ **Bun**: Workspace nativo soportado
 - ✅ **TypeScript**: Configuraciones independientes mantenidas
 - ✅ **Scripts**: Todos funcionando desde raíz
@@ -89,7 +100,8 @@ bun run mvp:hibrido    # MVP híbrido
 ---
 
 **📝 Nota**: Esta optimización sigue las reglas del proyecto:
+
 - ✅ Solo BUN y BUNX
-- ✅ Solo fetch nativo  
+- ✅ Solo fetch nativo
 - ✅ Solo ES6 modules
 - ✅ Estructura limpia y mantenible
