@@ -439,6 +439,39 @@ private calculateAdaptiveTimeout(previousResults: ValidationResult[]): number {
 
 ## 🧪 Testing
 
+### Setup de Testing
+
+```bash
+# Instalar dependencias de testing
+bun add -D vitest @testing-library/react jsdom
+
+# Ejecutar tests
+bun test
+
+# Watch mode
+bun test --watch
+
+# Coverage
+bun test --coverage
+```
+
+### Configuración Vitest
+
+```typescript
+// vitest.config.ts
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
+    coverage: {
+      provider: "c8",
+    },
+  },
+});
+```
+
 ### Mocks y Fixtures
 
 ```typescript

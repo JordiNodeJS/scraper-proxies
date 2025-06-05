@@ -1,54 +1,150 @@
-# React + TypeScript + Vite
+# 🕷️ Scraper de Proxies con Validación
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una Single Page Application (SPA) desarrollada en React + TypeScript que extrae y valida proxies de hide.mn con un sistema de validación concurrente usando Playwright.
 
-Currently, two official plugins are available:
+## 🚀 Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Scraping Inteligente**: Extracción automática de proxies con paginación
+- **Validación Concurrente**: Hasta 5 conexiones simultáneas con Playwright
+- **UI Responsive**: Interfaz moderna con Tailwind CSS
+- **Filtrado en Tiempo Real**: Búsqueda y filtros avanzados
+- **Exportación de Datos**: Múltiples formatos de salida
+- **Rate Limiting**: Scraping responsable con delays configurables
 
-## Expanding the ESLint configuration
+## 🛠️ Stack Tecnológico
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React 19.1.0 + TypeScript + Vite 6.3.5
+- **Styling**: Tailwind CSS
+- **Scraping**: Cheerio + fetch nativo
+- **Validación**: Playwright
+- **Build**: Bun 1.1.0+
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 📋 Requisitos
+
+- **Bun**: 1.1.0 o superior
+- **Node.js**: 18+ (para Playwright)
+- **OS**: Windows, macOS, Linux
+
+## ⚡ Instalación Rápida
+
+```bash
+# Clonar repositorio
+git clone <repo-url>
+cd scraper-proxies
+
+# Instalar dependencias
+bun install
+
+# Instalar navegadores de Playwright
+bunx playwright install
+
+# Iniciar desarrollo
+bun run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎯 Scripts Disponibles
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Desarrollo
+bun run dev          # Servidor de desarrollo (puerto 5173)
+bun run build        # Build de producción
+bun run preview      # Preview del build
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
+# Testing
+bun run test         # Ejecutar tests
+bunx vitest          # Tests en modo watch
+
+# Linting
+bun run lint         # ESLint
+bun run lint:fix     # Auto-fix de ESLint
+
+# MVP Testing
+cd mvp && bunx tsx src/scraper-test.ts  # Test básico de scraping
+```
+
+## 📁 Estructura del Proyecto
+
+```
+scraper-proxies/
+├── src/
+│   ├── components/     # Componentes React
+│   ├── hooks/          # Custom hooks
+│   ├── services/       # Lógica de negocio
+│   ├── types/          # Definiciones TypeScript
+│   └── utils/          # Utilidades y helpers
+├── docs/               # Documentación técnica
+├── mvp/                # Prueba de concepto mínima
+└── .github/            # Configuración GitHub Copilot
+```
+
+## 🔧 Configuración
+
+### Variables de Entorno
+
+Crear `.env.local`:
+
+```env
+VITE_SCRAPING_DELAY=2000
+VITE_VALIDATION_TIMEOUT=10000
+VITE_MAX_CONCURRENT_VALIDATIONS=5
+VITE_RESULTS_CACHE_TTL=3600000
+```
+
+### GitHub Copilot
+
+El proyecto incluye configuración optimizada para GitHub Copilot en `.github/copilot-instructions.md` con:
+
+- Patrones arquitecturales específicos
+- Reglas de TypeScript estricto
+- Convenciones de naming
+- Buenas prácticas de scraping
+
+## 📖 Documentación
+
+- **[PRD.md](docs/PRD.md)**: Especificaciones del producto
+- **[MVP-PLAN.md](MVP-PLAN.md)**: Plan de validación técnica
+- **[TASKS.md](TASKS.md)**: Lista de tareas de desarrollo
+
+## 🚀 Desarrollo
+
+### Primer Setup
+
+```bash
+# Instalar todo desde cero
+bun install
+bunx playwright install chromium
+
+# Ejecutar tests de validación
+bun run test
+
+# Iniciar desarrollo
+bun run dev
+```
+
+### Workflow de Desarrollo
+
+1. **MVP First**: Validar scraping con `cd mvp && bunx tsx src/scraper-test.ts`
+2. **Componentes**: Desarrollar UI con hot reload
+3. **Testing**: Validar proxies con Playwright
+4. **Build**: `bun run build && bun run preview`
+
+## 🎯 Objetivos de Performance
+
+- **Extracción**: < 30s para todas las páginas
+- **Validación**: 80% en < 2min con 5 conexiones concurrentes
+- **UI**: < 100ms respuesta, lazy loading para +100 resultados
+- **Precisión**: > 95% de proxies validados funcionan
+
+## 📄 Licencia
+
+MIT License - Ver [LICENSE](LICENSE) para detalles.
+
+---
+
+**Desarrollado con ❤️ usando Bun + React + TypeScript**
+},
 })
+
+```
+
 ```

@@ -8,6 +8,13 @@ Este proyecto es un **Scraper de Proxies con Validación** desarrollado como Sin
 
 ## 🎯 Reglas de Desarrollo Obligatorias
 
+### ⚠️ 0. Herramientas Fundamentales - CRÍTICO
+
+- **SOLO BUN**: Usar `bun` y `bunx` para TODAS las operaciones (install, run, build, etc.)
+- **SOLO FETCH**: Usar `fetch` nativo para HTTP requests (NO axios, NO request, NO otras libs)
+- **SOLO ES6 MODULES**: Usar `import/export` exclusivamente (NO require, NO CommonJS)
+- **BUNDLE**: Todos los archivos deben usar sintaxis ES6 moderna
+
 ### 1. TypeScript Estricto
 
 - Tipos explícitos siempre
@@ -106,12 +113,14 @@ interface ValidationConfig {
 
 ### Stack Tecnológico
 
+- **Runtime**: ⚠️ **IMPORTANTE: Usar BUN y BUNX exclusivamente**
 - **React**: 19.1.0 + TypeScript
 - **Build**: Vite 6.3.5
 - **Styling**: Tailwind CSS
-- **Scraping**: Cheerio + fetch nativo
+- **Scraping**: ⚠️ **IMPORTANTE: Cheerio + fetch nativo (NO axios u otras librerías)**
 - **Testing**: Playwright para validación de proxies
 - **State**: React Context + useReducer
+- **Módulos**: ⚠️ **IMPORTANTE: ES6 modules exclusivamente (import/export)**
 
 ### Variables de Entorno
 

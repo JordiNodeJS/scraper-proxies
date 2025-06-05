@@ -149,7 +149,9 @@ if (error) {
 
 ## 🧪 Testing Considerations
 
-- Componentes deben ser testeable unitariamente
+- Componentes deben ser testeable unitariamente con `bun test`
 - Props requeridas vs opcionales bien definidas
 - Handlers mockeables
 - Estados edge case manejados
+- Setup con `bunx vitest` para testing de componentes
+- Usar `@testing-library/react` instalado con `bun add -D`

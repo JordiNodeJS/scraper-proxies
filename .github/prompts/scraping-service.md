@@ -311,5 +311,6 @@ private async getCachedOrFetch(url: string): Promise<string> {
 
 - Mocks para fetch requests usando MSW (Mock Service Worker)
 - Fixtures con HTML de ejemplo
-- Tests de rate limiting
+- Tests de rate limiting con bun test
 - Validación de parsers con diferentes estructuras DOM
+- Setup con `bunx vitest` para testing unitario
