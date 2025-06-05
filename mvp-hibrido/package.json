@@ -3,10 +3,25 @@
   "module": "index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "hybrid": "bunx tsx src/hybrid-scraper.ts",
+    "test": "bunx tsx test-simple.ts",
+    "simple": "bunx tsx test-simple.ts",
+    "enhanced": "bunx tsx enhanced-hybrid.ts"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/node": "^22.15.29",
+    "@types/readline-sync": "^1.4.8",
+    "tsx": "^4.19.4"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "chalk": "^5.4.1",
+    "cheerio": "^1.0.0",
+    "readline-sync": "^1.4.10"
   }
 }
