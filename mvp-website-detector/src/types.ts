@@ -6,7 +6,7 @@ export interface WebsiteTarget {
   name: string;
   url: string;
   description: string;
-  category: 'ecommerce' | 'social' | 'search' | 'entertainment' | 'news' | 'tech' | 'academic' | 'government';
+  category: 'ecommerce' | 'social' | 'search' | 'entertainment' | 'news' | 'tech' | 'academic' | 'government' | 'proxy';
   expectedSelectors: string[];
   blockedIndicators: string[];
   riskLevel: 'excellent' | 'low' | 'medium' | 'high';

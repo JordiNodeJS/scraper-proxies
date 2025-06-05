@@ -1,0 +1,41 @@
+🎯 RESUMEN DE DETECCIÓN DE SITIOS WEB
+=====================================
+
+📊 Estadísticas Generales:
+   Total sitios analizados: 2
+   Accesibles: 2 (100%)
+   Bloqueados: 0 (0%)
+   Con Cloudflare: 2 (100%)
+   Con CAPTCHA: 0 (0%)
+   Con Rate Limiting: 0 (0%)
+   Tiempo promedio de respuesta: 1974ms
+
+🎯 Viabilidad de Scraping:
+   Excelente: 0 sitios
+   Buena: 0 sitios
+   Difícil: 2 sitios
+   Imposible: 0 sitios
+
+📋 Por Categorías:
+   PROXY: 2/2 accesibles (100%)
+
+💡 Recomendaciones:
+   🛡️ Más del 50% de sitios usan Cloudflare - considera usar proxies residenciales
+
+📝 Resultados Detallados:
+========================
+
+🎯 DIFFICULT (2 sitios):
+   • SPYS.ONE (https://spys.one/en/free-proxy-list/)
+     Categoría: proxy
+     Tiempo de respuesta: 2069ms
+     Status: 200
+     Protecciones: cloudflare
+     Notas: Título: "Free proxy list, public proxy servers list online, live proxies" | 🛡️ Cloudflare detectado
+
+   • Proxy List Download (https://www.proxy-list.download/HTTPS)
+     Categoría: proxy
+     Tiempo de respuesta: 1879ms
+     Status: 200
+     Protecciones: cloudflare
+     Notas: Título: "SSL/HTTPS Proxy List" | 🛡️ Cloudflare detectado

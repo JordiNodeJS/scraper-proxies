@@ -569,6 +569,57 @@ export const EXCELLENT_WEBSITES: WebsiteTarget[] = [
       'text=Rate limited'
     ],
     riskLevel: 'excellent'
+  },
+
+  // === PROXY LISTS WEBSITES ===
+  // Sitios específicos de listas de proxies para análisis
+  {
+    name: 'SPYS.ONE',
+    url: 'https://spys.one/en/free-proxy-list/',
+    description: 'Lista de proxies gratuitos con información detallada',
+    category: 'proxy',
+    expectedSelectors: [
+      'table', 
+      '.proxy-table',
+      'td',
+      '[title*="proxy"]',
+      'tr:has(td:contains(":"))'
+    ],
+    blockedIndicators: [
+      'text=Access denied',
+      'text=Rate limited',
+      'text=Cloudflare',
+      'text=DDoS protection',
+      'text=Please wait',
+      '.cf-wrapper',
+      '#cf-wrapper'
+    ],
+    riskLevel: 'medium'
+  },
+  {
+    name: 'Proxy List Download',
+    url: 'https://www.proxy-list.download/HTTPS',
+    description: 'Lista de proxies HTTPS con información de velocidad y país',
+    category: 'proxy',
+    expectedSelectors: [
+      'table',
+      '#proxiesTable',
+      '.proxy-table',
+      'td',
+      'tbody tr',
+      '[data-label="IP Address"]'
+    ],
+    blockedIndicators: [
+      'text=Access denied',
+      'text=Rate limited',
+      'text=Cloudflare',
+      'text=Security check',
+      'text=DDoS protection',
+      'text=Unable to load the full list',
+      'text=Some ad blockers may interfere',
+      '.cf-wrapper'
+    ],
+    riskLevel: 'medium'
   }
 ];
 

@@ -7,6 +7,8 @@
   "scripts": {
     "demo": "bunx tsx src/main.ts",
     "start": "bunx tsx src/main.ts",
+    "proxy-sites": "bunx tsx src/main.ts --proxy-sites",
+    "test-excellent": "bunx tsx src/main.ts --excellent-only",
     "test": "bunx tsx src/detector.ts",
     "dev": "bunx tsx --watch src/main.ts"
   },
