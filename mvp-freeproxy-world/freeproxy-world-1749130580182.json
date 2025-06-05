@@ -1,0 +1,508 @@
+{
+  "success": true,
+  "proxies": [
+    {
+      "ip": "65.49.14.154",
+      "port": 45707,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 349,
+      "uptime": "",
+      "lastCheck": "7 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "138.199.35.217",
+      "port": 9002,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 450,
+      "uptime": "",
+      "lastCheck": "8 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 23825,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 345,
+      "uptime": "",
+      "lastCheck": "10 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 43814,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 242,
+      "uptime": "",
+      "lastCheck": "10 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 18504,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 238,
+      "uptime": "",
+      "lastCheck": "10 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 55612,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 209,
+      "uptime": "",
+      "lastCheck": "18 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 45908,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 174,
+      "uptime": "",
+      "lastCheck": "18 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 52751,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 159,
+      "uptime": "",
+      "lastCheck": "18 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "138.199.35.204",
+      "port": 9002,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 334,
+      "uptime": "",
+      "lastCheck": "20 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "138.199.35.199",
+      "port": 9002,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 469,
+      "uptime": "",
+      "lastCheck": "22 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 38835,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 161,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 43235,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 182,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 35458,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 171,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 40329,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 154,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 61563,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 168,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 55915,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 161,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 33868,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 173,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 35381,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 171,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 46484,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 191,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 28280,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 176,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 20865,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 170,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 26233,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 166,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 23744,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 487,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 29397,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 500,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 13663,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 198,
+      "uptime": "",
+      "lastCheck": "35 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 34755,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 210,
+      "uptime": "",
+      "lastCheck": "37 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 19655,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 433,
+      "uptime": "",
+      "lastCheck": "38 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 52246,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 293,
+      "uptime": "",
+      "lastCheck": "40 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "137.184.224.125",
+      "port": 8888,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 437,
+      "uptime": "",
+      "lastCheck": "44 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "147.182.252.115",
+      "port": 8888,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 437,
+      "uptime": "",
+      "lastCheck": "44 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "143.110.229.181",
+      "port": 8888,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 438,
+      "uptime": "",
+      "lastCheck": "44 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "147.182.242.114",
+      "port": 8888,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 406,
+      "uptime": "",
+      "lastCheck": "46 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 29045,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 428,
+      "uptime": "",
+      "lastCheck": "46 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 24128,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 200,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 14210,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 464,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 49229,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 215,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 37497,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 483,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 57511,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 270,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 25103,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 335,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 32019,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 311,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 53512,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 251,
+      "uptime": "",
+      "lastCheck": "47 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 35728,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 497,
+      "uptime": "",
+      "lastCheck": "48 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 18320,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 395,
+      "uptime": "",
+      "lastCheck": "48 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 47957,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 365,
+      "uptime": "",
+      "lastCheck": "48 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.68.84",
+      "port": 25489,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 484,
+      "uptime": "",
+      "lastCheck": "48 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 50301,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 372,
+      "uptime": "",
+      "lastCheck": "48 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 34504,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 420,
+      "uptime": "",
+      "lastCheck": "48 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.14.154",
+      "port": 22610,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 264,
+      "uptime": "",
+      "lastCheck": "49 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "64.62.219.84",
+      "port": 56717,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 500,
+      "uptime": "",
+      "lastCheck": "49 minutes",
+      "protocol": "HTTPS"
+    },
+    {
+      "ip": "65.49.2.84",
+      "port": 14580,
+      "country": "United States of America",
+      "anonymity": "High",
+      "speed": 411,
+      "uptime": "",
+      "lastCheck": "49 minutes",
+      "protocol": "HTTPS"
+    }
+  ],
+  "totalFound": 50,
+  "source": "freeproxy.world",
+  "timestamp": "2025-06-05T13:36:20.182Z"
+}

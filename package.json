@@ -15,7 +15,9 @@
     "test": "vitest",
     "mvp:playwright": "cd mvp-playwright && bunx tsx src/playwright-scraper.ts",
     "mvp:hibrido": "cd mvp-hibrido && bunx tsx src/hybrid-scraper.ts",
-    "mvp:working": "cd mvp-working && bun run src/main.ts"
+    "mvp:working": "cd mvp-working && bun run src/main.ts",
+    "mvp:freeproxy": "cd mvp-freeproxy-world && bun run demo",
+    "mvp:freeproxy:full": "cd mvp-freeproxy-world && bun run start"
   },
   "dependencies": {
     "react": "^19.1.0",

@@ -3,9 +3,11 @@
   "type": "module",
   "scripts": {
     "start": "bunx tsx src/main.ts",
+    "demo": "bunx tsx src/quick-demo.ts",
     "scraper": "bunx tsx src/scraper.ts",
     "validator": "bunx tsx src/validator.ts",
     "test": "bunx tsx src/test.ts",
+    "test:validation": "bunx tsx src/test-validation.ts",
     "test:html": "bunx tsx src/test-html.ts"
   },
   "dependencies": {

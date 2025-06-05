@@ -56,9 +56,11 @@ bun run lint         # Analizar código
 bun run lint:fix     # Corregir problemas automáticamente
 
 # MVPs y Pruebas de Concepto
-bun run mvp:working    # MVP funcional con fuentes sin Cloudflare
-bun run mvp:playwright # MVP con Playwright para evasión Cloudflare
-bun run mvp:hibrido    # MVP híbrido (usuario + automatización)
+bun run mvp:working      # MVP funcional con fuentes sin Cloudflare
+bun run mvp:playwright   # MVP con Playwright para evasión Cloudflare
+bun run mvp:hibrido      # MVP híbrido (usuario + automatización)
+bun run mvp:freeproxy    # MVP FreeProxy.World - Demo rápida
+bun run mvp:freeproxy:full # MVP FreeProxy.World - Sistema completo
 ```
 
 # Testing

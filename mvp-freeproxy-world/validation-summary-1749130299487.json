@@ -1,0 +1,167 @@
+{
+  "totalTested": 10,
+  "working": [],
+  "notWorking": [
+    {
+      "proxy": {
+        "ip": "65.49.68.84",
+        "port": 23825,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 345,
+        "uptime": "",
+        "lastCheck": "5 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:00.288Z"
+    },
+    {
+      "proxy": {
+        "ip": "64.62.219.84",
+        "port": 43814,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 242,
+        "uptime": "",
+        "lastCheck": "5 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:01.678Z"
+    },
+    {
+      "proxy": {
+        "ip": "64.62.219.84",
+        "port": 18504,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 238,
+        "uptime": "",
+        "lastCheck": "5 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:03.099Z"
+    },
+    {
+      "proxy": {
+        "ip": "65.49.14.154",
+        "port": 55612,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 209,
+        "uptime": "",
+        "lastCheck": "13 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:11.782Z"
+    },
+    {
+      "proxy": {
+        "ip": "65.49.2.84",
+        "port": 45908,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 174,
+        "uptime": "",
+        "lastCheck": "13 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:16.171Z"
+    },
+    {
+      "proxy": {
+        "ip": "65.49.14.154",
+        "port": 52751,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 159,
+        "uptime": "",
+        "lastCheck": "13 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:32.222Z"
+    },
+    {
+      "proxy": {
+        "ip": "138.199.35.204",
+        "port": 9002,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 334,
+        "uptime": "",
+        "lastCheck": "14 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:33.645Z"
+    },
+    {
+      "proxy": {
+        "ip": "138.199.35.199",
+        "port": 9002,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 469,
+        "uptime": "",
+        "lastCheck": "16 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:35.071Z"
+    },
+    {
+      "proxy": {
+        "ip": "65.49.68.84",
+        "port": 38835,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 161,
+        "uptime": "",
+        "lastCheck": "30 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:36.490Z"
+    },
+    {
+      "proxy": {
+        "ip": "65.49.68.84",
+        "port": 43235,
+        "country": "United States of America",
+        "anonymity": "High",
+        "speed": 182,
+        "uptime": "",
+        "lastCheck": "30 minutes",
+        "protocol": "HTTPS"
+      },
+      "isWorking": false,
+      "testedSite": "HTTPBin IP Check",
+      "error": "page.goto: net::ERR_EMPTY_RESPONSE at https://httpbin.org/ip\nCall log:\n\u001b[2m  - navigating to \"https://httpbin.org/ip\", waiting until \"domcontentloaded\"\u001b[22m\n",
+      "timestamp": "2025-06-05T13:31:38.486Z"
+    }
+  ],
+  "successRate": 0
+}
