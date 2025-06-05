@@ -269,7 +269,7 @@ abort(): void {
 async fetchWithTimeout(url: string, timeout: number = this.config.timeout): Promise<Response> {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeout);
-  
+
   try {
     const response = await fetch(url, {
       signal: controller.signal,
@@ -294,15 +294,15 @@ private cache = new Map<string, { data: string; timestamp: number }>();
 private async getCachedOrFetch(url: string): Promise<string> {
   const cached = this.cache.get(url);
   const now = Date.now();
-  
+
   // Cache válido por 5 minutos
   if (cached && (now - cached.timestamp) < 300000) {
     return cached.data;
   }
-  
+
   const data = await this.fetchWithRetry(url);
   this.cache.set(url, { data, timestamp: now });
-  
+
   return data;
 }
 ```
