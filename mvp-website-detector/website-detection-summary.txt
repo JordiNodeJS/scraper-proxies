@@ -1,0 +1,92 @@
+🎯 RESUMEN DE DETECCIÓN DE SITIOS WEB
+=====================================
+
+📊 Estadísticas Generales:
+   Total sitios analizados: 8
+   Accesibles: 7 (88%)
+   Bloqueados: 1 (13%)
+   Con Cloudflare: 0 (0%)
+   Con CAPTCHA: 2 (25%)
+   Con Rate Limiting: 0 (0%)
+   Tiempo promedio de respuesta: 3755ms
+
+🎯 Viabilidad de Scraping:
+   Excelente: 1 sitios
+   Buena: 0 sitios
+   Difícil: 4 sitios
+   Imposible: 3 sitios
+
+📋 Por Categorías:
+   ECOMMERCE: 0/1 accesibles (0%)
+   SOCIAL: 1/1 accesibles (100%)
+   SEARCH: 1/1 accesibles (100%)
+   ENTERTAINMENT: 1/1 accesibles (100%)
+   ACADEMIC: 2/2 accesibles (100%)
+   TECH: 2/2 accesibles (100%)
+
+💡 Recomendaciones:
+   🤖 Detectados CAPTCHAs - implementar servicios de resolución automática
+   ✅ Algunos sitios son fáciles de scrapear - prioriza estos para MVPs
+   ⚠️ Muchos sitios son difíciles - considera arquitectura distribuida
+
+📝 Resultados Detallados:
+========================
+
+🎯 EXCELLENT (1 sitios):
+   • GitHub (https://github.com)
+     Categoría: tech
+     Tiempo de respuesta: 3084ms
+     Status: 200
+     Notas: Título: "GitHub · Build and ship software on a single, collaborative platform · GitHub" | Redirigido a: https://github.com/
+
+
+🎯 DIFFICULT (4 sitios):
+   • Google (https://www.google.com)
+     Categoría: search
+     Tiempo de respuesta: 1371ms
+     Status: 200
+     Notas: Título: "Google" | Redirigido a: https://www.google.com/
+
+   • Wikipedia (https://en.wikipedia.org)
+     Categoría: academic
+     Tiempo de respuesta: 2045ms
+     Status: 200
+     Notas: Título: "Wikipedia, the free encyclopedia" | Redirigido a: https://en.wikipedia.org/wiki/Main_Page
+
+   • MDN Web Docs (https://developer.mozilla.org)
+     Categoría: tech
+     Tiempo de respuesta: 1541ms
+     Status: 200
+     Notas: Título: "MDN Web Docs" | Redirigido a: https://developer.mozilla.org/es/
+
+   • ArXiv (https://arxiv.org)
+     Categoría: academic
+     Tiempo de respuesta: 1044ms
+     Status: 200
+     Notas: Título: "arXiv.org e-Print archive" | Redirigido a: https://arxiv.org/
+
+
+🎯 IMPOSSIBLE (3 sitios):
+   • Amazon (https://www.amazon.com)
+     Categoría: ecommerce
+     Tiempo de respuesta: 15142ms
+     Status: N/A
+     Protecciones: connection_error
+     Notas: Error de conexión: TimeoutError: page.goto: Timeout 15000ms exceeded.
+Call log:
+[2m  - navigating to "https://www.amazon.com/", waiting until "networkidle"[22m
+
+
+   • Twitter/X (https://x.com)
+     Categoría: social
+     Tiempo de respuesta: 2593ms
+     Status: 200
+     Protecciones: captcha
+     Notas: Título: "X. Es lo que está pasando / X" | Redirigido a: https://x.com/
+
+   • YouTube (https://www.youtube.com)
+     Categoría: entertainment
+     Tiempo de respuesta: 3220ms
+     Status: 200
+     Protecciones: captcha
+     Notas: Título: "YouTube" | Redirigido a: https://www.youtube.com/

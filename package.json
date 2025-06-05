@@ -17,7 +17,9 @@
     "mvp:hibrido": "cd mvp-hibrido && bunx tsx src/hybrid-scraper.ts",
     "mvp:working": "cd mvp-working && bun run src/main.ts",
     "mvp:freeproxy": "cd mvp-freeproxy-world && bun run demo",
-    "mvp:freeproxy:full": "cd mvp-freeproxy-world && bun run start"
+    "mvp:freeproxy:full": "cd mvp-freeproxy-world && bun run start",
+    "mvp:website-detector": "cd mvp-website-detector && bun run demo",
+    "mvp:website-detector:full": "cd mvp-website-detector && bun run start"
   },
   "dependencies": {
     "react": "^19.1.0",
