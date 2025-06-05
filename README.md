@@ -50,6 +50,17 @@ bun run dev          # Servidor de desarrollo (puerto 5173)
 bun run build        # Build de producción
 bun run preview      # Preview del build
 
+# Testing y Linting
+bun run test         # Ejecutar tests
+bun run lint         # Analizar código
+bun run lint:fix     # Corregir problemas automáticamente
+
+# MVPs y Pruebas de Concepto
+bun run mvp:working    # MVP funcional con fuentes sin Cloudflare
+bun run mvp:playwright # MVP con Playwright para evasión Cloudflare
+bun run mvp:hibrido    # MVP híbrido (usuario + automatización)
+```
+
 # Testing
 bun run test         # Ejecutar tests
 bunx vitest          # Tests en modo watch
