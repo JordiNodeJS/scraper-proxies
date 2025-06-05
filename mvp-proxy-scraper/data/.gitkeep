@@ -1,0 +1,2 @@
+# Este archivo mantiene la estructura del directorio data/
+# Los archivos JSON y CSV generados se gitignore pero la carpeta se preserva 

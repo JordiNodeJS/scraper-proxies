@@ -1,0 +1,56 @@
+{
+  "name": "mvp-proxy-scraper",
+  "version": "1.0.0",
+  "description": "MVP para extraer y validar proxies usando Playwright",
+  "type": "module",
+  "main": "src/main.ts",
+  "scripts": {
+    "dev": "bunx tsx --watch src/main.ts",
+    "start": "bunx tsx src/main.ts",
+    "start:both": "bunx tsx src/main.ts --both",
+    "start:http": "bunx tsx src/main.ts --http",
+    "start:https": "bunx tsx src/main.ts --https",
+    "scrape:both": "bunx tsx src/main.ts --both",
+    "scrape:http": "bunx tsx src/main.ts --http",
+    "scrape:https": "bunx tsx src/main.ts --https",
+    "test:basic": "bunx tsx src/testMain.ts",
+    "test:amazon": "bunx tsx src/testMain.ts --amazon",
+    "test:social": "bunx tsx src/testMain.ts --social",
+    "scrape:proxy-list-download": "bunx tsx src/main.ts --source=proxy-list-download",
+    "scrape:spys-one": "bunx tsx src/main.ts --source=spys-one",
+    "test:amazon": "bunx tsx src/main.ts --test=amazon",
+    "test:social": "bunx tsx src/main.ts --test=social",
+    "full-pipeline": "bunx tsx src/main.ts --full",
+    "build": "bunx build src/main.ts --outdir=dist",
+    "test": "bunx tsx tests/run-tests.ts",
+    "lint": "eslint src/**/*.ts",
+    "clean": "rm -rf data/*.json data/*.csv logs/*.log"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "playwright": "^1.52.0",
+    "chalk": "^5.4.1",
+    "tsx": "^4.11.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "bun-types": "latest",
+    "typescript": "^5.3.0",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0"
+  },
+  "keywords": [
+    "proxy",
+    "scraping",
+    "playwright",
+    "typescript",
+    "automation",
+    "cloudflare"
+  ],
+  "author": "Scraper Proxies Team",
+  "license": "MIT",
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+} 
