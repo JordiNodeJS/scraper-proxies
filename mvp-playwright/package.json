@@ -1,0 +1,22 @@
+{
+  "name": "mvp-playwright",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "mvp": "bunx tsx src/playwright-scraper.ts",
+    "dev": "bunx tsx src/playwright-scraper.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.15.29",
+    "tsx": "^4.19.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "cheerio": "^1.0.0"
+  }
+}

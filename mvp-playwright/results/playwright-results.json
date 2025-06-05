@@ -1,0 +1,12 @@
+{
+  "success": false,
+  "proxiesFound": 0,
+  "data": [],
+  "errors": [],
+  "cloudflareBypass": false,
+  "pageStructure": {
+    "hasTable": false,
+    "tableRows": 0,
+    "paginationFound": false
+  }
+}
