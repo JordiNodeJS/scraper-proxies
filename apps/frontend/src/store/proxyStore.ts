@@ -3,7 +3,7 @@
  */
 
 import { create } from 'zustand';
-import type { ProxyData, ScrapingSession, ProgressUpdate } from '../types/proxy.types';
+import type { ProxyData, ScrapingSession } from '../types/proxy.types';
 import type { ScrapingRequest } from '../types/api.types';
 import { apiService } from '../services/api.service';
 

@@ -2,8 +2,6 @@
  * Aplicación principal - MVP Proxy Scraper Frontend
  */
 
-import React from 'react';
-import Dashboard from './pages/Dashboard';
 import './index.css';
 
 /**
@@ -12,7 +10,11 @@ import './index.css';
 function App() {
   return (
     <div className="App">
-      <Dashboard />
+      <h1>🎯 Proxy Scraper</h1>
+      <p>La aplicación frontend está funcionando!</p>
+      <button onClick={() => alert('El frontend funciona!')}>
+        Probar Interacción
+      </button>
     </div>
   );
 }
