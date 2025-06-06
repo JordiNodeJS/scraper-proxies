@@ -198,7 +198,7 @@ export default function ProxyTable({ proxies, scrapingTime, onExportJson, onExpo
             {paginatedData.map((proxy) => (
               <tr 
                 key={`${proxy.ip}:${proxy.port}`} 
-                className="hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors"
+                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 <td className="px-4 py-3 font-mono text-gray-900 dark:text-gray-100">
                   {proxy.ip}

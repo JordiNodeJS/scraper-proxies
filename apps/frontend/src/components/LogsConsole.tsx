@@ -13,7 +13,7 @@ interface LogEntry {
 export default function LogsConsole() {
   const [frontendLogs, setFrontendLogs] = useState<LogEntry[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [autoScroll, setAutoScroll] = useState(true);
+  const [autoScroll, setAutoScroll] = useState(false); // Cambiado: autoscroll desmarcado por defecto
   const [showBackendLogs, setShowBackendLogs] = useState(true);
   const [showFrontendLogs, setShowFrontendLogs] = useState(true);
   const logsEndRef = useRef<HTMLDivElement>(null);
@@ -52,8 +52,8 @@ export default function LogsConsole() {
       combinedLogs.push(...backendLogs);
     }
     
-    // Ordenar por timestamp
-    return combinedLogs.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+    // Ordenar por timestamp (más reciente primero)
+    return combinedLogs.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   };
 
   const allLogs = getAllLogs();
