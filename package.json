@@ -10,7 +10,7 @@
   "scripts": {
     "build": "bun run build:packages && bun run build:apps",
     "build:packages": "bun run --filter='@scraper-proxies/*' build",
-    "build:apps": "bun run --filter='apps/*' build",
+    "build:apps": "cd apps/frontend && bun run build && cd ../backend && bun run build",
     "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
     "dev:frontend": "cd apps/frontend && bun run dev",
     "dev:backend": "cd apps/backend && bun run dev",
