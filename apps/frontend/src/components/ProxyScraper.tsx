@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useScrapeProxies } from '../hooks/useApi';
 import { apiService } from '../services/api';
 import type { Proxy } from '../types/api.types';
+import ProxyTable from './ProxyTable';
 
 export default function ProxyScraper() {
   const [scrapedProxies, setScrapedProxies] = useState<Proxy[]>([]);
@@ -146,9 +147,9 @@ export default function ProxyScraper() {
   };
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-sm">
+    <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm transition-colors duration-300">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-900">Scraper de Proxies</h2>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Scraper de Proxies</h2>
         
         <div className="flex space-x-3">
           <button
@@ -198,108 +199,38 @@ export default function ProxyScraper() {
 
       {/* Estado del último scraping */}
       {lastScrapingResult && (
-        <div className={`p-3 rounded-lg mb-4 text-sm ${
+        <div className={`p-3 rounded-lg mb-4 text-sm transition-colors ${
           lastScrapingResult.includes('✅') 
-            ? 'bg-green-50 text-green-800 border border-green-200' 
+            ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200 border border-green-200 dark:border-green-800' 
             : lastScrapingResult.includes('❌')
-            ? 'bg-red-50 text-red-800 border border-red-200'
-            : 'bg-blue-50 text-blue-800 border border-blue-200'
+            ? 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200 border border-red-200 dark:border-red-800'
+            : 'bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200 border border-blue-200 dark:border-blue-800'
         }`}>
           {lastScrapingResult}
         </div>
       )}
 
-      {/* Resultados del scraping */}
-      {scrapedProxies.length > 0 && (
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center space-x-4">
-              <span className="text-lg font-medium text-gray-900">
-                {scrapedProxies.length} proxies encontrados
-              </span>
-              {scrapingTime && (
-                <span className="text-sm text-gray-600">
-                  en {(scrapingTime / 1000).toFixed(1)}s
-                </span>
-              )}
-            </div>
-            
-            <div className="flex space-x-2">
-              <button
-                onClick={exportToJson}
-                className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-              >
-                📄 JSON
-              </button>
-              <button
-                onClick={exportToCsv}
-                className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-              >
-                📊 CSV
-              </button>
-            </div>
-          </div>
-
-          {/* Tabla de proxies */}
-          <div className="overflow-x-auto bg-gray-50 rounded-lg">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-4 py-3 text-left font-medium text-gray-900">IP</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-900">Puerto</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-900">Tipo</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-900">País</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-900">Anonimato</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200">
-                {scrapedProxies.map((proxy) => (
-                  <tr key={`${proxy.ip}:${proxy.port}`} className="hover:bg-gray-50">
-                    <td className="px-4 py-3 font-mono text-gray-900">{proxy.ip}</td>
-                    <td className="px-4 py-3 text-gray-900">{proxy.port}</td>
-                    <td className="px-4 py-3">
-                      <span className={`inline-flex px-2 py-1 text-xs font-medium rounded ${
-                        proxy.type === 'HTTPS' ? 'bg-green-100 text-green-800' :
-                        proxy.type === 'HTTP' ? 'bg-blue-100 text-blue-800' :
-                        proxy.type === 'SOCKS5' ? 'bg-purple-100 text-purple-800' :
-                        'bg-gray-100 text-gray-800'
-                      }`}>
-                        {proxy.type}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-gray-900">{proxy.country || 'N/A'}</td>
-                    <td className="px-4 py-3 text-gray-900">
-                      {proxy.anonymity ? (
-                        <span className={`inline-flex px-2 py-1 text-xs font-medium rounded ${
-                          proxy.anonymity === 'elite' ? 'bg-purple-100 text-purple-800' :
-                          proxy.anonymity === 'anonymous' ? 'bg-yellow-100 text-yellow-800' :
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {proxy.anonymity}
-                        </span>
-                      ) : 'N/A'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
+      {/* Resultados del scraping - Nueva tabla con paginación */}
+      <ProxyTable
+        proxies={scrapedProxies}
+        scrapingTime={scrapingTime}
+        onExportJson={exportToJson}
+        onExportCsv={exportToCsv}
+      />
 
       {/* Mensaje de error */}
       {(scrapeMutation.isError || realScrapingError) && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg mb-4">
-          <p className="text-red-800 font-medium">Error durante el scraping</p>
-          <p className="text-red-600 text-sm mt-1">
+        <div className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg mb-4 transition-colors">
+          <p className="text-red-800 dark:text-red-200 font-medium">Error durante el scraping</p>
+          <p className="text-red-600 dark:text-red-300 text-sm mt-1">
             {realScrapingError || scrapeMutation.error?.message || 'Error desconocido'}
           </p>
           {realScrapingError && (
             <div className="mt-2 space-y-1">
-              <p className="text-red-500 text-xs">
+              <p className="text-red-500 dark:text-red-400 text-xs">
                 💡 Tip: Puedes usar "Test Scraping" para datos simulados
               </p>
-              <p className="text-red-500 text-xs">
+              <p className="text-red-500 dark:text-red-400 text-xs">
                 🔧 Verifica que el backend esté ejecutándose en el puerto 3001
               </p>
             </div>
@@ -309,14 +240,14 @@ export default function ProxyScraper() {
 
       {/* Mensaje informativo si no hay proxies */}
       {scrapedProxies.length === 0 && !scrapeMutation.isPending && !scrapeMutation.isError && !isRealScraping && !isDirectScraping && (
-        <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-6">
+        <div className="bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-900/20 dark:to-indigo-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-6 transition-colors">
           <div className="flex items-center mb-4">
             <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-xl font-bold mr-4">
               🎯
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">Extracción de Proxies REALES</h3>
-              <p className="text-gray-600">Sistema optimizado y confiable para obtener proxies funcionales</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Extracción de Proxies REALES</h3>
+              <p className="text-gray-600 dark:text-gray-400">Sistema optimizado y confiable para obtener proxies funcionales</p>
             </div>
           </div>
           
@@ -326,8 +257,8 @@ export default function ProxyScraper() {
                 ✓
               </div>
               <div>
-                <strong className="text-green-800">🎯 Proxies Reales:</strong>
-                <span className="text-gray-700 ml-2">Extracción directa y rápida de múltiples fuentes (Free Proxy List, GitHub SpeedX, PubProxy) - ¡27 proxies en menos de 1 segundo!</span>
+                <strong className="text-green-800 dark:text-green-200">🎯 Proxies Reales:</strong>
+                <span className="text-gray-700 dark:text-gray-300 ml-2">Extracción directa y rápida de múltiples fuentes (Free Proxy List, GitHub SpeedX, PubProxy) - ¡27 proxies en menos de 1 segundo!</span>
               </div>
             </div>
             
@@ -336,8 +267,8 @@ export default function ProxyScraper() {
                 ✗
               </div>
               <div>
-                <strong className="text-gray-600">🧪 Test Scraping:</strong>
-                <span className="text-gray-500 ml-2">Deshabilitado - Solo mostraba datos simulados</span>
+                <strong className="text-gray-600 dark:text-gray-400">🧪 Test Scraping:</strong>
+                <span className="text-gray-500 dark:text-gray-500 ml-2">Deshabilitado - Solo mostraba datos simulados</span>
               </div>
             </div>
             
@@ -346,8 +277,8 @@ export default function ProxyScraper() {
                 ✗
               </div>
               <div>
-                <strong className="text-gray-600">🌐 Scraping Real:</strong>
-                <span className="text-gray-500 ml-2">Deshabilitado - Playwright presenta timeouts constantes en este entorno</span>
+                <strong className="text-gray-600 dark:text-gray-400">🌐 Scraping Real:</strong>
+                <span className="text-gray-500 dark:text-gray-500 ml-2">Deshabilitado - Playwright presenta timeouts constantes en este entorno</span>
               </div>
             </div>
           </div>
