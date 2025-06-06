@@ -21,6 +21,11 @@
     "lint": "bun run --filter='apps/*' lint",
     "lint:fix": "bun run --filter='apps/*' lint:fix",
     "test": "bun run --filter='*' test",
+    "test:sse": "playwright test tests/sse",
+    "test:sse:ui": "playwright test tests/sse --ui",
+    "test:sse:headed": "playwright test tests/sse --headed",
+    "test:sse:debug": "playwright test tests/sse --debug",
+    "test:sse:report": "playwright show-report",
     "clean": "rm -rf apps/*/dist packages/*/dist apps/*/node_modules packages/*/node_modules",
     "install:all": "bun install && bun run --filter='*' install"
   },
