@@ -1,0 +1,25 @@
+{
+  "name": "@scraper-proxies/proxy-validator",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "bun test"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3"
+  }
+} 

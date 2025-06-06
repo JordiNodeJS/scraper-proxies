@@ -1,0 +1,26 @@
+{
+  "name": "@scraper-proxies/backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --watch run src/index.ts",
+    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "test": "bun test",
+    "scrape": "bun run src/scripts/scrape.ts",
+    "validate": "bun run src/scripts/validate.ts"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.52.0",
+    "cheerio": "^1.0.0",
+    "chalk": "^5.4.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "typescript": "~5.8.3"
+  }
+} 
