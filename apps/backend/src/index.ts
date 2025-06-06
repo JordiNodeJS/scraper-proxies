@@ -4,12 +4,48 @@ import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+// CORS Middleware mejorado
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
+  origin: [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    process.env.FRONTEND_URL || 'http://localhost:5173'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cache-Control',
+    'X-HTTP-Method-Override'
+  ],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  maxAge: 86400, // 24 hours
+  preflightContinue: false,
+  optionsSuccessStatus: 204
 }));
+
+// Middleware adicional para manejar preflight requests
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(204);
+});
+
 app.use(express.json());
+
+// Middleware para logging de requests en desarrollo
+if (process.env.NODE_ENV === 'development') {
+  app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Origin: ${req.headers.origin || 'none'}`);
+    next();
+  });
+}
 
 // Health check
 app.get('/health', (req, res) => {
