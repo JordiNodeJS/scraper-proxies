@@ -6,7 +6,7 @@ import type {
   TesterConfig,
   LogLevel,
   LogEntry
-} from '../types/proxy.types.js';
+} from '@scraper-proxies/shared';
 import chalk from 'chalk';
 
 /**

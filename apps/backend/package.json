@@ -6,7 +6,7 @@
   "scripts": {
     "start": "bun run src/index.ts",
     "dev": "bun --watch run src/index.ts",
-    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "build": "echo 'Backend no require bundling, se ejecuta directamente desde src/'",
     "test": "bun test",
     "scrape": "bun run src/scripts/scrape.ts",
     "validate": "bun run src/scripts/validate.ts"
