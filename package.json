@@ -4,41 +4,39 @@
   "version": "0.0.0",
   "type": "module",
   "workspaces": [
-    "mvp-*"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "preview": "vite preview",
-    "test": "vitest",
-    "mvp:playwright": "cd mvp-playwright && bunx tsx src/playwright-scraper.ts",
-    "mvp:hibrido": "cd mvp-hibrido && bunx tsx src/hybrid-scraper.ts",
-    "mvp:working": "cd mvp-working && bun run src/main.ts",
-    "mvp:freeproxy": "cd mvp-freeproxy-world && bun run demo",
-    "mvp:freeproxy:full": "cd mvp-freeproxy-world && bun run start",
-    "mvp:website-detector": "cd mvp-website-detector && bun run demo",
-    "mvp:website-detector:full": "cd mvp-website-detector && bun run start"
+    "build": "bun run build:packages && bun run build:apps",
+    "build:packages": "bun run --filter='@scraper-proxies/*' build",
+    "build:apps": "bun run --filter='apps/*' build",
+    "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
+    "dev:frontend": "cd apps/frontend && bun run dev",
+    "dev:backend": "cd apps/backend && bun run dev",
+    "start:frontend": "cd apps/frontend && bun run preview",
+    "start:backend": "cd apps/backend && bun run start",
+    "lint": "bun run --filter='apps/*' lint",
+    "lint:fix": "bun run --filter='apps/*' lint:fix",
+    "test": "bun run --filter='*' test",
+    "clean": "rm -rf apps/*/dist packages/*/dist apps/*/node_modules packages/*/node_modules",
+    "install:all": "bun install && bun run --filter='*' install"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "@playwright/test": "^1.52.0",
-    "cheerio": "^1.0.0",
-    "chalk": "^5.4.1"
+    "chalk": "^5.4.1",
+    "cheerio": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "@vitejs/plugin-react-swc": "^3.9.0",
+    "concurrently": "^9.1.2",
     "eslint": "^9.25.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "typescript-eslint": "^8.30.1"
+  },
+  "engines": {
+    "bun": ">=1.0.0",
+    "node": ">=18.0.0"
   }
 }
