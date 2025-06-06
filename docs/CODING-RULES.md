@@ -3,24 +3,29 @@
 ## 🎯 Reglas Fundamentales
 
 ### **1. Package Manager**
+
 - ✅ **Usar BUN exclusivamente**: `bun add`, `bun run`, `bunx`
 - ❌ **NO usar npm/yarn**: Evitar `npm install`, `yarn add`
 
 ### **2. HTTP Requests**
+
 - ✅ **Fetch nativo**: Usar `fetch()` API estándar
 - ❌ **NO usar axios**: Evitar librerías HTTP externas
 - **Ejemplo correcto:**
+
 ```typescript
 const response = await fetch(url, {
-  headers: { 'User-Agent': userAgent },
-  signal: AbortSignal.timeout(10000)
+  headers: { "User-Agent": userAgent },
+  signal: AbortSignal.timeout(10000),
 });
 ```
 
 ### **3. Módulos ESM6**
+
 - ✅ **ES Modules**: `import/export` syntax
 - ❌ **CommonJS**: Evitar `require()` y `module.exports`
 - **Configuración package.json:**
+
 ```json
 {
   "type": "module"
@@ -28,11 +33,13 @@ const response = await fetch(url, {
 ```
 
 ### **4. TypeScript Estricto**
+
 - ✅ **Tipos explícitos**: Siempre definir tipos
 - ✅ **Interfaces bien definidas**: Para objetos complejos
 - ❌ **NO usar `any`**: Usar tipos específicos o `unknown`
 
 ### **5. React Moderno**
+
 - ✅ **Componentes funcionales**: Solo function components
 - ✅ **Hooks**: useState, useEffect, custom hooks
 - ❌ **Class components**: No usar React.Component
@@ -42,18 +49,21 @@ const response = await fetch(url, {
 ## 🛠️ Stack Tecnológico Aprobado
 
 ### **Core**
+
 - **Runtime**: Bun
 - **Frontend**: React 19.1.0 + TypeScript
 - **Build**: Vite 6.3.5
 - **Styling**: Tailwind CSS
 
 ### **Scraping & Testing**
+
 - **HTML Parser**: Cheerio
 - **Browser Testing**: Playwright
 - **HTTP**: fetch nativo
 - **File System**: Node.js fs modules
 
 ### **Development**
+
 - **Linting**: ESLint con TypeScript
 - **Testing**: Vitest + React Testing Library
 - **TypeScript**: tsx para ejecución directa
@@ -63,6 +73,7 @@ const response = await fetch(url, {
 ## 📁 Estructura de Archivos
 
 ### **Convenciones de Naming**
+
 ```
 src/
 ├── components/        # PascalCase
@@ -83,6 +94,7 @@ src/
 ```
 
 ### **Exports/Imports**
+
 ```typescript
 // ✅ ESM exports
 export interface ProxyData { ... }
@@ -99,6 +111,7 @@ import ScraperService from '../services/scraperService.js';
 ## 🚀 Comandos Estándar
 
 ### **Setup del Proyecto**
+
 ```bash
 # Inicializar
 bun init -y
@@ -114,6 +127,7 @@ bun run lint
 ```
 
 ### **Scripts de Package.json**
+
 ```json
 {
   "scripts": {
@@ -131,15 +145,17 @@ bun run lint
 ## 📝 Estilo de Código
 
 ### **Fetch Patterns**
+
 ```typescript
 // ✅ Correcto - Con timeout y error handling
 async function fetchData(url: string): Promise<string> {
   try {
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
       },
-      signal: AbortSignal.timeout(10000)
+      signal: AbortSignal.timeout(10000),
     });
 
     if (!response.ok) {
@@ -148,25 +164,26 @@ async function fetchData(url: string): Promise<string> {
 
     return await response.text();
   } catch (error) {
-    if (error.name === 'TimeoutError') {
-      throw new Error('Request timeout');
+    if (error.name === "TimeoutError") {
+      throw new Error("Request timeout");
     }
     throw error;
   }
 }
 
 // ❌ Incorrecto - Usando axios
-import axios from 'axios';
+import axios from "axios";
 const response = await axios.get(url);
 ```
 
 ### **TypeScript Interfaces**
+
 ```typescript
 // ✅ Correcto - Tipos específicos
 interface Proxy {
   ip: string;
   port: number;
-  protocol: 'http' | 'https';
+  protocol: "http" | "https";
   lastChecked?: Date;
 }
 
@@ -179,6 +196,7 @@ interface Proxy {
 ```
 
 ### **React Components**
+
 ```typescript
 // ✅ Correcto - Functional component con tipos
 import React, { memo } from 'react';
@@ -208,6 +226,7 @@ class ProxyRow extends React.Component { ... }
 ## 🔧 Configuraciones Requeridas
 
 ### **tsconfig.json**
+
 ```json
 {
   "compilerOptions": {
@@ -223,17 +242,18 @@ class ProxyRow extends React.Component { ... }
 ```
 
 ### **vite.config.ts**
+
 ```typescript
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react-swc';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': '/src'
-    }
-  }
+      "@": "/src",
+    },
+  },
 });
 ```
 
@@ -242,6 +262,7 @@ export default defineConfig({
 ## ⚠️ Prohibiciones Estrictas
 
 ### **❌ NO Usar:**
+
 - `npm install` → Usar `bun add`
 - `yarn add` → Usar `bun add`
 - `axios` → Usar `fetch()`
@@ -251,6 +272,7 @@ export default defineConfig({
 - `any` type → Usar tipos específicos
 
 ### **✅ Usar SIEMPRE:**
+
 - `bun` para package management
 - `fetch()` para HTTP requests
 - ESM imports/exports
@@ -262,19 +284,21 @@ export default defineConfig({
 ## 🧪 Testing
 
 ### **Configuración Vitest**
+
 ```typescript
 // vitest.config.ts
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts']
-  }
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
+  },
 });
 ```
 
 ### **Comandos de Testing**
+
 ```bash
 # Ejecutar tests
 bun run test
@@ -291,18 +315,20 @@ bun run test --coverage
 ## 📈 Performance
 
 ### **Optimizaciones Requeridas**
+
 - `React.memo` para componentes que renderizan frecuentemente
 - `useCallback` para handlers pasados como props
 - `useMemo` para cálculos costosos
 - Lazy loading para componentes pesados
 
 ### **Ejemplo de Optimización**
+
 ```typescript
 import React, { memo, useCallback, useMemo } from 'react';
 
 const ProxyTable: React.FC<Props> = memo(({ proxies, onSelect }) => {
-  const sortedProxies = useMemo(() => 
-    proxies.sort((a, b) => a.latency - b.latency), 
+  const sortedProxies = useMemo(() =>
+    proxies.sort((a, b) => a.latency - b.latency),
     [proxies]
   );
 
@@ -321,11 +347,13 @@ const ProxyTable: React.FC<Props> = memo(({ proxies, onSelect }) => {
 ## 📋 TASK TRACKING Y PHASE IDS
 
 **Para nuevas features y gestión de tareas**, consultar reglas específicas en:
+
 - **Archivo**: `.github/prompts/rules-task.prompt.md`
 - **Sistema**: Automated Phase ID assignment y task tracker creation
 - **Uso**: Se aplica automáticamente para requests de nuevas features
 
 **Referencias adicionales**:
+
 - **Quick Reference**: `docs/tasks/TASK-TRACKING-QUICK-REFERENCE.md`
 - **INDEX maestro**: `docs/tasks/INDEX-TASK-TRACKER-ORGANIZADO.md`
 
