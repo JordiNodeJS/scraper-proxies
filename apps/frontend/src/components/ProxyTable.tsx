@@ -6,8 +6,8 @@ import TableFilters from './TableFilters';
 interface ProxyTableProps {
   proxies: Proxy[];
   scrapingTime?: number | null;
-  onExportJson: () => void;
-  onExportCsv: () => void;
+  onExportJson?: () => void;
+  onExportCsv?: () => void;
 }
 
 export default function ProxyTable({ proxies, scrapingTime, onExportJson, onExportCsv }: ProxyTableProps) {
@@ -83,21 +83,27 @@ export default function ProxyTable({ proxies, scrapingTime, onExportJson, onExpo
           )}
         </div>
         
-        {/* Controles de exportación */}
-        <div className="flex space-x-2">
-          <button
-            onClick={onExportJson}
-            className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors"
-          >
-            📄 JSON
-          </button>
-          <button
-            onClick={onExportCsv}
-            className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
-          >
-            📊 CSV
-          </button>
-        </div>
+        {/* Controles de exportación - solo mostrar si se proporcionan las funciones */}
+        {(onExportJson || onExportCsv) && (
+          <div className="flex space-x-2">
+            {onExportJson && (
+              <button
+                onClick={onExportJson}
+                className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-600 transition-colors"
+              >
+                📄 JSON
+              </button>
+            )}
+            {onExportCsv && (
+              <button
+                onClick={onExportCsv}
+                className="px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 transition-colors"
+              >
+                📊 CSV
+              </button>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Filtros de tabla */}
