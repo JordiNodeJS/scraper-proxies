@@ -1,0 +1,450 @@
+# Cursor Rules - Scraper de Proxies MVP
+
+## 🎯 CONTEXTO DEL PROYECTO
+
+Este es un **MVP de Scraper de Proxies** completamente funcional desarrollado como monorepo con:
+
+- **Frontend**: React 19 + TypeScript + Tailwind CSS + TanStack Query
+- **Backend**: Bun + Express + CORS configurado  
+- **Arquitectura**: Packages independientes en apps/frontend y apps/backend
+- **Estado**: Aplicación web 100% operativa con testing completo realizado
+
+## 🚨 REGLAS FUNDAMENTALES OBLIGATORIAS
+
+### 0. Stack Tecnológico Validado - SOLO USAR ESTAS HERRAMIENTAS ✅
+
+- **RUNTIME**: `bun` y `bunx` EXCLUSIVAMENTE (NO npm/yarn/pnpm)
+- **HTTP REQUESTS**: `fetch` nativo EXCLUSIVAMENTE (NO axios/request)
+- **MÓDULOS**: ES6 modules `import/export` EXCLUSIVAMENTE (NO CommonJS require)
+- **TYPESCRIPT**: Tipado estricto sin `any` (interfaces obligatorias)
+- **ARQUITECTURA**: Monorepo con apps/frontend y apps/backend
+
+### 1. Herramientas de Desarrollo ✅ PROBADAS
+
+```bash
+# Frontend: React 19 + Vite ultra-rápido
+cd apps/frontend && bun run dev  # Puerto 5173
+
+# Backend: Bun + Express con auto-reload  
+cd apps/backend && bun run dev   # Puerto 3001
+```
+
+### 2. Endpoints API Funcionales ✅
+
+```typescript
+// FUNCIONALES - Todos respondiendo correctamente
+GET  /health              # Status: OK, Runtime: Bun v1.2.8
+GET  /api/test           # Status: functional  
+POST /api/scrape/test    # Mock data: 5 proxies
+POST /api/validate/proxies # Validación concurrente
+GET  /api/stats          # Métricas del sistema
+GET  /api/config         # Configuración del scraper
+```
+
+## 📋 SISTEMA DE TASK TRACKING OBLIGATORIO
+
+### 🎯 PHASE ID SYSTEM - APLICAR SIEMPRE
+
+**ESTADO ACTUAL DEL SISTEMA:**
+```
+P1: BACKEND CORE ✅ COMPLETED
+├── P1-F1: Express + Bun Server ✅
+├── P1-F2: API Endpoints ✅  
+├── P1-F3: CORS & Error Handling ✅
+└── P1-F4: Health & Monitoring ✅
+
+P2: FRONTEND DEVELOPMENT 🚧 IN PROGRESS  
+├── P2-F1: React + TypeScript Setup ✅
+└── PRÓXIMO DISPONIBLE: P2-F2
+
+P3: ADVANCED FEATURES ⏳ PENDING
+└── PRÓXIMO DISPONIBLE: P3-F1
+```
+
+### 🚨 ACCIONES OBLIGATORIAS PARA NUEVAS FEATURES
+
+**CUANDO EL USUARIO SOLICITE UNA NUEVA FEATURE:**
+
+1. **AUTO-IDENTIFICAR PHASE ID:**
+   ```
+   Authentication/Login → P2-F2
+   Dashboard → P2-F3
+   Settings/Config → P2-F4  
+   Scraping Engine → P3-F1
+   Anti-Bot Bypass → P3-F2
+   Performance Optimization → P3-F3
+   Advanced UI Features → P3-F4
+   Export Features → P3-F5
+   ```
+
+2. **CREAR TASK TRACKER OBLIGATORIO:**
+   - **Ubicación**: `docs/tasks/P{X}-F{Y}_{DESCRIPCION}.md`
+   - **Formato**: Usar template específico (ver sección Template)
+   - **Actualizar**: `docs/tasks/INDEX-TASK-TRACKER-ORGANIZADO.md`
+
+3. **TEMPLATE OBLIGATORIO:**
+```markdown
+# P{X}-F{Y}: {FEATURE_NAME}
+
+## 📊 METADATA
+- **Phase ID**: P{X}-F{Y}
+- **Feature**: {FEATURE_NAME}
+- **Estimated Duration**: {HOURS/DAYS}
+- **Priority**: {HIGH/MEDIUM/LOW}
+- **Dependencies**: {LIST_OR_NONE}
+- **Status**: 🚧 IN PROGRESS
+- **Created**: {YYYY-MM-DD}
+- **Last Updated**: {YYYY-MM-DD}
+
+## 🎯 OBJECTIVES
+{CLEAR_FEATURE_DESCRIPTION}
+
+## 📋 TASK BREAKDOWN
+### Frontend Tasks
+- [ ] Task 1
+- [ ] Task 2
+
+### Backend Tasks
+- [ ] Task 1
+- [ ] Task 2
+
+### Testing Tasks
+- [ ] Task 1
+- [ ] Task 2
+
+## ✅ ACCEPTANCE CRITERIA
+- [ ] Criteria 1
+- [ ] Criteria 2
+
+## 🔧 TECHNICAL SPECIFICATIONS
+{TECH_DETAILS}
+
+## 📝 PROGRESS LOG
+### {DATE}
+- {PROGRESS_UPDATE}
+
+## 🚨 BLOCKERS & ISSUES
+{NONE_OR_LIST}
+
+## ✅ COMPLETION CHECKLIST
+- [ ] Development completed
+- [ ] Testing completed
+- [ ] Documentation updated
+- [ ] Code reviewed
+- [ ] Performance validated
+```
+
+## 🏗️ PATRONES ARQUITECTURALES OBLIGATORIOS
+
+### Estructura de Carpetas ✅ APLICADA
+
+```
+apps/frontend/src/
+├── components/
+│   ├── SystemStatus.tsx      # PascalCase obligatorio
+│   └── ProxyScraper.tsx      # Componentes funcionales únicamente
+├── hooks/
+│   └── useApi.ts            # camelCase + prefijo 'use'
+├── services/
+│   └── api.ts               # camelCase para servicios
+└── types/
+    └── api.types.ts         # camelCase + sufijo '.types.ts'
+
+apps/backend/src/
+└── index.ts                 # Express server principal
+```
+
+### Convenciones de Naming ESTRICTAS ✅
+
+- **Componentes**: PascalCase (ej: `SystemStatus.tsx`)
+- **Hooks**: camelCase con prefijo `use` (ej: `useApi.ts`)
+- **Services**: camelCase (ej: `api.ts`)
+- **Types**: camelCase con sufijo `.types.ts` (ej: `api.types.ts`)
+- **Variables/Functions**: camelCase
+- **Constants**: SCREAMING_SNAKE_CASE
+
+## 🔧 PATRONES DE IMPLEMENTACIÓN
+
+### React Components - USAR SIEMPRE
+
+```typescript
+import React, { memo } from "react";
+
+interface ComponentNameProps {
+  /**
+   * Descripción JSDoc obligatoria
+   */
+  propName: string;
+  onAction?: (data: any) => void;
+  className?: string;
+}
+
+/**
+ * Descripción del componente con JSDoc
+ */
+const ComponentName: React.FC<ComponentNameProps> = memo(
+  ({ propName, onAction, className = "" }) => {
+    // Estado local con useState
+    // Custom hooks
+    // Event handlers con useCallback
+    
+    return (
+      <div className={`base-classes ${className}`}>
+        {/* Contenido con Tailwind CSS */}
+      </div>
+    );
+  }
+);
+
+ComponentName.displayName = "ComponentName";
+export default ComponentName;
+```
+
+### API Service Pattern - IMPLEMENTADO ✅
+
+```typescript
+class ApiService {
+  private baseURL = "http://localhost:3001";
+  
+  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    try {
+      const response = await fetch(`${this.baseURL}${endpoint}`, {
+        headers: { "Content-Type": "application/json" },
+        ...options,
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error(`API request failed for ${endpoint}:`, error);
+      throw error;
+    }
+  }
+}
+```
+
+### React Query Hooks - PATRÓN ESTABLECIDO ✅
+
+```typescript
+export const useScrapeProxies = () => {
+  return useMutation({
+    mutationFn: (config?: ScrapeConfig) =>
+      apiService.scrapeProxies(config?.sources),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.stats });
+    },
+  });
+};
+```
+
+## 🎨 STYLING Y UI OBLIGATORIO
+
+### Tailwind CSS Classes - APLICAR SIEMPRE
+
+```typescript
+// Botones
+const buttonStyles = {
+  base: "px-4 py-2 rounded-lg font-medium transition-colors duration-200",
+  primary: "bg-blue-600 hover:bg-blue-700 text-white",
+  secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800", 
+  danger: "bg-red-600 hover:bg-red-700 text-white",
+};
+
+// Cards
+const cardStyles = "bg-white rounded-lg shadow-md border border-gray-200 p-6";
+
+// Inputs  
+const inputStyles = "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500";
+```
+
+### Estados de UI - IMPLEMENTAR SIEMPRE
+
+```typescript
+// Loading state
+if (isLoading) {
+  return (
+    <div className="flex items-center justify-center p-4">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    </div>
+  );
+}
+
+// Error state
+if (error) {
+  return (
+    <div className="bg-red-50 border border-red-200 rounded-md p-4">
+      <p className="text-red-800">{error}</p>
+    </div>
+  );
+}
+```
+
+## 🔍 SERVICIOS ESPECIALIZADOS
+
+### Scraping Service - IMPLEMENTAR CUANDO SEA REQUERIDO
+
+```typescript
+interface ScrapingConfig {
+  baseUrl: string;
+  delay: number;
+  timeout: number;
+  maxRetries: number;
+  userAgent: string;
+}
+
+class ScraperService {
+  private config: ScrapingConfig;
+  
+  constructor(config: Partial<ScrapingConfig> = {}) {
+    this.config = {
+      baseUrl: "https://hide.mn/es/proxy-list/?type=s",
+      delay: 2000,
+      timeout: 10000, 
+      maxRetries: 3,
+      userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      ...config,
+    };
+  }
+  
+  async scrapeAllPages(onProgress?: (progress: ScrapingProgress) => void): Promise<ScrapingResult> {
+    // Implementación con rate limiting y error handling
+  }
+}
+```
+
+### Validation Service - USAR PLAYWRIGHT
+
+```typescript
+interface ValidationConfig {
+  timeout: number;
+  retries: number;
+  concurrency: number;
+  testUrl: string;
+}
+
+class ProxyValidatorService {
+  private config: ValidationConfig;
+  private semaphore: Semaphore;
+  
+  async validateProxies(
+    proxies: Proxy[],
+    onProgress?: (progress: ValidationProgress) => void
+  ): Promise<ValidationResult[]> {
+    // Validación concurrente con Playwright
+    // Control de concurrencia con semáforo
+    // Progress tracking obligatorio
+  }
+}
+```
+
+## 📊 TIPOS TYPESCRIPT OBLIGATORIOS
+
+```typescript
+// Proxy principal - USAR SIEMPRE
+interface Proxy {
+  ip: string;
+  port: number;
+  type: "HTTP" | "HTTPS" | "SOCKS5";
+  country?: string;
+  anonymity?: "Elite" | "Anonymous" | "Transparent";
+  speed?: number;
+  uptime?: number;
+  lastChecked?: Date;
+}
+
+// Respuestas API - TIPADO ESTRICTO
+interface ProxyResponse {
+  success: boolean;
+  data: {
+    total: number;
+    proxies: Proxy[];
+    scrapingTime: number;
+  };
+  timestamp: string;
+}
+
+// Configuraciones - SIEMPRE OPCIONALES PARCIALES
+interface ScrapingConfig {
+  sources?: string[];
+  maxPages?: number;
+  timeout?: number;
+}
+
+interface ValidationConfig {
+  timeout: number;
+  retries: number;
+  concurrency: number;
+}
+```
+
+## ⚡ OPTIMIZACIÓN Y PERFORMANCE
+
+### Reglas Obligatorias
+
+1. **React.memo**: Solo para componentes que re-renderizan frecuentemente
+2. **useCallback**: Para event handlers pasados como props
+3. **useMemo**: Para cálculos costosos únicamente
+4. **Lazy Loading**: React.lazy para componentes pesados no inmediatos
+
+### Testing Requirements
+
+- **Framework**: `bunx vitest` para unit testing
+- **React Testing**: `@testing-library/react` instalado con `bun add -D`
+- **Mocking**: Event handlers mockeables
+- **Coverage**: Props requeridas vs opcionales bien definidas
+
+## 🚨 RESTRICCIONES CRÍTICAS
+
+### ❌ NUNCA USAR
+
+- `npm`, `yarn`, `pnpm` (SOLO `bun`)
+- `axios`, `request` (SOLO `fetch` nativo)
+- `require()`, `module.exports` (SOLO `import/export`)
+- `any` type (SIEMPRE tipos explícitos)
+- Class components (SOLO functional components)
+
+### ✅ SIEMPRE USAR
+
+- JSDoc para funciones y componentes principales
+- Error boundaries para componentes críticos  
+- ARIA labels para accesibilidad
+- Responsive design mobile-first
+- TypeScript strict mode
+- Progress tracking para operaciones largas
+
+## 📝 DOCUMENTACIÓN OBLIGATORIA
+
+### Al Crear Nuevas Features
+
+1. **Task Tracker**: Crear en `docs/tasks/P{X}-F{Y}_{NAME}.md`
+2. **Update Index**: Actualizar `docs/tasks/INDEX-TASK-TRACKER-ORGANIZADO.md`
+3. **JSDoc Comments**: Para funciones públicas
+4. **README Updates**: Si se agregan comandos o configuraciones
+
+### Estructura de Commits
+
+```
+P{X}-F{Y}: Brief description
+
+- Detailed change 1
+- Detailed change 2
+- Testing status
+```
+
+## 🎯 PRÓXIMOS PHASE IDs DISPONIBLES
+
+- **P2-F2**: Frontend Authentication 
+- **P2-F3**: Frontend Dashboard
+- **P2-F4**: Frontend Configuration
+- **P3-F1**: Advanced Scraping Engine
+- **P3-F2**: Anti-Bot Protection (Playwright)
+- **P3-F3**: Performance Optimization  
+- **P3-F4**: Advanced UI Features
+- **P3-F5**: Export Features Enhancement
+
+---
+
+**RECORDATORIO**: Estas reglas garantizan la consistencia, mantenibilidad y escalabilidad del MVP Proxy Scraper. Aplicar TODAS las reglas en cada implementación. 
