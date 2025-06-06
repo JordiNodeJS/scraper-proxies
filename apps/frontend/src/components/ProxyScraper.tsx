@@ -253,7 +253,7 @@ export default function ProxyScraper() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {scrapedProxies.map((proxy, index) => (
+                {scrapedProxies.map((proxy) => (
                   <tr key={`${proxy.ip}:${proxy.port}`} className="hover:bg-gray-50">
                     <td className="px-4 py-3 font-mono text-gray-900">{proxy.ip}</td>
                     <td className="px-4 py-3 text-gray-900">{proxy.port}</td>

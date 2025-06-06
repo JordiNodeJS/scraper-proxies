@@ -39,17 +39,42 @@ const addLog = (level: LogEntry['level'], message: string) => {
   console.log(`${emoji} [${level.toUpperCase()}] ${message}`);
 };
 
-// CORS Middleware mejorado
+// CORS Middleware mejorado - Configuración permisiva para desarrollo/producción
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'http://127.0.0.1:5173',
-    'http://127.0.0.1:5174',
-    process.env.FRONTEND_URL || 'http://localhost:5173'
-  ],
+  origin: (origin, callback) => {
+    // Lista de orígenes permitidos
+    const allowedOrigins = [
+      'http://localhost:5173',    // Frontend desarrollo
+      'http://localhost:4173',    // Frontend producción
+      'http://localhost:4174',    // Frontend producción (puerto alternativo)
+      'http://localhost:4175',    // Frontend producción (puerto alternativo 2)
+      'http://127.0.0.1:5173',
+      'http://127.0.0.1:4173',
+      'http://127.0.0.1:4174',
+      'http://127.0.0.1:4175',
+    ];
+    
+    // Si no hay origin (requests del mismo origin o herramientas como curl), permitir
+    if (!origin) {
+      return callback(null, true);
+    }
+    
+    // Si el origin está en la lista permitida, permitir
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
+    // En desarrollo, permitir cualquier origen localhost
+    if (process.env.NODE_ENV !== 'production' && origin.includes('localhost')) {
+      return callback(null, true);
+    }
+    
+    // Logging para debugging
+    addLog('warning', `CORS blocked origin: ${origin}`);
+    return callback(new Error('Not allowed by CORS'), false);
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: [
     'Origin',
     'X-Requested-With',
@@ -57,9 +82,11 @@ app.use(cors({
     'Accept',
     'Authorization',
     'Cache-Control',
-    'X-HTTP-Method-Override'
+    'X-HTTP-Method-Override',
+    'X-Forwarded-For',
+    'X-Real-IP'
   ],
-  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  exposedHeaders: ['Content-Length', 'X-Total-Count', 'X-Page-Count'],
   maxAge: 86400, // 24 hours
   preflightContinue: false,
   optionsSuccessStatus: 204
@@ -67,22 +94,32 @@ app.use(cors({
 
 // Middleware adicional para manejar preflight requests
 app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  const origin = req.headers.origin;
+  addLog('info', `CORS preflight request from origin: ${origin}`);
+  
+  res.header('Access-Control-Allow-Origin', origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, X-HTTP-Method-Override');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.sendStatus(204);
 });
 
 app.use(express.json());
 
-// Middleware para logging de requests en desarrollo
-if (process.env.NODE_ENV === 'development') {
-  app.use((req, res, next) => {
-    addLog('info', `${req.method} ${req.path} - Origin: ${req.headers.origin || 'none'}`);
-    next();
-  });
-}
+// Middleware para logging de requests y CORS debugging
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const userAgent = req.headers['user-agent'];
+  
+  addLog('info', `${req.method} ${req.path} - Origin: ${origin || 'none'} - UA: ${userAgent?.substring(0, 50) || 'none'}`);
+  
+  // Debug de CORS headers
+  if (req.method === 'OPTIONS') {
+    addLog('info', `CORS preflight: ${origin} → ${req.headers['access-control-request-method']} ${req.path}`);
+  }
+  
+  next();
+});
 
 // Health check
 app.get('/health', (req, res) => {

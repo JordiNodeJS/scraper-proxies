@@ -397,8 +397,6 @@ async function testSocial(): Promise<void> {
     
     console.log(`\n📁 Resultados exportados:`);
     console.log(`📄 JSON: data/social-test-results-${timestamp}.json`);
-
-    const totalSuccessful = Object.values(socialStats).reduce((sum, count) => sum + count, 0);
     
     if (totalSuccessful > 0) {
       console.log('\n✅ Algunos proxies funcionan en redes sociales');
