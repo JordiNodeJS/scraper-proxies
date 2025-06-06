@@ -8,6 +8,7 @@ export const QUERY_KEYS = {
   test: ['test'],
   proxies: ['proxies'],
   stats: ['stats'],
+  logs: ['logs'],
 } as const;
 
 // Hook para health check
@@ -39,6 +40,8 @@ export const useScrapeProxies = () => {
     onSuccess: () => {
       // Invalidar stats después de un scraping exitoso
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.stats });
+      // Invalidar logs para obtener nuevos logs del backend
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.logs });
     },
   });
 };
@@ -55,6 +58,8 @@ export const useValidateProxies = () => {
     onSuccess: () => {
       // Invalidar stats después de una validación exitosa
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.stats });
+      // Invalidar logs para obtener nuevos logs del backend
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.logs });
     },
   });
 };
@@ -65,6 +70,16 @@ export const useStats = () => {
     queryKey: QUERY_KEYS.stats,
     queryFn: apiService.getStats,
     refetchInterval: 60000, // cada minuto
+    retry: 2,
+  });
+};
+
+// Hook para obtener logs del backend
+export const useBackendLogs = (limit: number = 50) => {
+  return useQuery({
+    queryKey: [...QUERY_KEYS.logs, limit],
+    queryFn: () => apiService.getLogs(limit),
+    refetchInterval: 5000, // cada 5 segundos para logs en tiempo real
     retry: 2,
   });
 };

@@ -5,6 +5,7 @@
 import './index.css';
 import SystemStatus from './components/SystemStatus';
 import ProxyScraper from './components/ProxyScraper';
+import LogsConsole from './components/LogsConsole';
 
 /**
  * Componente principal de la aplicación
@@ -30,6 +31,9 @@ function App() {
           
           {/* Scraper de proxies */}
           <ProxyScraper />
+          
+          {/* Console de logs en tiempo real */}
+          <LogsConsole />
         </main>
 
         {/* Footer */}
