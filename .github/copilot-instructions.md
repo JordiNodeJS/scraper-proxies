@@ -1,5 +1,16 @@
 # GitHub Copilot Instructions - Scraper de Proxies
 
+## 🔧 SPECIALIZED PROMPTS SYSTEM
+
+**TASK TRACKING & PHASE IDs**: Para nuevas features y gestión de tareas, consultar reglas específicas en:
+- **File**: `.github/prompts/rules-task.prompt.md`
+- **Purpose**: Automated Phase ID assignment and task tracker creation
+- **Usage**: Apply when user requests new features, improvements, or tasks
+
+**OTHER SPECIALIZED PROMPTS**: Additional prompts available in `.github/prompts/` directory.
+
+---
+
 ## 📋 Contexto del Proyecto - ACTUALIZADO 2025-06-06
 
 Este proyecto es un **MVP de Scraper de Proxies** completamente funcional desarrollado como:

@@ -318,4 +318,15 @@ const ProxyTable: React.FC<Props> = memo(({ proxies, onSelect }) => {
 
 ---
 
-**🎯 Estas reglas son OBLIGATORIAS para mantener consistencia en el proyecto y aprovechar las ventajas de Bun + ESM + TypeScript moderno.** 
+## 📋 TASK TRACKING Y PHASE IDS
+
+**Para nuevas features y gestión de tareas**, consultar reglas específicas en:
+- **Archivo**: `.github/prompts/rules-task.prompt.md`
+- **Sistema**: Automated Phase ID assignment y task tracker creation
+- **Uso**: Se aplica automáticamente para requests de nuevas features
+
+**Referencias adicionales**:
+- **Quick Reference**: `docs/tasks/TASK-TRACKING-QUICK-REFERENCE.md`
+- **INDEX maestro**: `docs/tasks/INDEX-TASK-TRACKER-ORGANIZADO.md`
+
+---
