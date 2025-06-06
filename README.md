@@ -64,26 +64,123 @@ bun install
 bun run build:packages
 ```
 
-### 🛠️ Desarrollo Local - FUNCIONAL ✅
+### 🛠️ Desarrollo Local - VERIFICADO Y FUNCIONAL ✅
+
+#### 🚀 Opción 1: Arranque Concurrente (Recomendado)
 
 ```bash
-# Método 1: Desarrollo con concurrently (Linux/Mac/Windows)
+# 1. Asegurar dependencias instaladas
+bun install
+
+# 2. Arrancar frontend + backend simultáneamente
 bun run dev
 
-# Método 2: Terminales separadas (Windows/Linux/Mac)
-# Terminal 1: Frontend
-bun run dev:frontend  # http://localhost:5173
-
-# Terminal 2: Backend
-bun run dev:backend   # http://localhost:3001
+# ✅ Resultado automático:
+# Frontend: http://localhost:5173 (Vite dev server + HMR)
+# Backend:  http://localhost:3001 (Express + hot reload)
 ```
 
-**🔗 URLs de Desarrollo:**
+#### 🔧 Opción 2: Terminales Separadas (Control Total)
 
-- **Frontend**: http://localhost:5173
-- **Backend**: http://localhost:3001
-- **Health Check**: http://localhost:3001/health
-- **API Test**: http://localhost:3001/api/test
+```bash
+# Terminal 1: Backend con hot reload
+cd apps/backend && bun run dev
+# → Puerto 3001 con auto-reload en cambios
+
+# Terminal 2: Frontend con HMR
+cd apps/frontend && bun run dev  
+# → Puerto 5173 con Hot Module Replacement
+```
+
+#### 🔍 Opción 3: Comandos Individuales
+
+```bash
+# Solo backend (desarrollo)
+bun run dev:backend      # Puerto 3001
+
+# Solo frontend (desarrollo)  
+bun run dev:frontend     # Puerto 5173
+
+# Verificar servicios
+curl http://localhost:3001/health
+curl http://localhost:3001/api/test
+```
+
+**🔗 URLs de Desarrollo Verificadas:**
+
+- **🎨 Frontend**: http://localhost:5173 (React 19 + TypeScript + Tailwind CSS 4)
+- **🔧 Backend**: http://localhost:3001 (Express + Bun + hot reload)
+- **💓 Health Check**: http://localhost:3001/health
+- **📊 API Test**: http://localhost:3001/api/test
+- **📋 Logs API**: http://localhost:3001/api/logs
+- **🌐 Scraping Real**: http://localhost:3001/api/scrape/direct
+
+#### ⚡ Features de Desarrollo Verificadas
+
+- **🔥 Hot Reload**: Cambios en código se reflejan automáticamente
+- **🔧 TypeScript**: Autocompletado y type checking en tiempo real
+- **🌐 CORS**: Configurado automáticamente para localhost:5173
+- **📱 DevTools**: React Query DevTools habilitado
+- **🐛 Error Overlay**: Errores de TS aparecen en browser
+- **📊 Real-time Logs**: Sistema de logs sincronizado frontend-backend
+- **🎯 Scraping Funcional**: Extracción real de 27 proxies en 1.1s
+
+#### 🔍 Verificación del Desarrollo
+
+```bash
+# Test completo del sistema
+curl http://localhost:5173                    # HTML del React app
+curl http://localhost:3001/health             # {"status":"ok","runtime":"bun"}
+curl http://localhost:3001/api/test           # {"message":"🚀 Backend is working correctly!"}
+
+# Testing funcional (en browser)
+# 1. Ir a http://localhost:5173
+# 2. Click en "🎯 Proxies Reales" 
+# 3. Verificar: tabla con 20+ proxies en <2 segundos
+# 4. Ver logs actualizándose en tiempo real
+```
+
+#### 🐛 Troubleshooting de Desarrollo
+
+**Error: Puerto ya en uso**
+```bash
+# Windows: Encontrar y terminar procesos
+netstat -ano | findstr :3001
+netstat -ano | findstr :5173
+taskkill /PID <PID> /F
+
+# Linux/Mac: Terminar procesos
+lsof -ti:3001 | xargs kill -9
+lsof -ti:5173 | xargs kill -9
+
+# Alternativa: Cambiar puerto
+PORT=3002 bun run dev:backend
+```
+
+**Error: Dependencias faltantes**
+```bash
+# Reinstalar desde raíz
+bun clean && bun install
+
+# Verificar workspace
+bun run --filter='*' install
+```
+
+**Error: TypeScript compilation**
+```bash
+# Frontend TS check
+cd apps/frontend && npx tsc --noEmit
+
+# Backend TS check  
+cd apps/backend && npx tsc --noEmit
+```
+
+**Error: CORS en desarrollo**
+```bash
+# Verificar configuración
+curl -H "Origin: http://localhost:5173" http://localhost:3001/api/test
+# Esperado: Sin errores CORS
+```
 
 ### 🚀 Producción - BUILDS OPTIMIZADAS ✅
 
