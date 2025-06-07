@@ -59,9 +59,8 @@ const corsConfig = getCorsConfig();
 app.use(cors({
   origin: (origin, callback) => {
     // Lista de orígenes permitidos desde configuración
-    const allowedOrigins: string[] = Array.isArray(corsConfig.origin) 
-      ? [...corsConfig.origin] 
-      : [corsConfig.origin];
+    const origins = Array.isArray(corsConfig.origin) ? corsConfig.origin : [corsConfig.origin];
+    const allowedOrigins: string[] = origins.flat().filter(Boolean) as string[];
     
     // Si no hay origin (requests del mismo origin o herramientas como curl), permitir
     if (!origin) {
@@ -168,6 +167,16 @@ app.get('/api/test', (req, res) => {
     timestamp: new Date().toISOString(),
     server: 'Bun + Express',
     status: 'functional'
+  });
+});
+
+// Debug endpoint to check CORS configuration
+app.get('/api/debug/cors', (req, res) => {
+  addLog('info', 'Debug CORS endpoint solicitado');
+  res.json({
+    environment: process.env.NODE_ENV,
+    corsEnvVar: process.env.CORS_ORIGIN,
+    timestamp: new Date().toISOString()
   });
 });
 

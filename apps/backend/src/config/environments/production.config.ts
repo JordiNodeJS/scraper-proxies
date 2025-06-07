@@ -16,9 +16,11 @@ export const productionConfig = {
   // CORS Configuration
   cors: {
     origin: [
-      'http://localhost:3080', // Frontend en Docker
+      'http://localhost:3080', // Frontend en Docker local
       'http://localhost:3800', // Compatibilidad con configuración anterior
-    ],
+      'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3080', // Frontend en AWS
+      process.env.CORS_ORIGIN, // Variable de entorno dinámica
+    ].filter(Boolean), // Filtrar valores undefined/null
     credentials: true,
   },
   
@@ -46,7 +48,7 @@ export const productionConfig = {
   // Production Features
   development: {
     enableHotReload: false,
-    showConfigLogs: false,    // Sin logs de configuración en producción
+    showConfigLogs: true,     // Habilitar logs temporalmente para debug
     enableDetailedErrors: false, // Errores simplificados en producción
   },
 } as const;
