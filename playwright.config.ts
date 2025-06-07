@@ -81,7 +81,7 @@ export default defineConfig({
       timeout: 120 * 1000,
     },
     {
-      command: 'cd apps/backend && bun run dev',
+      command: 'cd apps/backend && PORT=3002 bun run dev',
       port: 3002,
       reuseExistingServer: !process.env.CI,
       timeout: 120 * 1000,

@@ -10,11 +10,18 @@ import LogsConsole from './components/LogsConsole';
 import DarkModeToggle from './components/DarkModeToggle';
 import SSEConnectionIndicator from './components/SSEConnectionIndicator';
 import { useServerEvents } from './hooks/useServerEvents';
+import { getSSEConfig, printFrontendConfig } from './config/env.config';
 
 /**
  * Componente principal de la aplicación
  */
 function App() {
+  // Imprimir configuración en desarrollo
+  printFrontendConfig();
+  
+  // Obtener configuración de SSE desde env.config
+  const sseConfig = getSSEConfig();
+  
   // Initialize SSE connection
   const { 
     connectionState, 
@@ -22,10 +29,11 @@ function App() {
     retryCount,
     lastLog,
     lastScrapingEvent 
-  } = useServerEvents('http://localhost:3002', {
-    autoConnect: true,
-    retryDelay: 3000,
-    maxRetries: 10
+  } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
+    autoConnect: sseConfig.autoConnect,
+    retryDelay: sseConfig.retryDelay,
+    maxRetries: sseConfig.maxRetries,
+    heartbeatTimeout: sseConfig.heartbeatTimeout
   }, {
     onLog: (event) => {
       console.log('📋 [SSE] New log:', event.message);

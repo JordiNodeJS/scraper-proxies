@@ -12,6 +12,23 @@ dist
 dist-ssr
 *.local
 
+# Environment variables
+.env.local
+.env.*.local
+
+# Build outputs and caches
+*.tsbuildinfo
+
+# Testing and coverage
+test-results/
+coverage/
+playwright-report/
+test-results/
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

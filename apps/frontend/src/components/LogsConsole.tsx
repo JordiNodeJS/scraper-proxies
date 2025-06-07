@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useBackendLogs } from '../hooks/useApi';
-import type { BackendLogEntry } from '../services/api';
+// Eliminamos useBackendLogs porque usaremos SSE
+// import { useBackendLogs } from '../hooks/useApi';
+import { useServerEvents } from '../hooks/useServerEvents';
+import type { LogEvent } from '../types/events.types';
+import { getSSEConfig } from '../config/env.config';
 
 interface LogEntry {
   id: string;
@@ -12,14 +15,35 @@ interface LogEntry {
 
 export default function LogsConsole() {
   const [frontendLogs, setFrontendLogs] = useState<LogEntry[]>([]);
+  const [backendLogs, setBackendLogs] = useState<LogEntry[]>([]);
   const [isCollapsed, setIsCollapsed] = useState(true);
-  const [autoScroll, setAutoScroll] = useState(false); // Cambiado: autoscroll desmarcado por defecto
+  const [autoScroll, setAutoScroll] = useState(false);
   const [showBackendLogs, setShowBackendLogs] = useState(true);
   const [showFrontendLogs, setShowFrontendLogs] = useState(true);
   const logsEndRef = useRef<HTMLDivElement>(null);
 
-  // Obtener logs del backend
-  const { data: backendLogsData, isLoading: backendLogsLoading, error: backendLogsError } = useBackendLogs(100);
+  // Usar SSE para logs en tiempo real en lugar de polling
+  const sseConfig = getSSEConfig();
+  const { connectionState, lastLog } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
+    autoConnect: sseConfig.autoConnect,
+    retryDelay: sseConfig.retryDelay,
+    maxRetries: sseConfig.maxRetries,
+    heartbeatTimeout: sseConfig.heartbeatTimeout
+  }, {
+    onLog: (event: LogEvent) => {
+      // Convertir log de SSE al formato interno
+      const newLog: LogEntry = {
+        id: event.id || `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        timestamp: event.timestamp,
+        level: event.level,
+        message: event.message,
+        source: 'backend'
+      };
+      
+      // Agregar log del backend manteniendo solo los últimos 100
+      setBackendLogs(prev => [...prev.slice(-99), newLog]);
+    }
+  });
 
   // Función para agregar un nuevo log del frontend
   const addFrontendLog = (level: LogEntry['level'], message: string) => {
@@ -43,12 +67,8 @@ export default function LogsConsole() {
       combinedLogs.push(...frontendLogs);
     }
     
-    // Agregar logs del backend si están habilitados y disponibles
-    if (showBackendLogs && backendLogsData?.success) {
-      const backendLogs: LogEntry[] = backendLogsData.data.logs.map((log: BackendLogEntry) => ({
-        ...log,
-        source: 'backend' as const
-      }));
+    // Agregar logs del backend si están habilitados
+    if (showBackendLogs) {
       combinedLogs.push(...backendLogs);
     }
     
@@ -110,6 +130,11 @@ export default function LogsConsole() {
     setFrontendLogs([]);
   };
 
+  // Limpiar logs del backend
+  const clearBackendLogs = () => {
+    setBackendLogs([]);
+  };
+
   // Formatear timestamp
   const formatTime = (timestamp: string) => {
     const date = new Date(timestamp);
@@ -149,9 +174,19 @@ export default function LogsConsole() {
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200">
               {allLogs.length} entradas
             </span>
-            {backendLogsLoading && (
+            {connectionState === 'connecting' && (
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200">
-                Cargando backend...
+                Conectando SSE...
+              </span>
+            )}
+            {connectionState === 'connected' && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200">
+                ✅ Tiempo Real
+              </span>
+            )}
+            {connectionState === 'error' && (
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200">
+                ❌ Error SSE
               </span>
             )}
           </div>
@@ -174,14 +209,19 @@ export default function LogsConsole() {
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-200">
             {allLogs.length} entradas
           </span>
-          {backendLogsLoading && (
+          {connectionState === 'connecting' && (
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/50 text-yellow-800 dark:text-yellow-200">
-              🔄 Sincronizando...
+              🔄 Conectando SSE...
             </span>
           )}
-          {backendLogsError && (
+          {connectionState === 'connected' && (
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200">
+              ✅ Tiempo Real Activo
+            </span>
+          )}
+          {connectionState === 'error' && (
             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200">
-              ❌ Error backend
+              ❌ Error Conexión SSE
             </span>
           )}
         </div>
@@ -225,6 +265,13 @@ export default function LogsConsole() {
           </button>
           
           <button
+            onClick={clearBackendLogs}
+            className="px-3 py-1 text-sm bg-red-600 dark:bg-red-700 text-white rounded hover:bg-red-700 dark:hover:bg-red-600 transition-colors"
+          >
+            Limpiar Backend
+          </button>
+          
+          <button
             onClick={() => setIsCollapsed(true)}
             className="px-3 py-1 text-sm bg-gray-600 dark:bg-gray-700 text-white rounded hover:bg-gray-700 dark:hover:bg-gray-600 transition-colors"
           >
@@ -236,7 +283,7 @@ export default function LogsConsole() {
       <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4 max-h-96 overflow-y-auto border dark:border-gray-700">
         {allLogs.length === 0 ? (
           <div className="text-gray-400 dark:text-gray-500 text-center py-8">
-            📋 No hay logs disponibles. Los logs aparecerán aquí en tiempo real.
+            📋 No hay logs disponibles. Los logs aparecerán aquí en tiempo real vía SSE.
           </div>
         ) : (
           <div className="space-y-1">
@@ -265,8 +312,11 @@ export default function LogsConsole() {
 
       {allLogs.length > 0 && (
         <div className="mt-2 text-xs text-gray-500 dark:text-gray-400 text-center">
-          💡 Logs se actualizan automáticamente cada 5 segundos. 
-          Frontend: {frontendLogs.length} | Backend: {backendLogsData?.data?.logs?.length || 0}
+          ⚡ Logs actualizados en tiempo real vía Server-Sent Events. 
+          Frontend: {frontendLogs.length} | Backend: {backendLogs.length}
+          {connectionState === 'connected' && (
+            <span className="text-green-600 dark:text-green-400 ml-2">• SSE Conectado</span>
+          )}
         </div>
       )}
     </div>

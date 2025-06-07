@@ -3,9 +3,9 @@ import cors from 'cors';
 import { scrapingService } from './services/scraping.service.js';
 import { eventManager } from './services/event-manager.service.js';
 import eventsRouter from './routes/events.routes.js';
+import { ENV_CONFIG, printConfig } from './config/env.config.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // Sistema de logs en memoria para el frontend
 interface LogEntry {
@@ -17,7 +17,7 @@ interface LogEntry {
 }
 
 const logs: LogEntry[] = [];
-const MAX_LOGS = 100;
+const MAX_LOGS = ENV_CONFIG.MAX_LOGS;
 
 // Función helper para agregar logs
 const addLog = (level: LogEntry['level'], message: string) => {
@@ -47,8 +47,9 @@ const addLog = (level: LogEntry['level'], message: string) => {
 // CORS Middleware mejorado - Configuración permisiva para desarrollo/producción
 app.use(cors({
   origin: (origin, callback) => {
-    // Lista de orígenes permitidos
+    // Lista de orígenes permitidos (incluye configuración de ENV)
     const allowedOrigins = [
+      ENV_CONFIG.CORS_ORIGIN,     // Configurado en .env
       'http://localhost:5173',    // Frontend desarrollo
       'http://localhost:4173',    // Frontend producción
       'http://localhost:4174',    // Frontend producción (puerto alternativo)
@@ -605,14 +606,18 @@ app.use('*', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  addLog('success', `Backend server running on port ${PORT}`);
-  addLog('info', `Health check: http://localhost:${PORT}/health`);
-  addLog('info', `Test endpoint: http://localhost:${PORT}/api/test`);
-  addLog('info', `Environment: ${process.env.NODE_ENV || 'development'}`);
-  addLog('info', `Stats endpoint: http://localhost:${PORT}/api/stats`);
-  addLog('info', `Config endpoint: http://localhost:${PORT}/api/config`);
-  addLog('info', `Logs endpoint: http://localhost:${PORT}/api/logs`);
+app.listen(ENV_CONFIG.PORT, () => {
+  // Imprimir configuración al inicio
+  printConfig();
+  
+  addLog('success', `Backend server running on port ${ENV_CONFIG.PORT}`);
+  addLog('info', `Health check: http://localhost:${ENV_CONFIG.PORT}/health`);
+  addLog('info', `Test endpoint: http://localhost:${ENV_CONFIG.PORT}/api/test`);
+  addLog('info', `Environment: ${ENV_CONFIG.NODE_ENV}`);
+  addLog('info', `Stats endpoint: http://localhost:${ENV_CONFIG.PORT}/api/stats`);
+  addLog('info', `Config endpoint: http://localhost:${ENV_CONFIG.PORT}/api/config`);
+  addLog('info', `Logs endpoint: http://localhost:${ENV_CONFIG.PORT}/api/logs`);
+  addLog('info', `SSE Stream: http://localhost:${ENV_CONFIG.PORT}/api/events/stream`);
 });
 
 export default app; 
