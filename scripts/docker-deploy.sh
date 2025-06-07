@@ -146,7 +146,7 @@ fi
 
 # Stop existing services
 echo -e "${BLUE}🛑 Deteniendo servicios existentes...${NC}"
-docker compose down --remove-orphans || true
+docker compose down || true
 
 # Build images if requested
 if [[ "$BUILD_IMAGES" = "true" ]]; then
