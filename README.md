@@ -64,6 +64,31 @@ bun install
 bun run build:packages
 ```
 
+### 📝 Configuración de Variables de Entorno
+
+El proyecto incluye archivos `.env.example` para facilitar la configuración:
+
+```bash
+# 🎯 Templates disponibles (solo referencia)
+.env.example                    # Variables globales (opcional)
+apps/frontend/.env.example      # Variables del frontend  
+apps/backend/.env.example       # Variables del backend
+
+# 🚀 Setup rápido para desarrollo
+cp apps/frontend/.env.example apps/frontend/.env
+cp apps/backend/.env.example apps/backend/.env
+
+# ⚡ Nota: El proyecto funciona SIN archivos .env usando defaults inteligentes
+# Solo necesitas configurar variables para producción o personalización
+```
+
+**📋 Variables más importantes:**
+- `VITE_API_URL`: URL del backend (solo para producción)
+- `PORT`: Puerto del backend (default: 3001)
+- `CORS_ORIGIN`: URL del frontend permitida
+
+📖 **Documentación completa**: [docs/ENV-CONFIGURATION.md](docs/ENV-CONFIGURATION.md)
+
 ### 🛠️ Desarrollo Local - VERIFICADO Y FUNCIONAL ✅
 
 #### 🚀 Opción 1: Arranque Concurrente (Recomendado)

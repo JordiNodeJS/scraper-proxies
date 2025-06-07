@@ -24,7 +24,7 @@ export default function LogsConsole() {
 
   // Usar SSE para logs en tiempo real en lugar de polling
   const sseConfig = getSSEConfig();
-  const { connectionState, lastLog } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
+  const { connectionState } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
     autoConnect: sseConfig.autoConnect,
     retryDelay: sseConfig.retryDelay,
     maxRetries: sseConfig.maxRetries,

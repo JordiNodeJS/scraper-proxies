@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiService } from '../services/api';
-import type { ScrapeConfig, ValidationConfig, Proxy } from '../types/api.types';
+import type { ScrapeConfig, ValidationConfig } from '../types/api.types';
 
 // Query keys para React Query
 export const QUERY_KEYS = {

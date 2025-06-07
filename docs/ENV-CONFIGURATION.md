@@ -1,6 +1,88 @@
-# Configuración de Variables de Entorno
+# 📝 Configuración de Variables de Entorno
 
-Este documento explica cómo configurar y usar las variables de entorno en el proyecto Scraper Proxies.
+## 🎯 Archivo de Referencia para Variables de Entorno
+
+Este documento explica todas las variables de entorno disponibles en el proyecto Scraper de Proxies.
+
+### 📁 Estructura de Archivos .env
+
+```bash
+# Archivos de ejemplo (para referencia)
+.env.example                    # Variables globales (opcional)
+apps/frontend/.env.example      # Variables del frontend  
+apps/backend/.env.example       # Variables del backend
+
+# Archivos reales (crear según necesidad)
+apps/frontend/.env              # Frontend desarrollo
+apps/frontend/.env.production   # Frontend producción
+apps/backend/.env               # Backend desarrollo  
+apps/backend/.env.production    # Backend producción
+```
+
+### 🚀 Setup Rápido
+
+#### Para Desarrollo Local:
+
+```bash
+# 1. Copiar templates
+cp apps/frontend/.env.example apps/frontend/.env
+cp apps/backend/.env.example apps/backend/.env
+
+# 2. Editar si es necesario (opcional - funciona con defaults)
+# Las configuraciones por defecto están optimizadas para desarrollo
+```
+
+#### Para Producción:
+
+```bash
+# 1. Copiar y renombrar
+cp apps/frontend/.env.example apps/frontend/.env.production
+cp apps/backend/.env.example apps/backend/.env.production
+
+# 2. Configurar URLs de producción
+# Editar VITE_API_URL en frontend/.env.production
+# Editar CORS_ORIGIN en backend/.env.production
+```
+
+### 🔧 Variables Más Importantes
+
+#### Frontend (apps/frontend/.env):
+- `VITE_API_URL`: URL del backend (solo para producción)
+- `VITE_ENABLE_DEVTOOLS`: React Query DevTools
+- `VITE_QUERY_STALE_TIME`: Cache de datos
+
+#### Backend (apps/backend/.env):
+- `PORT`: Puerto del servidor (default: 3001)
+- `CORS_ORIGIN`: URL del frontend permitida
+- `SCRAPING_DELAY`: Delay entre requests
+- `MAX_CONCURRENT_VALIDATIONS`: Validaciones simultáneas
+
+### 🌍 Variables Opcionales
+
+Las variables en `.env.example` del root son **OPCIONALES** y solo útiles para:
+- Docker Compose
+- Scripts globales
+- CI/CD pipelines
+- Herramientas de monitoreo
+
+### 🔐 Seguridad
+
+- ✅ Archivos `.env.example` están en Git (documentación)
+- ❌ Archivos `.env` y `.env.production` están en `.gitignore`
+- 🔒 Nunca commitear variables sensibles
+
+### 🎯 Notas Importantes
+
+1. **Desarrollo**: El proyecto funciona sin archivos `.env` (tiene defaults inteligentes)
+2. **Producción**: Solo necesitas configurar `VITE_API_URL` y `CORS_ORIGIN`  
+3. **Docker**: Usa variables del `.env.example` root si es necesario
+4. **Testing**: Variables de testing están incluidas para futura expansión
+
+### 🔗 Referencias
+
+- [Vite Environment Variables](https://vitejs.dev/guide/env-and-mode.html)
+- [Bun Environment Variables](https://bun.sh/docs/runtime/env)
+- [Docker Compose Environment](https://docs.docker.com/compose/environment-variables/)
 
 ## 📁 Estructura de Configuración
 

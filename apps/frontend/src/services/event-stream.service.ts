@@ -199,7 +199,7 @@ class EventStreamService {
         this.resetHeartbeatMonitor();
         break;
       default:
-        console.warn('Unknown event type:', event.type);
+        console.warn('Unknown event type:', (event as any).type);
     }
   }
 

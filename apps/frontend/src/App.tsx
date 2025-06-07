@@ -26,9 +26,7 @@ function App() {
   const { 
     connectionState, 
     isConnected, 
-    retryCount,
-    lastLog,
-    lastScrapingEvent 
+    retryCount
   } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
     autoConnect: sseConfig.autoConnect,
     retryDelay: sseConfig.retryDelay,

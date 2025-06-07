@@ -1,7 +1,7 @@
 import { useSystemStatus } from '../hooks/useApi';
 
 export default function SystemStatus() {
-  const { serverHealth, isHealthy, isConnected, healthData, testData, refetchTest } = useSystemStatus();
+  const { serverHealth, healthData, testData, refetchTest } = useSystemStatus();
 
   if (serverHealth.isLoading) {
     return (
@@ -14,21 +14,7 @@ export default function SystemStatus() {
     );
   }
 
-  // Función para obtener el color del estado
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'healthy':
-        return 'green';
-      case 'degraded':
-        return 'yellow';
-      case 'down':
-        return 'red';
-      default:
-        return 'gray';
-    }
-  };
 
-  const statusColor = getStatusColor(serverHealth.status);
 
   return (
     <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 rounded-xl p-6 mb-6 shadow-sm transition-colors duration-300">
