@@ -34,14 +34,14 @@ docker compose ps
 ┌─────────────┐    ┌─────────────┐
 │  Frontend   │    │   Backend   │
 │   (nginx)   │◄──►│ (bun+express)│
-│   :3000     │    │   :3001     │
+│   :3800     │    │   :3801     │
 └─────────────┘    └─────────────┘
 ```
 
 | Servicio | Puerto | Descripción | Health Check |
 |----------|--------|-------------|--------------|
-| **Frontend** | 3000 | React + nginx | ✅ |
-| **Backend** | 3001 | Bun + Express + Playwright | ✅ |
+| **Frontend** | 3800 | React + nginx | ✅ |
+| **Backend** | 3801 | Bun + Express + Playwright | ✅ |
 
 ---
 
@@ -83,8 +83,8 @@ docker compose restart backend
 ### **🔍 Monitoreo**
 ```bash
 # Health checks manuales
-curl http://localhost:3000/health  # Frontend
-curl http://localhost:3001/health  # Backend
+curl http://localhost:3800/health  # Frontend
+curl http://localhost:3801/health  # Backend
 
 # Logs específicos
 docker logs proxy-scraper-frontend
@@ -98,11 +98,11 @@ docker stats
 
 ## 🌐 **URLs de Acceso**
 
-- **Frontend**: `http://localhost:3000`
-- **Backend API**: `http://localhost:3001`
+- **Frontend**: `http://localhost:3800`
+- **Backend API**: `http://localhost:3801`
 - **Health Checks**: 
-  - Frontend: `http://localhost:3000/health`
-  - Backend: `http://localhost:3001/health`
+  - Frontend: `http://localhost:3800/health`
+  - Backend: `http://localhost:3801/health`
 
 ---
 
@@ -114,10 +114,10 @@ Archivo `.env` (se crea automáticamente desde `.env.example`):
 # Backend
 NODE_ENV=production
 PORT=3001
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:3800
 
 # Frontend
-VITE_API_URL=http://localhost:3001
+VITE_API_URL=http://localhost:3801
 ```
 
 ### **Volúmenes Persistentes**
@@ -172,7 +172,7 @@ docker compose up -d --build
 #### **3. Health Checks Fallan**
 ```bash
 # Verificar manualmente
-curl -v http://localhost:3001/health
+curl -v http://localhost:3801/health
 
 # Reiniciar servicio específico
 docker compose restart backend

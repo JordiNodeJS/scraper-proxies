@@ -478,8 +478,8 @@ Sistema de validación de proxies en sitios reales:
 ```
 
 **URLs de acceso:**
-- Frontend: http://localhost:3000
-- Backend: http://localhost:3001
+- Frontend: http://localhost:3800
+- Backend: http://localhost:3801
 
 **Comandos útiles:**
 
@@ -665,8 +665,8 @@ docker compose ps
 ```
 
 **URLs de producción:**
-- Frontend: http://your-server:3000
-- Backend API: http://your-server:3001
+- Frontend: http://your-server:3800
+- Backend API: http://your-server:3801
 
 **Comandos de mantenimiento:**
 

@@ -34,8 +34,8 @@ La dockerización completa del MVP Proxy Scraper ha sido implementada con **éxi
 ```bash
 # Estado actual verificado
 NAME                     STATUS                    PORTS
-proxy-scraper-backend    Up (healthy)             0.0.0.0:3001->3001/tcp
-proxy-scraper-frontend   Up (healthy)             0.0.0.0:3000->80/tcp  
+proxy-scraper-backend    Up (healthy)             0.0.0.0:3801->3001/tcp
+proxy-scraper-frontend   Up (healthy)             0.0.0.0:3800->80/tcp  
 ```
 
 ### 🔧 **Scripts Automatizados Creados**
@@ -111,8 +111,8 @@ docker compose ps
 docker compose logs -f
 
 # Health checks
-curl http://localhost:3000/health  # Frontend
-curl http://localhost:3001/health  # Backend
+curl http://localhost:3800/health  # Frontend
+curl http://localhost:3801/health  # Backend
 ```
 
 ### **🧹 Mantenimiento**

@@ -201,8 +201,8 @@ docker compose ps
 
 echo ""
 echo -e "${BLUE}📋 URLs de acceso:${NC}"
-echo -e "   Frontend: ${GREEN}http://localhost:3000${NC}"
-echo -e "   Backend:  ${GREEN}http://localhost:3001${NC}"
+echo -e "   Frontend: ${GREEN}http://localhost:3800${NC}"
+echo -e "   Backend:  ${GREEN}http://localhost:3801${NC}"
 
 echo ""
 echo -e "${YELLOW}💡 Comandos útiles:${NC}"

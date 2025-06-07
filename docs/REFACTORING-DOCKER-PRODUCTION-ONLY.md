@@ -97,7 +97,7 @@ bun run dev  # Frontend: 5173, Backend: 3001
 ```bash
 # Usar Docker para validar producción
 ./scripts/docker-deploy.sh --build
-# Frontend: 3000, Backend: 3001
+# Frontend: 3800, Backend: 3801
 ```
 
 ### **Para Producción**
@@ -114,7 +114,7 @@ bun run dev  # Frontend: 5173, Backend: 3001
 |---------|-------|---------|--------|
 | **Archivos Docker** | 2 compose files | 1 compose file | -50% |
 | **Scripts args** | `--env prod\|dev` | Solo producción | -100% complejidad |
-| **Puertos** | 3000,3001,5173 | 3000,3001 | -33% |
+| **Puertos** | 3000,3001,5173 | 3800,3801 | -33% |
 | **Documentación** | Múltiples modos | Enfoque único | +100% claridad |
 | **Learning curve** | Compleja | Simple | +200% facilidad |
 | **Maintenance** | Alta | Baja | +150% eficiencia |
@@ -181,8 +181,8 @@ docker compose logs -f
 docker compose down
 
 # ✅ URLs accesibles
-curl http://localhost:3000  # Frontend
-curl http://localhost:3001/health  # Backend
+curl http://localhost:3800  # Frontend
+curl http://localhost:3801/health  # Backend
 ```
 
 ### **Funcionalidades Validadas**
