@@ -8,8 +8,8 @@ git pull
 echo "🛑 Deteniendo servicios..."
 docker compose -f docker-compose.aws.yml down
 
-echo "🔨 Reconstruyendo frontend con configuración TypeScript..."
-docker compose -f docker-compose.aws.yml build --no-cache frontend
+echo "🔨 Reconstruyendo backend con configuración CORS actualizada..."
+docker compose -f docker-compose.aws.yml build --no-cache backend
 
 echo "🚀 Iniciando servicios..."
 docker compose -f docker-compose.aws.yml up -d
