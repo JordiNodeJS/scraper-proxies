@@ -3,7 +3,6 @@ import { useState, useEffect, useRef } from 'react';
 // import { useBackendLogs } from '../hooks/useApi';
 import { useServerEvents } from '../hooks/useServerEvents';
 import type { LogEvent } from '../types/events.types';
-import { getSSEConfig } from '../config/env.config';
 
 interface LogEntry {
   id: string;
@@ -23,12 +22,8 @@ export default function LogsConsole() {
   const logsEndRef = useRef<HTMLDivElement>(null);
 
   // Usar SSE para logs en tiempo real en lugar de polling
-  const sseConfig = getSSEConfig();
-  const { connectionState } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
-    autoConnect: sseConfig.autoConnect,
-    retryDelay: sseConfig.retryDelay,
-    maxRetries: sseConfig.maxRetries,
-    heartbeatTimeout: sseConfig.heartbeatTimeout
+  const { connectionState } = useServerEvents({
+    autoConnect: true
   }, {
     onLog: (event: LogEvent) => {
       // Convertir log de SSE al formato interno

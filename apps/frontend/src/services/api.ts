@@ -1,20 +1,8 @@
 import type { ProxyResponse, HealthResponse, TestResponse } from '../types/api.types';
+import { getApiUrls, printAppConfig } from '../config/app.config';
 
-// Configuración base del API
-// En desarrollo SIEMPRE usa el proxy de Vite (cadena vacía)
-// En producción usa VITE_API_URL o fallback
-const API_BASE_URL = import.meta.env.DEV 
-  ? '' // En desarrollo, usar proxy de Vite
-  : (import.meta.env.VITE_API_URL || 'http://localhost:3001'); // En producción, usar URL completa
-
-// Log de configuración para debugging
-console.log(`🔧 API Service configurado:`, {
-  mode: import.meta.env.MODE,
-  isDev: import.meta.env.DEV,
-  viteApiUrl: import.meta.env.VITE_API_URL,
-  finalApiBaseUrl: API_BASE_URL,
-  strategy: import.meta.env.DEV ? 'Vite Proxy' : 'Direct URL'
-});
+// Inicializar configuración y mostrar logs si está habilitado
+printAppConfig();
 
 // Tipo para los logs del backend
 export interface BackendLogEntry {
@@ -36,8 +24,13 @@ export interface LogsResponse {
 }
 
 class ApiService {
+  private getUrls() {
+    return getApiUrls();
+  }
+
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const url = `${API_BASE_URL}${endpoint}`;
+    const urls = this.getUrls();
+    const url = `${urls.base}${endpoint}`;
     
     console.log(`🌐 API Request: ${options?.method || 'GET'} ${url}`);
     

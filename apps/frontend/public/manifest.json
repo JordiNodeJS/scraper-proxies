@@ -1,0 +1,30 @@
+{
+    "name": "Scraper Proxies MVP",
+    "short_name": "Scraper Proxies",
+    "description": "Extracción y validación de proxies en tiempo real",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#3b82f6",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/favicon.ico",
+            "sizes": "32x32",
+            "type": "image/x-icon"
+        }
+    ],
+    "categories": [
+        "productivity",
+        "utilities",
+        "developer"
+    ],
+    "lang": "es",
+    "dir": "ltr"
+}
