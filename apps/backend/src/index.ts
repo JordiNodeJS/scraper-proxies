@@ -1,9 +1,11 @@
 import express from 'express';
 import cors from 'cors';
 import { scrapingService } from './services/scraping.service.js';
+import { eventManager } from './services/event-manager.service.js';
+import eventsRouter from './routes/events.routes.js';
+import { ENV_CONFIG, printConfig } from './config/env.config.js';
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // Sistema de logs en memoria para el frontend
 interface LogEntry {
@@ -15,7 +17,7 @@ interface LogEntry {
 }
 
 const logs: LogEntry[] = [];
-const MAX_LOGS = 100;
+const MAX_LOGS = ENV_CONFIG.MAX_LOGS;
 
 // Función helper para agregar logs
 const addLog = (level: LogEntry['level'], message: string) => {
@@ -37,13 +39,17 @@ const addLog = (level: LogEntry['level'], message: string) => {
   // También hacer console.log para la consola del servidor
   const emoji = level === 'error' ? '❌' : level === 'warning' ? '⚠️' : level === 'success' ? '✅' : '📋';
   console.log(`${emoji} [${level.toUpperCase()}] ${message}`);
+  
+  // Emit SSE event to all connected clients
+  eventManager.emitLogEvent(level, message);
 };
 
 // CORS Middleware mejorado - Configuración permisiva para desarrollo/producción
 app.use(cors({
   origin: (origin, callback) => {
-    // Lista de orígenes permitidos
+    // Lista de orígenes permitidos (incluye configuración de ENV)
     const allowedOrigins = [
+      ENV_CONFIG.CORS_ORIGIN,     // Configurado en .env
       'http://localhost:5173',    // Frontend desarrollo
       'http://localhost:4173',    // Frontend producción
       'http://localhost:4174',    // Frontend producción (puerto alternativo)
@@ -121,6 +127,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Mount SSE routes
+app.use('/api/events', eventsRouter);
+
 // Health check
 app.get('/health', (req, res) => {
   addLog('info', 'Health check solicitado');
@@ -193,12 +202,18 @@ app.post('/api/scrape/test', (req, res) => {
 app.post('/api/scrape/real', async (req, res) => {
   addLog('info', 'Iniciando scraping real de proxies...');
   
+  // Emit scraping start event
+  eventManager.emitScrapingEvent(0, 0, 'initialization', 'started');
+  
   try {
     // Establecer timeout más corto para evitar requests colgados
     req.setTimeout(90000); // 90 segundos (1.5 minutos)
     
     const startTime = Date.now();
     addLog('info', 'Llamando al servicio de scraping...');
+    
+    // Emit progress event
+    eventManager.emitScrapingEvent(10, 0, 'proxy-service', 'progress');
     
     // Crear una Promise con timeout personalizado
     const scrapingPromise = scrapingService.scrapeProxies();
@@ -227,6 +242,9 @@ app.post('/api/scrape/real', async (req, res) => {
     }));
 
     addLog('success', `Scraping real completado: ${formattedProxies.length} proxies en ${(endTime - startTime) / 1000}s`);
+    
+    // Emit scraping completion event
+    eventManager.emitScrapingEvent(100, formattedProxies.length, result.source?.name || 'proxy-list-download', 'completed');
 
     res.json({
       success: true,
@@ -245,6 +263,9 @@ app.post('/api/scrape/real', async (req, res) => {
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     addLog('error', `Error en scraping real: ${errorMessage}`);
+    
+    // Emit scraping error event
+    eventManager.emitScrapingEvent(0, 0, 'error-handling', 'error', errorMessage);
     
     // Responder con error pero también incluir datos mock como fallback
     res.status(200).json({
@@ -585,14 +606,18 @@ app.use('*', (req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  addLog('success', `Backend server running on port ${PORT}`);
-  addLog('info', `Health check: http://localhost:${PORT}/health`);
-  addLog('info', `Test endpoint: http://localhost:${PORT}/api/test`);
-  addLog('info', `Environment: ${process.env.NODE_ENV || 'development'}`);
-  addLog('info', `Stats endpoint: http://localhost:${PORT}/api/stats`);
-  addLog('info', `Config endpoint: http://localhost:${PORT}/api/config`);
-  addLog('info', `Logs endpoint: http://localhost:${PORT}/api/logs`);
+app.listen(ENV_CONFIG.PORT, () => {
+  // Imprimir configuración al inicio
+  printConfig();
+  
+  addLog('success', `Backend server running on port ${ENV_CONFIG.PORT}`);
+  addLog('info', `Health check: http://localhost:${ENV_CONFIG.PORT}/health`);
+  addLog('info', `Test endpoint: http://localhost:${ENV_CONFIG.PORT}/api/test`);
+  addLog('info', `Environment: ${ENV_CONFIG.NODE_ENV}`);
+  addLog('info', `Stats endpoint: http://localhost:${ENV_CONFIG.PORT}/api/stats`);
+  addLog('info', `Config endpoint: http://localhost:${ENV_CONFIG.PORT}/api/config`);
+  addLog('info', `Logs endpoint: http://localhost:${ENV_CONFIG.PORT}/api/logs`);
+  addLog('info', `SSE Stream: http://localhost:${ENV_CONFIG.PORT}/api/events/stream`);
 });
 
 export default app; 
