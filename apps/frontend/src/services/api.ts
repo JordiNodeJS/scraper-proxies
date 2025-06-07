@@ -1,9 +1,20 @@
 import type { ProxyResponse, HealthResponse, TestResponse } from '../types/api.types';
 
 // Configuración base del API
-// En desarrollo usa el proxy de Vite, en producción usa la URL completa
-const API_BASE_URL = import.meta.env.VITE_API_URL || 
-  (import.meta.env.DEV ? '' : 'http://localhost:3001');
+// En desarrollo SIEMPRE usa el proxy de Vite (cadena vacía)
+// En producción usa VITE_API_URL o fallback
+const API_BASE_URL = import.meta.env.DEV 
+  ? '' // En desarrollo, usar proxy de Vite
+  : (import.meta.env.VITE_API_URL || 'http://localhost:3001'); // En producción, usar URL completa
+
+// Log de configuración para debugging
+console.log(`🔧 API Service configurado:`, {
+  mode: import.meta.env.MODE,
+  isDev: import.meta.env.DEV,
+  viteApiUrl: import.meta.env.VITE_API_URL,
+  finalApiBaseUrl: API_BASE_URL,
+  strategy: import.meta.env.DEV ? 'Vite Proxy' : 'Direct URL'
+});
 
 // Tipo para los logs del backend
 export interface BackendLogEntry {

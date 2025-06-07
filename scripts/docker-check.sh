@@ -181,7 +181,7 @@ echo ""
 # Port Availability Check
 echo -e "${YELLOW}🔌 Verificando Puertos...${NC}"
 
-ports_to_check=(3800 3801)
+ports_to_check=(3080 3081)
 ports_ok=true
 
 for port in "${ports_to_check[@]}"; do
