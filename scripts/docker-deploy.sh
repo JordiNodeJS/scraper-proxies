@@ -13,7 +13,6 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Default values
-ENVIRONMENT="prod"
 BUILD_IMAGES="false"
 ROLLBACK="false"
 DETACHED="true"
@@ -21,10 +20,6 @@ DETACHED="true"
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --env)
-            ENVIRONMENT="$2"
-            shift 2
-            ;;
         --build)
             BUILD_IMAGES="true"
             shift
@@ -38,10 +33,9 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         -h|--help)
-            echo "Uso: $0 [--env prod|dev] [--build] [--rollback] [--foreground]"
-            echo "  --env      Entorno: prod o dev (default: prod)"
-            echo "  --build    Build imágenes antes de deploy"
-            echo "  --rollback Rollback al último deployment"
+            echo "Uso: $0 [--build] [--rollback] [--foreground]"
+            echo "  --build      Build imágenes antes de deploy"
+            echo "  --rollback   Rollback al último deployment"
             echo "  --foreground Ejecutar en foreground (no -d)"
             exit 0
             ;;
@@ -55,11 +49,7 @@ done
 echo -e "${BLUE}🚀 MVP Proxy Scraper - Deployment Script${NC}"
 echo -e "${BLUE}═══════════════════════════════════════════${NC}"
 
-# Verify environment
-if [[ "$ENVIRONMENT" != "prod" && "$ENVIRONMENT" != "dev" ]]; then
-    echo -e "${RED}❌ Environment debe ser 'prod' o 'dev'${NC}"
-    exit 1
-fi
+# Production only deployment
 
 # Check if .env file exists
 if [[ ! -f ".env" ]]; then
@@ -134,7 +124,7 @@ if [[ "$ROLLBACK" = "true" ]]; then
 fi
 
 echo -e "${YELLOW}📋 Configuración de Deployment:${NC}"
-echo -e "   Entorno: ${ENVIRONMENT}"
+echo -e "   Entorno: production"
 echo -e "   Build: ${BUILD_IMAGES}"
 echo -e "   Directorio: $(pwd)"
 echo ""
@@ -161,20 +151,16 @@ docker compose down --remove-orphans || true
 # Build images if requested
 if [[ "$BUILD_IMAGES" = "true" ]]; then
     echo -e "${BLUE}🔨 Building imágenes...${NC}"
-    ./scripts/docker-build.sh --${ENVIRONMENT}
+    ./scripts/docker-build.sh
 fi
 
 # Create backup
 backup_deployment
 
 # Start deployment
-echo -e "${BLUE}🚀 Iniciando deployment (${ENVIRONMENT})...${NC}"
+echo -e "${BLUE}🚀 Iniciando deployment (production)...${NC}"
 
-if [[ "$ENVIRONMENT" = "dev" ]]; then
-    compose_files="-f docker-compose.yml -f docker-compose.dev.yml"
-else
-    compose_files="-f docker-compose.yml"
-fi
+compose_files="-f docker-compose.yml"
 
 if [[ "$DETACHED" = "true" ]]; then
     detach_flag="-d"
@@ -197,7 +183,7 @@ if [[ "$DETACHED" = "true" ]]; then
     sleep 10  # Wait for initial startup
     
     # Check each service
-    for service in backend frontend redis; do
+    for service in backend frontend; do
         if ! check_health $service; then
             echo -e "${RED}❌ Deployment falló en health check${NC}"
             echo -e "${YELLOW}📋 Logs del servicio ${service}:${NC}"
@@ -215,14 +201,8 @@ docker compose ps
 
 echo ""
 echo -e "${BLUE}📋 URLs de acceso:${NC}"
-if [[ "$ENVIRONMENT" = "dev" ]]; then
-    echo -e "   Frontend: ${GREEN}http://localhost:5173${NC}"
-    echo -e "   Backend:  ${GREEN}http://localhost:3001${NC}"
-else
-    echo -e "   Frontend: ${GREEN}http://localhost:3000${NC}"
-    echo -e "   Backend:  ${GREEN}http://localhost:3001${NC}"
-fi
-echo -e "   Redis:    ${GREEN}localhost:6379${NC}"
+echo -e "   Frontend: ${GREEN}http://localhost:3000${NC}"
+echo -e "   Backend:  ${GREEN}http://localhost:3001${NC}"
 
 echo ""
 echo -e "${YELLOW}💡 Comandos útiles:${NC}"

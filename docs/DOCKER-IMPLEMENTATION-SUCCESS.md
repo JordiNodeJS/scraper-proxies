@@ -16,7 +16,6 @@ La dockerización completa del MVP Proxy Scraper ha sido implementada con **éxi
 |------------|-------------|--------------|-------------|
 | **Frontend** | `node:20-alpine` → `nginx:alpine` | **74.2MB** | React 19 + Vite + nginx |
 | **Backend** | `oven/bun:1-alpine` | **1.31GB** | Bun + Express + Playwright |
-| **Redis** | `redis:7-alpine` | **~50MB** | Cache + Session storage |
 
 ### ⚡ **MÉTRICAS DE PERFORMANCE**
 
@@ -37,7 +36,6 @@ La dockerización completa del MVP Proxy Scraper ha sido implementada con **éxi
 NAME                     STATUS                    PORTS
 proxy-scraper-backend    Up (healthy)             0.0.0.0:3001->3001/tcp
 proxy-scraper-frontend   Up (healthy)             0.0.0.0:3000->80/tcp  
-proxy-scraper-redis      Up (healthy)             0.0.0.0:6379->6379/tcp
 ```
 
 ### 🔧 **Scripts Automatizados Creados**
@@ -78,7 +76,7 @@ proxy-scraper-redis      Up (healthy)             0.0.0.0:6379->6379/tcp
 - **Exposición**: Solo puertos necesarios expuestos
 
 ### 💾 **Persistencia**
-- **Volúmenes**: `redis_data`, `backend_logs`
+- **Volúmenes**: `backend_logs`
 - **Backup**: Sistema automático de backups
 - **Recovery**: Rollback procedures implementados
 
@@ -93,14 +91,15 @@ proxy-scraper-redis      Up (healthy)             0.0.0.0:6379->6379/tcp
 
 ### **🚀 Inicio Rápido**
 ```bash
-# Opción 1: Deploy completo
+# Opción 1: Deploy completo automatizado
 ./scripts/docker-deploy.sh --build
 
 # Opción 2: Solo compose
 docker compose up -d
 
-# Opción 3: Desarrollo
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+# Opción 3: Build manual + compose
+./scripts/docker-build.sh
+docker compose up -d
 ```
 
 ### **📊 Monitoreo**
@@ -119,7 +118,7 @@ curl http://localhost:3001/health  # Backend
 ### **🧹 Mantenimiento**
 ```bash
 # Limpieza completa
-./scripts/docker-cleanup.sh --all
+./scripts/docker-cleanup.sh --all --volumes
 
 # Verificación sistema
 ./scripts/docker-check.sh
@@ -132,11 +131,11 @@ curl http://localhost:3001/health  # Backend
 
 ## 📈 **BENEFICIOS OBTENIDOS**
 
-### **🎯 Para Desarrollo**
-- ✅ **Environment consistency**: Mismo ambiente dev/prod
+### **🎯 Para Desarrollo Local**
+- ✅ **Environment consistency**: Mismo ambiente que producción
 - ✅ **Quick setup**: Setup en 12 segundos
-- ✅ **Hot reload**: Soporte completo para desarrollo
 - ✅ **Isolation**: Dependencias containerizadas
+- ✅ **Production-ready**: Testing en ambiente real
 
 ### **🚀 Para Producción**
 - ✅ **Scalability**: Fácil horizontal scaling

@@ -32,9 +32,6 @@ services:
     volumes:
       # Solo para logs persistentes
       - backend_logs:/app/logs
-    depends_on:
-      - redis
-
   # ===== FRONTEND SERVICE =====
   frontend:
     build:
@@ -60,31 +57,9 @@ services:
       backend:
         condition: service_healthy
 
-  # ===== REDIS CACHE =====
-  redis:
-    image: redis:7-alpine
-    container_name: proxy-scraper-redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
-    networks:
-      - proxy-scraper-network
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
-    volumes:
-      - redis_data:/data
-    sysctls:
-      - net.core.somaxconn=1024
-
-  # ===== DEVELOPMENT OVERRIDE (opcional) =====
-  # Usar: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+  # ===== PRODUCTION ONLY =====
+  # Uso: docker compose up -d
 
 volumes:
-  redis_data:
-    driver: local
   backend_logs:
     driver: local 

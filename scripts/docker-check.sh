@@ -131,7 +131,6 @@ files_ok=true
 
 project_files=(
     "docker-compose.yml:Docker Compose principal"
-    "docker-compose.dev.yml:Docker Compose desarrollo"
     "Dockerfile:Backend Dockerfile"
     "apps/frontend/Dockerfile:Frontend Dockerfile" 
     "apps/frontend/nginx.conf:Nginx config"
@@ -182,19 +181,30 @@ echo ""
 # Port Availability Check
 echo -e "${YELLOW}🔌 Verificando Puertos...${NC}"
 
-ports_to_check=(3000 3001 5173 6379)
+ports_to_check=(3000 3001)
 ports_ok=true
 
 for port in "${ports_to_check[@]}"; do
-    if command -v netstat >/dev/null 2>&1; then
-        if netstat -tuln | grep ":$port " >/dev/null 2>&1; then
+    # Check if running on Windows (Git Bash/MINGW)
+    if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "win32" || "$MSYSTEM" == "MINGW64" ]]; then
+        # Windows netstat command
+        if netstat -an 2>/dev/null | grep ":$port " >/dev/null 2>&1; then
+            echo -e "  🔌 Puerto $port: ${RED}❌ Ocupado${NC}"
+            ports_ok=false
+        else
+            echo -e "  🔌 Puerto $port: ${GREEN}✅ Disponible${NC}"
+        fi
+    elif command -v netstat >/dev/null 2>&1; then
+        # Linux/macOS netstat command
+        if netstat -tuln 2>/dev/null | grep ":$port " >/dev/null 2>&1; then
             echo -e "  🔌 Puerto $port: ${RED}❌ Ocupado${NC}"
             ports_ok=false
         else
             echo -e "  🔌 Puerto $port: ${GREEN}✅ Disponible${NC}"
         fi
     elif command -v ss >/dev/null 2>&1; then
-        if ss -tuln | grep ":$port " >/dev/null 2>&1; then
+        # Alternative with ss command
+        if ss -tuln 2>/dev/null | grep ":$port " >/dev/null 2>&1; then
             echo -e "  🔌 Puerto $port: ${RED}❌ Ocupado${NC}"
             ports_ok=false
         else
@@ -246,9 +256,9 @@ if [[ "$overall_status" = "true" ]]; then
     echo -e "${GREEN}🎉 Sistema listo para Docker deployment!${NC}"
     echo ""
     echo -e "${YELLOW}💡 Próximos pasos recomendados:${NC}"
-    echo -e "   1. ${GREEN}./scripts/docker-build.sh --prod${NC}"
-    echo -e "   2. ${GREEN}./scripts/docker-deploy.sh --build${NC}"
-    echo -e "   3. ${GREEN}docker compose ps${NC}"
+    echo -e "   1. ${GREEN}./scripts/docker-build.sh${NC}"
+    echo -e "   2. ${GREEN}./scripts/docker-deploy.sh${NC}"
+    echo -e "   3. ${GREEN}docker compose up -d${NC}"
 else
     echo -e "${RED}❌ Sistema NO está listo para deployment${NC}"
     echo ""

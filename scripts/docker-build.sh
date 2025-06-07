@@ -13,21 +13,13 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-BUILD_MODE="prod"
+BUILD_MODE="production"
 NO_CACHE=""
 VERBOSE=""
 
 # Parse arguments
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --dev)
-            BUILD_MODE="dev"
-            shift
-            ;;
-        --prod)
-            BUILD_MODE="prod"
-            shift
-            ;;
         --no-cache)
             NO_CACHE="--no-cache"
             shift
@@ -37,9 +29,7 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         -h|--help)
-            echo "Uso: $0 [--prod|--dev] [--no-cache] [--verbose]"
-            echo "  --prod     Build para producción (default)"
-            echo "  --dev      Build para desarrollo"
+            echo "Uso: $0 [--no-cache] [--verbose]"
             echo "  --no-cache No usar cache de Docker"
             echo "  --verbose  Output detallado"
             exit 0
@@ -76,11 +66,7 @@ build_service() {
     
     echo -e "${BLUE}🔨 Building ${service}...${NC}"
     
-    local build_cmd="docker build ${NO_CACHE} ${VERBOSE} -t proxy-scraper-${service}:latest"
-    
-    if [ "$BUILD_MODE" = "prod" ]; then
-        build_cmd="${build_cmd} --target production"
-    fi
+    local build_cmd="docker build ${NO_CACHE} ${VERBOSE} -t proxy-scraper-${service}:latest --target production"
     
     build_cmd="${build_cmd} -f ${dockerfile} ${context}"
     
@@ -123,7 +109,7 @@ docker images | grep proxy-scraper
 
 echo ""
 echo -e "${YELLOW}💡 Próximos pasos:${NC}"
-echo -e "   🐳 Ejecutar stack completo: ${GREEN}docker compose up${NC}"
-echo -e "   🔧 Modo desarrollo: ${GREEN}docker compose -f docker-compose.yml -f docker-compose.dev.yml up${NC}"
+echo -e "   🐳 Ejecutar stack completo: ${GREEN}docker compose up -d${NC}"
 echo -e "   📊 Ver logs: ${GREEN}docker compose logs -f${NC}"
+echo -e "   🔍 Estado: ${GREEN}docker compose ps${NC}"
 echo -e "   🧹 Limpiar: ${GREEN}./scripts/docker-cleanup.sh${NC}" 
