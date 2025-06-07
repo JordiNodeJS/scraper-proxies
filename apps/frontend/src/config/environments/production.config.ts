@@ -9,7 +9,7 @@ export const productionConfig = {
   
   // API Configuration
   api: {
-    baseUrl: 'http://localhost:3081', // URL completa para producción
+    baseUrl: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081', // URL completa para AWS
     timeout: 30000, // 30 segundos
   },
   
@@ -43,9 +43,9 @@ export const productionConfig = {
   
   // URLs dinámicas (calculadas automáticamente)
   urls: {
-    frontend: 'http://localhost:3080',
-    backend: 'http://localhost:3081',
-    api: 'http://localhost:3081/api', // URL completa para producción
+    frontend: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3080',
+    backend: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081',
+    api: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081/api', // URL completa para AWS
   },
 } as const;
 
