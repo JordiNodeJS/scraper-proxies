@@ -9,18 +9,21 @@ Sistema avanzado de scraping y validación de proxies con interfaz web moderna, 
 **📊 Último Testing**: 6 de Junio, 2025 - **PLAYWRIGHT TESTING EXITOSO**
 
 ### 🛠️ Desarrollo
+
 - ✅ **Frontend**: React 19 + TypeScript + Tailwind CSS (Puerto 5173)
 - ✅ **Backend**: Bun + Express + CORS (Puerto 3001)
 - ✅ **Hot Reload**: Desarrollo con auto-recarga
 - ✅ **Proxy Integration**: Frontend → Backend automático
 
-### 🚀 Producción  
+### 🚀 Producción
+
 - ✅ **Frontend Build**: 249.49 kB optimizado (Puerto 4174)
 - ✅ **Backend Production**: Bun runtime directo (Puerto 3001)
 - ✅ **Performance**: <100ms API response, <5s startup
 - ✅ **Testing**: Playwright validation completa
 
 ### 🔧 Funcionalidades
+
 - ✅ **API Endpoints**: Todos funcionales y probados
 - ✅ **UI/UX**: Interfaz moderna y responsiva
 - ✅ **Sistema de Logs**: Monitoreo en tiempo real
@@ -71,21 +74,31 @@ El proyecto incluye archivos `.env.example` para facilitar la configuración:
 ```bash
 # 🎯 Templates disponibles (solo referencia)
 .env.example                    # Variables globales (opcional)
-apps/frontend/.env.example      # Variables del frontend  
+apps/frontend/.env.example      # Variables del frontend
 apps/backend/.env.example       # Variables del backend
 
 # 🚀 Setup rápido para desarrollo
 cp apps/frontend/.env.example apps/frontend/.env
 cp apps/backend/.env.example apps/backend/.env
 
-# ⚡ Nota: El proyecto funciona SIN archivos .env usando defaults inteligentes
-# Solo necesitas configurar variables para producción o personalización
+# ⚡ Nota: Los archivos .env.example están COMPLETAMENTE DOCUMENTADOS
+# Incluyen 100+ variables con explicaciones detalladas y valores por defecto
+# El proyecto funciona perfectamente SIN archivos .env personalizados
 ```
 
-**📋 Variables más importantes:**
+**📋 Archivos .env.example disponibles:**
+
+- ✅ `apps/frontend/.env.example` - **100+ variables** del frontend documentadas
+- ✅ `apps/backend/.env.example` - **150+ variables** del backend documentadas
+- ✅ `.env.example` - Variables globales opcionales para Docker/CI
+
+**🔧 Variables más importantes:**
+
 - `VITE_API_URL`: URL del backend (solo para producción)
 - `PORT`: Puerto del backend (default: 3001)
 - `CORS_ORIGIN`: URL del frontend permitida
+- `SCRAPING_DELAY`: Delay entre requests de scraping
+- `VALIDATION_TIMEOUT`: Timeout para validar proxies
 
 📖 **Documentación completa**: [docs/ENV-CONFIGURATION.md](docs/ENV-CONFIGURATION.md)
 
@@ -113,7 +126,7 @@ cd apps/backend && bun run dev
 # → Puerto 3001 con auto-reload en cambios
 
 # Terminal 2: Frontend con HMR
-cd apps/frontend && bun run dev  
+cd apps/frontend && bun run dev
 # → Puerto 5173 con Hot Module Replacement
 ```
 
@@ -123,7 +136,7 @@ cd apps/frontend && bun run dev
 # Solo backend (desarrollo)
 bun run dev:backend      # Puerto 3001
 
-# Solo frontend (desarrollo)  
+# Solo frontend (desarrollo)
 bun run dev:frontend     # Puerto 5173
 
 # Verificar servicios
@@ -160,7 +173,7 @@ curl http://localhost:3001/api/test           # {"message":"🚀 Backend is work
 
 # Testing funcional (en browser)
 # 1. Ir a http://localhost:5173
-# 2. Click en "🎯 Proxies Reales" 
+# 2. Click en "🎯 Proxies Reales"
 # 3. Verificar: tabla con 20+ proxies en <2 segundos
 # 4. Ver logs actualizándose en tiempo real
 ```
@@ -168,6 +181,7 @@ curl http://localhost:3001/api/test           # {"message":"🚀 Backend is work
 #### 🐛 Troubleshooting de Desarrollo
 
 **Error: Puerto ya en uso**
+
 ```bash
 # Windows: Encontrar y terminar procesos
 netstat -ano | findstr :3001
@@ -183,6 +197,7 @@ PORT=3002 bun run dev:backend
 ```
 
 **Error: Dependencias faltantes**
+
 ```bash
 # Reinstalar desde raíz
 bun clean && bun install
@@ -192,15 +207,17 @@ bun run --filter='*' install
 ```
 
 **Error: TypeScript compilation**
+
 ```bash
 # Frontend TS check
 cd apps/frontend && npx tsc --noEmit
 
-# Backend TS check  
+# Backend TS check
 cd apps/backend && npx tsc --noEmit
 ```
 
 **Error: CORS en desarrollo**
+
 ```bash
 # Verificar configuración
 curl -H "Origin: http://localhost:5173" http://localhost:3001/api/test
@@ -232,6 +249,7 @@ bun run production
 ```
 
 Este script:
+
 - ✅ Verifica que el build esté disponible
 - ✅ Comprueba puertos disponibles (3001, 4174)
 - ✅ Inicia backend y frontend automáticamente
@@ -283,12 +301,14 @@ curl http://localhost:3001/api/test
 #### ⚡ Métricas de Producción Verificadas
 
 **Build Performance:**
+
 - 📦 Bundle size: 249.49 kB (gzipped: 76.39 kB)
 - ⏱️ Build time: <4.8s frontend
 - 🚀 Startup time: <2s backend, <3s frontend
 - 💾 Memory usage: Optimizado con Bun runtime
 
 **Runtime Performance:**
+
 - 🔥 API Response: <100ms promedio
 - 🌐 Scraping Real: 27 proxies en 0.8s
 - 📊 UI Responsiveness: <50ms interacciones
@@ -310,6 +330,7 @@ curl http://localhost:3001/api/test
 #### 🔧 Solución de Problemas
 
 **Si el backend no inicia:**
+
 ```bash
 # Verificar que Bun esté instalado
 bun --version
@@ -322,6 +343,7 @@ bun run src/index.ts
 ```
 
 **Si el frontend no se construye:**
+
 ```bash
 # Limpiar y reconstruir
 cd apps/frontend
@@ -331,6 +353,7 @@ bun run build
 ```
 
 **Si hay conflictos de puertos:**
+
 ```bash
 # Windows: Encontrar y terminar procesos
 netstat -ano | findstr "3001\|4173"
@@ -496,7 +519,7 @@ bun run build
 npm install -g netlify-cli
 netlify deploy --prod --dir=dist
 
-# Para Vercel  
+# Para Vercel
 npm install -g vercel
 vercel --prod
 ```
@@ -530,14 +553,14 @@ sudo nano /etc/nginx/sites-available/scraper-proxies
 server {
     listen 80;
     server_name tu-dominio.com;
-    
+
     # Frontend
     location / {
         proxy_pass http://localhost:4173;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
-    
+
     # Backend API
     location /api {
         proxy_pass http://localhost:3001;
@@ -614,7 +637,7 @@ sudo systemctl status scraper-frontend.service
 
 ```yaml
 # docker-compose.prod.yml
-version: '3.8'
+version: "3.8"
 
 services:
   backend:
@@ -627,7 +650,7 @@ services:
       - NODE_ENV=production
       - PORT=3001
     restart: unless-stopped
-    
+
   frontend:
     build:
       context: ./apps/frontend
@@ -637,7 +660,7 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
-      
+
   nginx:
     image: nginx:alpine
     ports:
@@ -815,9 +838,9 @@ curl http://localhost:3001/api/stats
 ### 🎯 Scraping Real Performance (VERIFICADO)
 
 - **⚡ Extracción Total**: 27 proxies únicos en **0.8 segundos**
-- **📡 Múltiples Fuentes**: 
+- **📡 Múltiples Fuentes**:
   - Free Proxy List: 90 proxies encontrados
-  - GitHub SpeedX: 1,996 proxies encontrados  
+  - GitHub SpeedX: 1,996 proxies encontrados
   - PubProxy: 2 proxies encontrados
   - ProxyScrape: 0 proxies (fuente vacía)
 - **🔍 Filtrado Inteligente**: De 2,088 total → 27 únicos válidos

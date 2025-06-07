@@ -32,8 +32,8 @@ const DEFAULT_CONFIG: EnvConfig = {
   PORT: 3001,
   NODE_ENV: 'development',
   
-  // CORS
-  CORS_ORIGIN: 'http://localhost:5173',
+  // CORS - Soporta múltiples orígenes separados por coma
+  CORS_ORIGIN: 'http://localhost:5173,http://localhost:4173',
   
   // SSE
   SSE_HEARTBEAT_INTERVAL: 30000, // 30 segundos
