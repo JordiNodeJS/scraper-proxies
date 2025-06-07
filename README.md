@@ -469,20 +469,51 @@ Sistema de validación de proxies en sitios reales:
 - `POST /api/scrape/https` - Solo proxies HTTPS
 - `POST /api/scrape/http` - Solo proxies HTTP
 
-## 🐳 Docker
+## 🐳 Docker (Solo Producción)
 
-### Desarrollo Local
-
-```bash
-docker-compose up -d
-```
-
-### Producción (Solo Backend)
+**Deploy automatizado:**
 
 ```bash
-docker build -t scraper-proxies-backend .
-docker run -p 3001:3001 scraper-proxies-backend
+./scripts/docker-deploy.sh --build
 ```
+
+**URLs de acceso:**
+- Frontend: http://localhost:3800
+- Backend: http://localhost:3801
+
+**Comandos útiles:**
+
+```bash
+# Verificar requisitos
+./scripts/docker-check.sh
+
+# Build manual
+./scripts/docker-build.sh
+
+# Ver estado
+docker compose ps
+
+# Ver logs
+docker compose logs -f
+```
+
+**Comandos de limpieza:**
+
+```bash
+# Limpieza básica del proyecto
+./scripts/docker-cleanup.sh
+
+# Limpieza completa con volúmenes
+./scripts/docker-cleanup.sh --volumes
+
+# Limpieza total del sistema Docker
+./scripts/docker-cleanup.sh --all --volumes --force
+
+# Detener servicios únicamente
+docker compose down
+```
+
+📖 **Documentación completa**: [docs/DOCKER-PRODUCTION-ONLY.md](docs/DOCKER-PRODUCTION-ONLY.md)
 
 ## 🌐 Deployment en Cloud/VPS
 
@@ -633,55 +664,38 @@ sudo systemctl status scraper-backend.service
 sudo systemctl status scraper-frontend.service
 ```
 
-### 🌍 Opción 3: Docker Compose (Producción)
+### 🌍 Opción 3: Docker (Producción)
 
-```yaml
-# docker-compose.prod.yml
-version: "3.8"
-
-services:
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3001"
-    environment:
-      - NODE_ENV=production
-      - PORT=3001
-    restart: unless-stopped
-
-  frontend:
-    build:
-      context: ./apps/frontend
-      dockerfile: Dockerfile.prod
-    ports:
-      - "4173:4173"
-    depends_on:
-      - backend
-    restart: unless-stopped
-
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    depends_on:
-      - frontend
-      - backend
-    restart: unless-stopped
-```
-
-**Deploy con Docker:**
+**Deploy automatizado:**
 
 ```bash
-# Build y deploy
-docker-compose -f docker-compose.prod.yml up -d
+# En servidor/VPS
+git clone <repo>
+cd scraper-proxies
 
-# Verificar logs
-docker-compose -f docker-compose.prod.yml logs -f
+# Deploy completo
+./scripts/docker-deploy.sh --build
+
+# Verificar servicios
+docker compose ps
+```
+
+**URLs de producción:**
+- Frontend: http://your-server:3800
+- Backend API: http://your-server:3801
+
+**Comandos de mantenimiento:**
+
+```bash
+# Ver logs
+docker compose logs -f
+
+# Reiniciar servicios
+docker compose restart
+
+# Actualizar aplicación
+git pull
+./scripts/docker-deploy.sh --build
 ```
 
 ### ⚡ Verificación de Deployment
@@ -884,7 +898,7 @@ curl http://localhost:3001/api/stats
 
 - **Windows compatibility**: ✅ Totalmente funcional
 - **Cross-platform**: ✅ Linux/Mac preparado
-- **Docker ready**: ✅ Contenedores configurados
+- **Docker ready**: ✅ Producción simplificada
 
 ## 🛡️ Seguridad
 
@@ -960,7 +974,7 @@ Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
 
 - 🌐 **Local/VPS**: Documentación completa de setup
 - ☁️ **Cloud Hosting**: Guías para Netlify, Vercel, Railway
-- 🐳 **Docker**: Configuración de contenedores incluida
+- 🐳 **Docker**: Setup simplificado solo para producción
 - 🔧 **CI/CD**: Scripts automatizados de deploy
 
 ### 📊 Métricas Finales

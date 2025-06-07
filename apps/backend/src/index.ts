@@ -3,9 +3,17 @@ import cors from 'cors';
 import { scrapingService } from './services/scraping.service.js';
 import { eventManager } from './services/event-manager.service.js';
 import eventsRouter from './routes/events.routes.js';
-import { ENV_CONFIG, printConfig } from './config/env.config.js';
+import { 
+  getServerConfig, 
+  getCorsConfig, 
+  getLoggingConfig, 
+  printBackendConfig 
+} from './config/app.config.js';
 
 const app = express();
+
+// Imprimir configuración al inicio
+printBackendConfig();
 
 // Sistema de logs en memoria para el frontend
 interface LogEntry {
@@ -17,7 +25,7 @@ interface LogEntry {
 }
 
 const logs: LogEntry[] = [];
-const MAX_LOGS = ENV_CONFIG.MAX_LOGS;
+const loggingConfig = getLoggingConfig();
 
 // Función helper para agregar logs
 const addLog = (level: LogEntry['level'], message: string) => {
@@ -31,34 +39,29 @@ const addLog = (level: LogEntry['level'], message: string) => {
   
   logs.push(logEntry);
   
-  // Mantener solo los últimos 100 logs
-  if (logs.length > MAX_LOGS) {
-    logs.splice(0, logs.length - MAX_LOGS);
+  // Mantener solo los últimos logs según configuración
+  if (logs.length > loggingConfig.maxLogs) {
+    logs.splice(0, logs.length - loggingConfig.maxLogs);
   }
   
-  // También hacer console.log para la consola del servidor
-  const emoji = level === 'error' ? '❌' : level === 'warning' ? '⚠️' : level === 'success' ? '✅' : '📋';
-  console.log(`${emoji} [${level.toUpperCase()}] ${message}`);
+  // Console log solo si está habilitado
+  if (loggingConfig.enableConsole) {
+    const emoji = level === 'error' ? '❌' : level === 'warning' ? '⚠️' : level === 'success' ? '✅' : '📋';
+    console.log(`${emoji} [${level.toUpperCase()}] ${message}`);
+  }
   
   // Emit SSE event to all connected clients
   eventManager.emitLogEvent(level, message);
 };
 
-// CORS Middleware mejorado - Configuración permisiva para desarrollo/producción
+// CORS Middleware usando configuración TypeScript
+const corsConfig = getCorsConfig();
 app.use(cors({
   origin: (origin, callback) => {
-    // Lista de orígenes permitidos (incluye configuración de ENV)
-    const allowedOrigins = [
-      ENV_CONFIG.CORS_ORIGIN,     // Configurado en .env
-      'http://localhost:5173',    // Frontend desarrollo
-      'http://localhost:4173',    // Frontend producción
-      'http://localhost:4174',    // Frontend producción (puerto alternativo)
-      'http://localhost:4175',    // Frontend producción (puerto alternativo 2)
-      'http://127.0.0.1:5173',
-      'http://127.0.0.1:4173',
-      'http://127.0.0.1:4174',
-      'http://127.0.0.1:4175',
-    ];
+    // Lista de orígenes permitidos desde configuración
+    const allowedOrigins: string[] = Array.isArray(corsConfig.origin) 
+      ? [...corsConfig.origin] 
+      : [corsConfig.origin];
     
     // Si no hay origin (requests del mismo origin o herramientas como curl), permitir
     if (!origin) {
@@ -79,7 +82,7 @@ app.use(cors({
     addLog('warning', `CORS blocked origin: ${origin}`);
     return callback(new Error('Not allowed by CORS'), false);
   },
-  credentials: true,
+  credentials: corsConfig.credentials,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
   allowedHeaders: [
     'Origin',
@@ -606,18 +609,16 @@ app.use('*', (req, res) => {
 });
 
 // Start server
-app.listen(ENV_CONFIG.PORT, () => {
-  // Imprimir configuración al inicio
-  printConfig();
-  
-  addLog('success', `Backend server running on port ${ENV_CONFIG.PORT}`);
-  addLog('info', `Health check: http://localhost:${ENV_CONFIG.PORT}/health`);
-  addLog('info', `Test endpoint: http://localhost:${ENV_CONFIG.PORT}/api/test`);
-  addLog('info', `Environment: ${ENV_CONFIG.NODE_ENV}`);
-  addLog('info', `Stats endpoint: http://localhost:${ENV_CONFIG.PORT}/api/stats`);
-  addLog('info', `Config endpoint: http://localhost:${ENV_CONFIG.PORT}/api/config`);
-  addLog('info', `Logs endpoint: http://localhost:${ENV_CONFIG.PORT}/api/logs`);
-  addLog('info', `SSE Stream: http://localhost:${ENV_CONFIG.PORT}/api/events/stream`);
+const serverConfig = getServerConfig();
+app.listen(serverConfig.port, serverConfig.host, () => {
+  addLog('success', `Backend server running on ${serverConfig.host}:${serverConfig.port}`);
+  addLog('info', `Health check: http://localhost:${serverConfig.port}/health`);
+  addLog('info', `Test endpoint: http://localhost:${serverConfig.port}/api/test`);
+  addLog('info', `Environment: ${process.env.NODE_ENV || 'development'}`);
+  addLog('info', `Stats endpoint: http://localhost:${serverConfig.port}/api/stats`);
+  addLog('info', `Config endpoint: http://localhost:${serverConfig.port}/api/config`);
+  addLog('info', `Logs endpoint: http://localhost:${serverConfig.port}/api/logs`);
+  addLog('info', `SSE Stream: http://localhost:${serverConfig.port}/api/events/stream`);
 });
 
 export default app; 

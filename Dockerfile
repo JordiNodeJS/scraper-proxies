@@ -1,49 +1,52 @@
-# Dockerfile para el backend Bun
-FROM oven/bun:1 as base
+# Dockerfile para Backend Bun + Express + Playwright
+# Optimizado para monorepo structure
+
+FROM oven/bun:1-alpine AS production
 WORKDIR /app
 
-# Install dependencies
-COPY package.json bun.lock ./
+# Instalar dependencias del sistema para Playwright (Alpine)
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    freetype-dev \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    curl \
+    && rm -rf /var/cache/apk/*
+
+# Configurar Playwright para usar Chromium del sistema
+ENV PLAYWRIGHT_BROWSERS_PATH=/usr/bin
+ENV PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+# Copiar archivos de dependencias
+COPY package.json bun.lock* ./
 COPY apps/backend/package.json ./apps/backend/
-COPY packages/*/package.json ./packages/*/
-RUN bun install --frozen-lockfile
 
-# Copy source code
-COPY . .
+# Instalar dependencias
+RUN bun install
 
-# Build packages
-RUN bun run build:packages
+# Copiar código fuente del backend
+COPY apps/backend ./apps/backend
 
-# Build backend
-WORKDIR /app/apps/backend
-RUN bun run build
+# Crear grupo nodejs si no existe y usar usuario bun existente
+RUN addgroup -g 1001 -S nodejs 2>/dev/null || true && \
+    adduser bun nodejs 2>/dev/null || true
 
-# Production stage
-FROM oven/bun:1-slim as production
-WORKDIR /app
+# Cambiar permisos al usuario bun
+RUN chown -R bun:nodejs /app
 
-# Install Playwright dependencies
-RUN apt-get update && apt-get install -y \
-    libnss3 \
-    libnspr4 \
-    libatk-bridge2.0-0 \
-    libdrm2 \
-    libxkbcommon0 \
-    libxcomposite1 \
-    libxdamage1 \
-    libxrandr2 \
-    libgbm1 \
-    libxss1 \
-    libasound2 \
-    && apt-get clean
+# Cambiar a usuario no-root
+USER bun
 
-# Copy built application
-COPY --from=base /app/apps/backend/dist ./
-COPY --from=base /app/packages ./packages
-
-# Install Playwright browsers
-RUN bunx playwright install chromium
-
+# Exponer puerto
 EXPOSE 3001
 
-CMD ["bun", "run", "index.js"] 
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:3001/health || exit 1
+
+# Comando de inicio
+WORKDIR /app/apps/backend
+CMD ["bun", "run", "src/index.ts"] 

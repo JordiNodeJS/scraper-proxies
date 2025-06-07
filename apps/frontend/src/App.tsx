@@ -2,47 +2,55 @@
  * Aplicación principal - MVP Proxy Scraper Frontend
  */
 
-import './index.css';
-import { DarkModeProvider } from './contexts/DarkModeContext';
-import SystemStatus from './components/SystemStatus';
-import ProxyScraper from './components/ProxyScraper';
-import LogsConsole from './components/LogsConsole';
-import DarkModeToggle from './components/DarkModeToggle';
-import SSEConnectionIndicator from './components/SSEConnectionIndicator';
-import { useServerEvents } from './hooks/useServerEvents';
-import { getSSEConfig, printFrontendConfig } from './config/env.config';
+import "./index.css";
+import { useEffect } from "react";
+import { DarkModeProvider } from "./contexts/DarkModeContext";
+import SystemStatus from "./components/SystemStatus";
+import ProxyScraper from "./components/ProxyScraper";
+import LogsConsole from "./components/LogsConsole";
+import DarkModeToggle from "./components/DarkModeToggle";
+import SSEConnectionIndicator from "./components/SSEConnectionIndicator";
+import { useServerEvents } from "./hooks/useServerEvents";
+import { printAppConfig } from "./config/app.config";
 
 /**
  * Componente principal de la aplicación
  */
 function App() {
   // Imprimir configuración en desarrollo
-  printFrontendConfig();
-  
-  // Obtener configuración de SSE desde env.config
-  const sseConfig = getSSEConfig();
-  
-  // Initialize SSE connection
-  const { 
-    connectionState, 
-    isConnected, 
-    retryCount
-  } = useServerEvents(sseConfig.url.replace('/api/events/stream', ''), {
-    autoConnect: sseConfig.autoConnect,
-    retryDelay: sseConfig.retryDelay,
-    maxRetries: sseConfig.maxRetries,
-    heartbeatTimeout: sseConfig.heartbeatTimeout
-  }, {
-    onLog: (event) => {
-      console.log('📋 [SSE] New log:', event.message);
+  printAppConfig();
+
+  // Initialize SSE connection (sin parámetros - usa configuración automática)
+  const { connectionState, isConnected, retryCount } = useServerEvents(
+    {
+      autoConnect: true,
     },
-    onScrapingProgress: (event) => {
-      console.log('🔄 [SSE] Scraping progress:', event.progress + '%');
-    },
-    onConnectionChange: (state) => {
-      console.log('📡 [SSE] Connection state changed:', state);
+    {
+      onLog: (event) => {
+        console.log("📋 [SSE] New log:", event.message);
+      },
+      onScrapingProgress: (event) => {
+        console.log("🔄 [SSE] Scraping progress:", event.progress + "%");
+      },
+      onConnectionChange: (state) => {
+        console.log("📡 [SSE] Connection state changed:", state);
+      },
     }
-  });
+  );
+  // Título dinámico basado en el estado de conexión SSE
+  useEffect(() => {
+    const baseTitle = "🌐 Scraper Proxies - MVP";
+
+    if (connectionState === "connecting") {
+      document.title = `🔄 Conectando... | ${baseTitle}`;
+    } else if (connectionState === "connected") {
+      document.title = `🟢 En Línea | ${baseTitle}`;
+    } else if (connectionState === "error") {
+      document.title = `🔴 Desconectado | ${baseTitle}`;
+    } else {
+      document.title = baseTitle;
+    }
+  }, [connectionState]);
 
   return (
     <DarkModeProvider>
@@ -52,7 +60,7 @@ function App() {
           <header className="text-center mb-8">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
-                <SSEConnectionIndicator 
+                <SSEConnectionIndicator
                   connectionState={connectionState}
                   retryCount={retryCount}
                   showDetails={true}
@@ -78,26 +86,28 @@ function App() {
             </div>
           </header>
 
-        {/* Contenido principal */}
-        <main className="max-w-6xl mx-auto space-y-6">
-          {/* Estado del sistema */}
-          <SystemStatus />
-          
-          {/* Scraper de proxies */}
-          <ProxyScraper />
-          
-          {/* Console de logs en tiempo real */}
-          <LogsConsole />
-        </main>
+          {/* Contenido principal */}
+          <main className="max-w-6xl mx-auto space-y-6">
+            {/* Estado del sistema */}
+            <SystemStatus />
 
-        {/* Footer */}
-        <footer className="text-center mt-12 text-gray-500 dark:text-gray-400 text-sm">
-          <p>🚀 MVP desarrollado con Bun + React + TypeScript + Tailwind CSS 4</p>
-        </footer>
+            {/* Scraper de proxies */}
+            <ProxyScraper />
+
+            {/* Console de logs en tiempo real */}
+            <LogsConsole />
+          </main>
+
+          {/* Footer */}
+          <footer className="text-center mt-12 text-gray-500 dark:text-gray-400 text-sm">
+            <p>
+              🚀 MVP desarrollado con Bun + React + TypeScript + Tailwind CSS 4
+            </p>
+          </footer>
+        </div>
       </div>
-    </div>
     </DarkModeProvider>
   );
 }
 
-export default App; 
+export default App;

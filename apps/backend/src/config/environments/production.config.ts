@@ -1,0 +1,54 @@
+/**
+ * Configuración para entorno de PRODUCCIÓN DOCKER - Backend
+ * Puerto: 3081 (Container)
+ * CORS: localhost:3080 (Frontend en Docker)
+ */
+
+export const productionConfig = {
+  environment: 'production' as const,
+  
+  // Server Configuration
+  server: {
+    port: 3001, // Puerto interno del container (mapeado a 3081 externamente)
+    host: '0.0.0.0',
+  },
+  
+  // CORS Configuration
+  cors: {
+    origin: [
+      'http://localhost:3080', // Frontend en Docker
+      'http://localhost:3800', // Compatibilidad con configuración anterior
+    ],
+    credentials: true,
+  },
+  
+  // Server-Sent Events
+  sse: {
+    heartbeatInterval: 45000, // 45 segundos (más conservador en producción)
+    clientTimeout: 90000,     // 90 segundos
+  },
+  
+  // Scraping Configuration
+  scraping: {
+    delay: 2000,              // 2 segundos entre requests (más conservador)
+    maxConcurrentSources: 3,  // Menos concurrencia en producción
+    requestTimeout: 15000,    // 15 segundos timeout (más tiempo)
+  },
+  
+  // Logging Configuration
+  logging: {
+    level: 'warn' as const,   // Solo warnings y errores en producción
+    maxLogs: 50,              // Menos logs en memoria
+    enableConsole: true,
+    enableFile: true,         // Habilitar logs a archivo en producción
+  },
+  
+  // Production Features
+  development: {
+    enableHotReload: false,
+    showConfigLogs: false,    // Sin logs de configuración en producción
+    enableDetailedErrors: false, // Errores simplificados en producción
+  },
+} as const;
+
+export type ProductionBackendConfig = typeof productionConfig; 

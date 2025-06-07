@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { EventStreamService } from '../services/event-stream.service';
+import { getSSEConfig } from '../config/app.config';
 import type { 
   SSEConnectionState, 
   SSEEventHandlers, 
@@ -35,7 +36,6 @@ interface UseServerEventsReturn {
 }
 
 export const useServerEvents = (
-  baseUrl: string = 'http://localhost:3001',
   options: UseServerEventsOptions = {},
   handlers: Partial<SSEEventHandlers> = {}
 ): UseServerEventsReturn => {
@@ -55,14 +55,14 @@ export const useServerEvents = (
 
   // Initialize EventStreamService
   useEffect(() => {
-    const sseUrl = `${baseUrl}/api/events/stream`;
+    const sseConfig = getSSEConfig();
     
     eventServiceRef.current = new EventStreamService({
-      url: sseUrl,
-      retryDelay: options.retryDelay || 3000,
-      maxRetries: options.maxRetries || 10,
-      heartbeatTimeout: options.heartbeatTimeout || 60000,
-      autoReconnect: true
+      url: sseConfig.url,
+      retryDelay: options.retryDelay || sseConfig.retryDelay,
+      maxRetries: options.maxRetries || sseConfig.maxRetries,
+      heartbeatTimeout: options.heartbeatTimeout || sseConfig.heartbeatTimeout,
+      autoReconnect: sseConfig.autoConnect
     });
 
     // Setup event handlers
@@ -99,7 +99,7 @@ export const useServerEvents = (
     });
 
     // Auto-connect if enabled
-    if (options.autoConnect !== false) {
+    if (options.autoConnect !== false && sseConfig.autoConnect) {
       eventServiceRef.current.connect();
     }
 
@@ -109,7 +109,7 @@ export const useServerEvents = (
         eventServiceRef.current.disconnect();
       }
     };
-  }, [baseUrl, options.retryDelay, options.maxRetries, options.heartbeatTimeout, options.autoConnect]);
+  }, [options.retryDelay, options.maxRetries, options.heartbeatTimeout, options.autoConnect]);
 
   // Update handlers when they change
   useEffect(() => {
