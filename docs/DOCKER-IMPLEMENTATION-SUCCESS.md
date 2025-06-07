@@ -124,7 +124,7 @@ curl http://localhost:3801/health  # Backend
 ./scripts/docker-check.sh
 
 # Rebuild
-./scripts/docker-build.sh --prod --no-cache
+./scripts/docker-build.sh --no-cache
 ```
 
 ---

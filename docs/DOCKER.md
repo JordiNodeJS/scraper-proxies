@@ -55,7 +55,7 @@ docker compose ps
 
 ```bash
 # 1. Build imágenes
-./scripts/docker-build.sh --prod
+./scripts/docker-build.sh
 
 # 2. Iniciar servicios
 docker compose up -d
@@ -314,7 +314,7 @@ docker run --rm -v scraper-proxies_redis_data:/data \
 docker compose pull
 
 # Rebuilding completo
-./scripts/docker-build.sh --no-cache --prod
+./scripts/docker-build.sh --no-cache
 
 # Deploy con rebuild
 ./scripts/docker-deploy.sh --build
