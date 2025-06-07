@@ -469,51 +469,199 @@ Sistema de validación de proxies en sitios reales:
 - `POST /api/scrape/https` - Solo proxies HTTPS
 - `POST /api/scrape/http` - Solo proxies HTTP
 
-## 🐳 Docker (Solo Producción)
+## 🐳 Docker - Configuraciones Separadas
 
-**Deploy automatizado:**
+### 🏠 Deployment Local
+
+**Para desarrollo y testing local:**
 
 ```bash
-./scripts/docker-deploy.sh --build
+# Deployment completo con build
+./scripts/docker-deploy-local.sh --build
+
+# Solo iniciar servicios
+./scripts/docker-deploy-local.sh
+
+# Limpiar y rebuild
+./scripts/docker-deploy-local.sh --build --clean
 ```
 
-**URLs de acceso:**
+**URLs de acceso LOCAL:**
 - Frontend: http://localhost:3800
 - Backend: http://localhost:3801
 
-**Comandos útiles:**
+### ☁️ Deployment AWS
+
+**Para producción en AWS:**
 
 ```bash
-# Verificar requisitos
-./scripts/docker-check.sh
+# Deployment automático (detecta IP)
+./scripts/docker-deploy-aws.sh --build
 
-# Build manual
-./scripts/docker-build.sh
+# Especificar IP manualmente
+./scripts/docker-deploy-aws.sh --build --ip 3.254.74.19
 
-# Ver estado
-docker compose ps
-
-# Ver logs
-docker compose logs -f
+# Limpiar y rebuild
+./scripts/docker-deploy-aws.sh --build --clean
 ```
 
-**Comandos de limpieza:**
+**URLs de acceso AWS:**
+- Frontend: http://TU_IP_AWS:3080
+- Backend: http://TU_IP_AWS:3081
 
+### 🔧 Comandos Útiles por Entorno
+
+#### Para Local:
 ```bash
-# Limpieza básica del proyecto
-./scripts/docker-cleanup.sh
+# Ver estado de servicios
+docker compose -f docker-compose.local.yml ps
 
-# Limpieza completa con volúmenes
-./scripts/docker-cleanup.sh --volumes
+# Ver logs en tiempo real
+docker compose -f docker-compose.local.yml logs -f
 
-# Limpieza total del sistema Docker
-./scripts/docker-cleanup.sh --all --volumes --force
+# Reiniciar servicios
+docker compose -f docker-compose.local.yml restart
 
-# Detener servicios únicamente
-docker compose down
+# Parar servicios
+docker compose -f docker-compose.local.yml down
 ```
 
-📖 **Documentación completa**: [docs/DOCKER-PRODUCTION-ONLY.md](docs/DOCKER-PRODUCTION-ONLY.md)
+#### Para AWS:
+```bash
+# Ver estado de servicios
+docker compose -f docker-compose.aws.yml ps
+
+# Ver logs en tiempo real
+docker compose -f docker-compose.aws.yml logs -f
+
+# Reiniciar servicios
+docker compose -f docker-compose.aws.yml restart
+
+# Parar servicios
+docker compose -f docker-compose.aws.yml down
+```
+
+### 🎯 Diferencias entre Entornos
+
+| Aspecto | Local | AWS |
+|---------|-------|-----|
+| **Archivo Config** | `docker-compose.local.yml` | `docker-compose.aws.yml` |
+| **Frontend Port** | 3800 | 3080 |
+| **Backend Port** | 3801 | 3081 |
+| **Frontend URL** | http://localhost:3800 | http://IP_PUBLICA:3080 |
+| **Backend URL** | http://localhost:3801 | http://IP_PUBLICA:3081 |
+| **CORS Origin** | http://localhost:3800 | http://IP_PUBLICA:3080 |
+| **Contenedores** | `*-local` | `*-aws` |
+| **Auto-detección IP** | No necesaria | Sí (automática) |
+
+### 🧹 Comandos de Limpieza
+
+#### Para Local:
+```bash
+# Parar y limpiar servicios locales
+docker compose -f docker-compose.local.yml down --remove-orphans
+
+# Limpiar con volúmenes
+docker compose -f docker-compose.local.yml down --remove-orphans --volumes
+
+# Rebuild completo
+./scripts/docker-deploy-local.sh --build --clean
+```
+
+#### Para AWS:
+```bash
+# Parar y limpiar servicios AWS
+docker compose -f docker-compose.aws.yml down --remove-orphans
+
+# Limpiar con volúmenes
+docker compose -f docker-compose.aws.yml down --remove-orphans --volumes
+
+# Rebuild completo
+./scripts/docker-deploy-aws.sh --build --clean
+```
+
+#### Limpieza General del Sistema:
+```bash
+# Limpiar imágenes no utilizadas
+docker system prune -f
+
+# Limpiar todo (imágenes, contenedores, volúmenes)
+docker system prune -a --volumes -f
+
+# 🧹 LIMPIAR TODO DOCKER DEL PROYECTO (COMANDO COMPLETO)
+# Parar todos los servicios del proyecto
+docker compose -f docker-compose.local.yml down --remove-orphans --volumes 2>/dev/null || true
+docker compose -f docker-compose.aws.yml down --remove-orphans --volumes 2>/dev/null || true
+docker compose down --remove-orphans --volumes 2>/dev/null || true
+
+# Eliminar contenedores específicos del proyecto
+docker rm -f proxy-scraper-backend-local proxy-scraper-frontend-local 2>/dev/null || true
+docker rm -f proxy-scraper-backend-aws proxy-scraper-frontend-aws 2>/dev/null || true
+
+# Limpiar sistema completo
+docker system prune -a --volumes -f
+
+# 🚀 SCRIPT AUTOMATIZADO PARA LIMPIAR TODO
+./scripts/docker-clean-all.sh
+
+# Con confirmación automática (sin preguntar)
+./scripts/docker-clean-all.sh --force
+```
+
+### 🚀 Guía de Deployment Rápido
+
+#### 1. **Desarrollo Local** (Testing rápido):
+```bash
+./scripts/docker-deploy-local.sh --build
+# ✅ URLs: http://localhost:3800 y http://localhost:3801
+```
+
+#### 2. **Producción AWS** (Deployment real):
+```bash
+# En el servidor AWS
+./scripts/docker-deploy-aws.sh --build --clean
+# ✅ URLs: http://IP_PUBLICA:3080 y http://IP_PUBLICA:3081
+```
+
+### 🔍 Troubleshooting Docker
+
+#### Problema: Puertos ocupados
+```bash
+# Verificar qué está usando los puertos
+netstat -ano | findstr "3080\|3081\|3800\|3801"
+
+# Matar procesos específicos (Windows)
+taskkill /PID <PID_NUMBER> /F
+
+# Linux/Mac
+lsof -ti:3080 | xargs kill -9
+```
+
+#### Problema: Configuración incorrecta
+```bash
+# Verificar configuración actual
+grep -A 5 -B 5 "VITE_API_URL\|CORS_ORIGIN" docker-compose.*.yml
+
+# Forzar rebuild sin caché
+docker compose -f docker-compose.aws.yml build --no-cache
+```
+
+#### Problema: Sistema Docker corrupto o conflictos
+```bash
+# Limpieza completa del proyecto (RECOMENDADO)
+./scripts/docker-clean-all.sh
+
+# Limpieza forzada sin confirmación
+./scripts/docker-clean-all.sh --force
+
+# Después de limpiar, rebuild completo
+./scripts/docker-deploy-local.sh --build  # Para local
+./scripts/docker-deploy-aws.sh --build    # Para AWS
+```
+
+📖 **Documentación completa**: 
+- [docs/DOCKER-ENVIRONMENTS-SEPARATION.md](docs/DOCKER-ENVIRONMENTS-SEPARATION.md) - Nueva estructura separada
+- [docs/DOCKER-PRODUCTION-ONLY.md](docs/DOCKER-PRODUCTION-ONLY.md) - Documentación legacy
 
 ## 🌐 Deployment en Cloud/VPS
 

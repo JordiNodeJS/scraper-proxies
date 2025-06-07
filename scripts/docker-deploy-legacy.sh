@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Script de Deployment para MVP Proxy Scraper
-# Uso: ./scripts/docker-deploy.sh [--env prod|dev] [--build] [--rollback]
+# Script de Deployment para MVP Proxy Scraper (Legacy Docker Compose)
+# Uso: ./scripts/docker-deploy-legacy.sh [--build] [--rollback] [--foreground]
 
 set -e
 
@@ -46,10 +46,20 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-echo -e "${BLUE}🚀 MVP Proxy Scraper - Deployment Script${NC}"
+echo -e "${BLUE}🚀 MVP Proxy Scraper - Deployment Script (Legacy)${NC}"
 echo -e "${BLUE}═══════════════════════════════════════════${NC}"
 
-# Production only deployment
+# Check if docker-compose is available
+if ! command -v docker-compose &> /dev/null; then
+    echo -e "${RED}❌ docker-compose no está instalado${NC}"
+    echo -e "${YELLOW}💡 Instalando docker-compose...${NC}"
+    
+    # Install docker-compose
+    sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    
+    echo -e "${GREEN}✅ docker-compose instalado${NC}"
+fi
 
 # Check if .env file exists
 if [[ ! -f ".env" ]]; then
@@ -66,7 +76,7 @@ check_health() {
     echo -e "${YELLOW}🔍 Verificando salud de ${service}...${NC}"
     
     while [ $attempt -le $max_attempts ]; do
-        if docker compose ps $service | grep -q "healthy"; then
+        if docker-compose ps $service | grep -q "healthy\|Up"; then
             echo -e "${GREEN}✅ ${service} está healthy${NC}"
             return 0
         fi
@@ -88,40 +98,14 @@ backup_deployment() {
     mkdir -p "$backup_dir"
     
     # Export current containers
-    docker compose ps > "$backup_dir/containers.json"
+    docker-compose ps > "$backup_dir/containers.txt" || true
     
     # Save current images
-    docker images \
-        | grep proxy-scraper > "$backup_dir/images.txt" || true
+    docker images | grep proxy-scraper > "$backup_dir/images.txt" || true
     
     echo "$backup_dir" > .last_backup
     echo -e "${GREEN}✅ Backup guardado en: ${backup_dir}${NC}"
 }
-
-# Function to rollback
-rollback_deployment() {
-    if [[ ! -f ".last_backup" ]]; then
-        echo -e "${RED}❌ No hay backup disponible para rollback${NC}"
-        exit 1
-    fi
-    
-    local backup_dir=$(cat .last_backup)
-    
-    echo -e "${YELLOW}🔄 Iniciando rollback desde: ${backup_dir}${NC}"
-    
-    # Stop current services
-    docker compose down
-    
-    # Here you would restore from backup
-    # This is a simplified version
-    echo -e "${GREEN}✅ Rollback completado${NC}"
-}
-
-# Main deployment flow
-if [[ "$ROLLBACK" = "true" ]]; then
-    rollback_deployment
-    exit 0
-fi
 
 echo -e "${YELLOW}📋 Configuración de Deployment:${NC}"
 echo -e "   Entorno: production"
@@ -146,7 +130,7 @@ fi
 
 # Stop existing services
 echo -e "${BLUE}🛑 Deteniendo servicios existentes...${NC}"
-docker compose down || true
+docker-compose down || true
 
 # Build images if requested
 if [[ "$BUILD_IMAGES" = "true" ]]; then
@@ -160,8 +144,6 @@ backup_deployment
 # Start deployment
 echo -e "${BLUE}🚀 Iniciando deployment (production)...${NC}"
 
-compose_files="-f docker-compose.yml"
-
 if [[ "$DETACHED" = "true" ]]; then
     detach_flag="-d"
 else
@@ -169,7 +151,7 @@ else
 fi
 
 # Start services
-if docker compose $compose_files up $detach_flag --wait; then
+if docker-compose -f docker-compose.yml up $detach_flag; then
     echo -e "${GREEN}✅ Servicios iniciados exitosamente${NC}"
 else
     echo -e "${RED}❌ Error al iniciar servicios${NC}"
@@ -180,14 +162,14 @@ fi
 if [[ "$DETACHED" = "true" ]]; then
     echo -e "${BLUE}🏥 Verificando health checks...${NC}"
     
-    sleep 10  # Wait for initial startup
+    sleep 15  # Wait for initial startup
     
     # Check each service
     for service in backend frontend; do
         if ! check_health $service; then
             echo -e "${RED}❌ Deployment falló en health check${NC}"
             echo -e "${YELLOW}📋 Logs del servicio ${service}:${NC}"
-            docker compose logs $service --tail=20
+            docker-compose logs $service --tail=20
             exit 1
         fi
     done
@@ -197,16 +179,16 @@ fi
 echo -e "${GREEN}🎉 Deployment completado exitosamente!${NC}"
 echo ""
 echo -e "${BLUE}📊 Estado de servicios:${NC}"
-docker compose ps
+docker-compose ps
 
 echo ""
 echo -e "${BLUE}📋 URLs de acceso:${NC}"
-echo -e "   Frontend: ${GREEN}http://localhost:3080${NC}"
-echo -e "   Backend:  ${GREEN}http://localhost:3081${NC}"
+echo -e "   Frontend: ${GREEN}http://localhost:3800${NC}"
+echo -e "   Backend:  ${GREEN}http://localhost:3801${NC}"
 
 echo ""
 echo -e "${YELLOW}💡 Comandos útiles:${NC}"
-echo -e "   📊 Ver logs: ${GREEN}docker compose logs -f${NC}"
-echo -e "   🔍 Estado: ${GREEN}docker compose ps${NC}"
-echo -e "   🛑 Parar: ${GREEN}docker compose down${NC}"
+echo -e "   📊 Ver logs: ${GREEN}docker-compose logs -f${NC}"
+echo -e "   🔍 Estado: ${GREEN}docker-compose ps${NC}"
+echo -e "   🛑 Parar: ${GREEN}docker-compose down${NC}"
 echo -e "   🧹 Limpiar: ${GREEN}./scripts/docker-cleanup.sh${NC}" 

@@ -1,18 +1,18 @@
-# Docker Compose para MVP Proxy Scraper
-# Optimizado para producción con networking y health checks
+# Docker Compose para MVP Proxy Scraper - AWS PRODUCTION
+# Uso: docker compose -f docker-compose.aws.yml up -d
 
 networks:
   proxy-scraper-network:
     driver: bridge
 
 services:
-  # ===== BACKEND SERVICE =====
+  # ===== BACKEND SERVICE - AWS =====
   backend:
     build:
       context: .
       dockerfile: Dockerfile
       target: production
-    container_name: proxy-scraper-backend
+    container_name: proxy-scraper-backend-aws
     restart: unless-stopped
     ports:
       - "3081:3001"
@@ -30,15 +30,17 @@ services:
       retries: 3
       start_period: 30s
     volumes:
-      # Solo para logs persistentes
       - backend_logs:/app/logs
-  # ===== FRONTEND SERVICE =====
+
+  # ===== FRONTEND SERVICE - AWS =====
   frontend:
     build:
       context: .
       dockerfile: apps/frontend/Dockerfile
       target: production
-    container_name: proxy-scraper-frontend
+      args:
+        - VITE_API_URL=http://3.254.74.19:3081
+    container_name: proxy-scraper-frontend-aws
     restart: unless-stopped
     ports:
       - "3080:80"
@@ -48,7 +50,7 @@ services:
     networks:
       - proxy-scraper-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -56,9 +58,6 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-
-  # ===== PRODUCTION ONLY =====
-  # Uso: docker compose up -d
 
 volumes:
   backend_logs:

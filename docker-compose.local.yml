@@ -1,25 +1,25 @@
-# Docker Compose para MVP Proxy Scraper
-# Optimizado para producción con networking y health checks
+# Docker Compose para MVP Proxy Scraper - DESARROLLO LOCAL
+# Uso: docker compose -f docker-compose.local.yml up -d
 
 networks:
   proxy-scraper-network:
     driver: bridge
 
 services:
-  # ===== BACKEND SERVICE =====
+  # ===== BACKEND SERVICE - LOCAL =====
   backend:
     build:
       context: .
       dockerfile: Dockerfile
       target: production
-    container_name: proxy-scraper-backend
+    container_name: proxy-scraper-backend-local
     restart: unless-stopped
     ports:
-      - "3081:3001"
+      - "3801:3001"  # Puerto local diferente para evitar conflictos
     environment:
       - NODE_ENV=production
       - FRONTEND_URL=http://frontend
-      - CORS_ORIGIN=http://3.254.74.19:3080
+      - CORS_ORIGIN=http://localhost:3800
       - PORT=3001
     networks:
       - proxy-scraper-network
@@ -30,25 +30,27 @@ services:
       retries: 3
       start_period: 30s
     volumes:
-      # Solo para logs persistentes
       - backend_logs:/app/logs
-  # ===== FRONTEND SERVICE =====
+
+  # ===== FRONTEND SERVICE - LOCAL =====
   frontend:
     build:
       context: .
       dockerfile: apps/frontend/Dockerfile
       target: production
-    container_name: proxy-scraper-frontend
+      args:
+        - VITE_API_URL=http://localhost:3801
+    container_name: proxy-scraper-frontend-local
     restart: unless-stopped
     ports:
-      - "3080:80"
+      - "3800:80"  # Puerto local diferente
     environment:
-      - VITE_API_URL=http://3.254.74.19:3081
+      - VITE_API_URL=http://localhost:3801
       - NGINX_ENTRYPOINT_QUIET_LOGS=1
     networks:
       - proxy-scraper-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -56,9 +58,6 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-
-  # ===== PRODUCTION ONLY =====
-  # Uso: docker compose up -d
 
 volumes:
   backend_logs:
