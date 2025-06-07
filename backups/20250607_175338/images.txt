@@ -1,0 +1,4 @@
+proxy-scraper-frontend:test     2c869205f4cf   74.2MB
+proxy-scraper-frontend:latest   e55db6414f29   74.2MB
+proxy-scraper-backend:test      880ce6d434f3   1.31GB
+proxy-scraper-backend:latest    d65c493681c9   1.31GB

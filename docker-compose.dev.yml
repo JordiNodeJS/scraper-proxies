@@ -1,0 +1,51 @@
+# Docker Compose Override para Desarrollo
+# Uso: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+services:
+  # ===== BACKEND DEVELOPMENT =====
+  backend:
+    build:
+      target: deps  # Solo dependencias, no build
+    environment:
+      - NODE_ENV=development
+      - FRONTEND_URL=http://localhost:5173
+      - CORS_ORIGIN=http://localhost:5173
+    volumes:
+      # Hot reload - montar código fuente
+      - ./apps/backend:/app/apps/backend:cached
+      - ./packages:/app/packages:cached
+      - /app/node_modules
+      - /app/apps/backend/node_modules
+    command: ["bun", "run", "dev"]
+    ports:
+      - "3001:3001"
+      - "9229:9229"  # Puerto debug Node.js
+
+  # ===== FRONTEND DEVELOPMENT =====
+  frontend:
+    build:
+      target: builder  # Solo build, no nginx
+    environment:
+      - VITE_API_URL=http://localhost:3001
+      - VITE_HMR_PORT=5173
+    volumes:
+      # Hot reload - montar código fuente
+      - ./apps/frontend:/app/apps/frontend:cached
+      - /app/node_modules
+      - /app/apps/frontend/node_modules
+    command: ["bun", "run", "dev", "--host", "0.0.0.0"]
+    ports:
+      - "5173:5173"  # Puerto Vite dev server
+    depends_on:
+      - backend  # Sin health check en dev
+
+  # ===== REDIS DEVELOPMENT =====
+  redis:
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+
+volumes:
+  redis_dev_data:
+    driver: local 

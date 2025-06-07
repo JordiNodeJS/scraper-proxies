@@ -1,42 +1,90 @@
-version: '3.8'
+# Docker Compose para MVP Proxy Scraper
+# Optimizado para producción con networking y health checks
+
+networks:
+  proxy-scraper-network:
+    driver: bridge
 
 services:
-  frontend:
-    build:
-      context: .
-      dockerfile: apps/frontend/Dockerfile
-    ports:
-      - "5173:5173"
-    environment:
-      - VITE_API_URL=http://localhost:3001
-    volumes:
-      - ./apps/frontend:/app
-      - /app/node_modules
-    depends_on:
-      - backend
-
+  # ===== BACKEND SERVICE =====
   backend:
     build:
       context: .
       dockerfile: Dockerfile
+      target: production
+    container_name: proxy-scraper-backend
+    restart: unless-stopped
     ports:
       - "3001:3001"
     environment:
-      - NODE_ENV=development
-      - FRONTEND_URL=http://localhost:5173
+      - NODE_ENV=production
+      - FRONTEND_URL=http://frontend
+      - CORS_ORIGIN=http://localhost:3000
+      - PORT=3001
+    networks:
+      - proxy-scraper-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
     volumes:
-      - ./apps/backend:/app/apps/backend
-      - ./packages:/app/packages
-      - /app/node_modules
+      # Solo para logs persistentes
+      - backend_logs:/app/logs
+    depends_on:
+      - redis
 
-  # Redis for caching (opcional)
+  # ===== FRONTEND SERVICE =====
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+      target: production
+    container_name: proxy-scraper-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:3001
+      - NGINX_ENTRYPOINT_QUIET_LOGS=1
+    networks:
+      - proxy-scraper-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  # ===== REDIS CACHE =====
   redis:
     image: redis:7-alpine
+    container_name: proxy-scraper-redis
+    restart: unless-stopped
     ports:
       - "6379:6379"
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    networks:
+      - proxy-scraper-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
     volumes:
       - redis_data:/data
+    sysctls:
+      - net.core.somaxconn=1024
+
+  # ===== DEVELOPMENT OVERRIDE (opcional) =====
+  # Usar: docker compose -f docker-compose.yml -f docker-compose.dev.yml up
 
 volumes:
-  redis_data: 
+  redis_data:
+    driver: local
+  backend_logs:
+    driver: local 
