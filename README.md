@@ -67,40 +67,42 @@ bun install
 bun run build:packages
 ```
 
-### 📝 Configuración de Variables de Entorno
+### ⚙️ Configuración TypeScript Unificada
 
-El proyecto incluye archivos `.env.example` para facilitar la configuración:
+El proyecto utiliza **configuración TypeScript unificada** sin necesidad de archivos `.env`:
 
 ```bash
-# 🎯 Templates disponibles (solo referencia)
-.env.example                    # Variables globales (opcional)
-apps/frontend/.env.example      # Variables del frontend
-apps/backend/.env.example       # Variables del backend
+# ✅ CONFIGURACIÓN AUTOMÁTICA - NO SE NECESITAN ARCHIVOS .env
+# El sistema detecta automáticamente el entorno y aplica la configuración correcta
 
-# 🚀 Setup rápido para desarrollo
-cp apps/frontend/.env.example apps/frontend/.env
-cp apps/backend/.env.example apps/backend/.env
-
-# ⚡ Nota: Los archivos .env.example están COMPLETAMENTE DOCUMENTADOS
-# Incluyen 100+ variables con explicaciones detalladas y valores por defecto
-# El proyecto funciona perfectamente SIN archivos .env personalizados
+# 🎯 Configuraciones disponibles:
+apps/frontend/src/config/environments/development.config.ts   # Desarrollo local
+apps/frontend/src/config/environments/production.config.ts    # Producción/AWS
+apps/backend/src/config/environments/development.config.ts    # Backend desarrollo
+apps/backend/src/config/environments/production.config.ts     # Backend producción
 ```
 
-**📋 Archivos .env.example disponibles:**
+**🔧 Configuración Automática por Entorno:**
 
-- ✅ `apps/frontend/.env.example` - **100+ variables** del frontend documentadas
-- ✅ `apps/backend/.env.example` - **150+ variables** del backend documentadas
-- ✅ `.env.example` - Variables globales opcionales para Docker/CI
+**Desarrollo Local:**
+- Frontend: Puerto 5173 (Vite dev server)
+- Backend: Puerto 3001 (Bun nativo)
+- API: Proxy automático de Vite
+- CORS: `http://localhost:5173`
 
-**🔧 Variables más importantes:**
+**Producción AWS:**
+- Frontend: Puerto 3080 (nginx)
+- Backend: Puerto 3081 (Bun container)
+- API: URLs completas con hostname
+- CORS: Hostname completo de AWS
 
-- `VITE_API_URL`: URL del backend (solo para producción)
-- `PORT`: Puerto del backend (default: 3001)
-- `CORS_ORIGIN`: URL del frontend permitida
-- `SCRAPING_DELAY`: Delay entre requests de scraping
-- `VALIDATION_TIMEOUT`: Timeout para validar proxies
+**✅ Ventajas de la Configuración TypeScript:**
 
-📖 **Documentación completa**: [docs/ENV-CONFIGURATION.md](docs/ENV-CONFIGURATION.md)
+- 🔧 **Auto-detección**: Detecta automáticamente desarrollo vs producción
+- 🎯 **Type Safety**: IntelliSense completo y validación de tipos
+- 📦 **Sin dependencias**: No necesita archivos `.env`
+- 🔄 **Hot Reload**: Cambios en configuración se reflejan inmediatamente
+- 🌐 **URLs Dinámicas**: Calcula automáticamente las URLs correctas
 
 ### 🛠️ Desarrollo Local - VERIFICADO Y FUNCIONAL ✅
 
@@ -113,9 +115,10 @@ bun install
 # 2. Arrancar frontend + backend simultáneamente
 bun run dev
 
-# ✅ Resultado automático:
+# ✅ Resultado automático (SIN archivos .env necesarios):
 # Frontend: http://localhost:5173 (Vite dev server + HMR)
 # Backend:  http://localhost:3001 (Express + hot reload)
+# Configuración: TypeScript automática por entorno
 ```
 
 #### 🔧 Opción 2: Terminales Separadas (Control Total)
@@ -157,6 +160,7 @@ curl http://localhost:3001/api/test
 
 - **🔥 Hot Reload**: Cambios en código se reflejan automáticamente
 - **🔧 TypeScript**: Autocompletado y type checking en tiempo real
+- **⚙️ Configuración Automática**: Sin archivos `.env` - TypeScript detecta entorno
 - **🌐 CORS**: Configurado automáticamente para localhost:5173
 - **📱 DevTools**: React Query DevTools habilitado
 - **🐛 Error Overlay**: Errores de TS aparecen en browser
@@ -186,7 +190,7 @@ curl http://localhost:3001/api/test           # {"message":"🚀 Backend is work
 # Windows: Encontrar y terminar procesos
 netstat -ano | findstr :3001
 netstat -ano | findstr :5173
-taskkill /PID <PID> /F
+taskkill //PID <PID> //F
 
 # Linux/Mac: Terminar procesos
 lsof -ti:3001 | xargs kill -9
@@ -194,6 +198,18 @@ lsof -ti:5173 | xargs kill -9
 
 # Alternativa: Cambiar puerto
 PORT=3002 bun run dev:backend
+```
+
+**❌ NO crear archivos .env**
+
+```bash
+# ❌ INCORRECTO - No crear estos archivos:
+apps/frontend/.env
+apps/backend/.env
+
+# ✅ CORRECTO - El sistema usa configuración TypeScript automática:
+apps/frontend/src/config/environments/development.config.ts
+apps/backend/src/config/environments/development.config.ts
 ```
 
 **Error: Dependencias faltantes**
