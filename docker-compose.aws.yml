@@ -19,7 +19,7 @@ services:
     environment:
       - NODE_ENV=production
       - FRONTEND_URL=http://frontend
-      - CORS_ORIGIN=http://3.254.74.19:3080
+      - CORS_ORIGIN=http://85.219.42.65:3080
       - PORT=3001
     networks:
       - proxy-scraper-network
@@ -39,13 +39,13 @@ services:
       dockerfile: apps/frontend/Dockerfile
       target: production
       args:
-        - VITE_API_URL=http://3.254.74.19:3081
+        - VITE_API_URL=http://85.219.42.65:3081
     container_name: proxy-scraper-frontend-aws
     restart: unless-stopped
     ports:
       - "3080:80"
     environment:
-      - VITE_API_URL=http://3.254.74.19:3081
+      - VITE_API_URL=http://85.219.42.65:3081
       - NGINX_ENTRYPOINT_QUIET_LOGS=1
     networks:
       - proxy-scraper-network
