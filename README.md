@@ -497,6 +497,22 @@ docker compose ps
 docker compose logs -f
 ```
 
+**Comandos de limpieza:**
+
+```bash
+# Limpieza básica del proyecto
+./scripts/docker-cleanup.sh
+
+# Limpieza completa con volúmenes
+./scripts/docker-cleanup.sh --volumes
+
+# Limpieza total del sistema Docker
+./scripts/docker-cleanup.sh --all --volumes --force
+
+# Detener servicios únicamente
+docker compose down
+```
+
 📖 **Documentación completa**: [docs/DOCKER-PRODUCTION-ONLY.md](docs/DOCKER-PRODUCTION-ONLY.md)
 
 ## 🌐 Deployment en Cloud/VPS
