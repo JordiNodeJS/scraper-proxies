@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useScrapeProxies } from '../hooks/useApi';
 import { apiService } from '../services/api';
 import type { Proxy } from '../types/api.types';
 import ProxyTable from './ProxyTable';
@@ -7,16 +6,12 @@ import ProxyTable from './ProxyTable';
 export default function ProxyScraper() {
   const [scrapedProxies, setScrapedProxies] = useState<Proxy[]>([]);
   const [scrapingTime, setScrapingTime] = useState<number | null>(null);
-  const [realScrapingError, setRealScrapingError] = useState<string | null>(null);
   const [lastScrapingResult, setLastScrapingResult] = useState<string | null>(null);
   const [isDirectScraping, setIsDirectScraping] = useState(false);
-  
-  const scrapeMutation = useScrapeProxies();
 
   const handleDirectScrape = async () => {
     const startTime = Date.now();
     setIsDirectScraping(true);
-    setRealScrapingError(null);
     setLastScrapingResult(null);
     
     console.log('🌐 Iniciando extracción de PROXIES REALES...');
@@ -37,7 +32,6 @@ export default function ProxyScraper() {
     } catch (error) {
       console.error('❌ Error durante el scraping DIRECTO:', error);
       const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
-      setRealScrapingError(errorMessage);
       setLastScrapingResult(`❌ Error en scraping DIRECTO: ${errorMessage}. Los servidores de proxy pueden estar bloqueando el acceso.`);
     } finally {
       setIsDirectScraping(false);

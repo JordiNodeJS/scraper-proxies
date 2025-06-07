@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .connected { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .disconnected { background-color: #fff3cd; color: #856404; }
+        .events {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .event {
+            padding: 5px;
+            margin: 5px 0;
+            border-left: 3px solid #007bff;
+            background: #f8f9fa;
+        }
+        .event.log { border-left-color: #28a745; }
+        .event.heartbeat { border-left-color: #ffc107; }
+        .event.system { border-left-color: #dc3545; }
+        .event.scraping_progress { border-left-color: #17a2b8; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .stat {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 SSE Testing Dashboard</h1>
+    
+    <div id="status" class="status disconnected">Desconectado</div>
+    
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value" id="total-events">0</div>
+            <div>Total Eventos</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="log-events">0</div>
+            <div>Logs</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="heartbeat-events">0</div>
+            <div>Heartbeats</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="connection-time">0s</div>
+            <div>Tiempo Conectado</div>
+        </div>
+    </div>
+    
+    <div>
+        <button onclick="connect()">🔌 Conectar</button>
+        <button onclick="disconnect()">❌ Desconectar</button>
+        <button onclick="clearEvents()">🗑️ Limpiar Eventos</button>
+        <button onclick="sendTestEvent()">📤 Enviar Test Log</button>
+        <button onclick="sendHeartbeat()">💓 Forzar Heartbeat</button>
+        <button onclick="sendScrapingEvent()">🔍 Test Scraping</button>
+    </div>
+    
+    <div class="events" id="events-container">
+        <p>No hay eventos aún. Conecta para empezar a recibir eventos en tiempo real.</p>
+    </div>
+
+    <script>
+        let eventSource = null;
+        let events = [];
+        let connectionStartTime = null;
+        let connectionTimer = null;
+        
+        const statusEl = document.getElementById('status');
+        const eventsContainer = document.getElementById('events-container');
+        const totalEventsEl = document.getElementById('total-events');
+        const logEventsEl = document.getElementById('log-events');
+        const heartbeatEventsEl = document.getElementById('heartbeat-events');
+        const connectionTimeEl = document.getElementById('connection-time');
+        
+        function updateStatus(status, message) {
+            statusEl.className = `status ${status}`;
+            statusEl.textContent = message;
+        }
+        
+        function updateStats() {
+            totalEventsEl.textContent = events.length;
+            logEventsEl.textContent = events.filter(e => e.type === 'log').length;
+            heartbeatEventsEl.textContent = events.filter(e => e.type === 'heartbeat').length;
+        }
+        
+        function updateConnectionTime() {
+            if (connectionStartTime) {
+                const seconds = Math.floor((Date.now() - connectionStartTime) / 1000);
+                connectionTimeEl.textContent = `${seconds}s`;
+            }
+        }
+        
+        function addEventToUI(event) {
+            const eventEl = document.createElement('div');
+            eventEl.className = `event ${event.type}`;
+            
+            const timestamp = new Date(event.timestamp).toLocaleTimeString();
+            let content = `<strong>[${timestamp}] ${event.type.toUpperCase()}</strong><br>`;
+            
+            try {
+                const data = JSON.parse(event.data);
+                content += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } catch {
+                content += event.data;
+            }
+            
+            eventEl.innerHTML = content;
+            eventsContainer.appendChild(eventEl);
+            eventsContainer.scrollTop = eventsContainer.scrollHeight;
+            
+            // Mantener solo los últimos 50 eventos en UI
+            while (eventsContainer.children.length > 50) {
+                eventsContainer.removeChild(eventsContainer.firstChild);
+            }
+        }
+        
+        function connect() {
+            if (eventSource) {
+                disconnect();
+            }
+            
+            updateStatus('disconnected', 'Conectando...');
+            
+            eventSource = new EventSource('http://localhost:3002/api/events/stream');
+            connectionStartTime = Date.now();
+            
+            eventSource.onopen = function(event) {
+                updateStatus('connected', '✅ Conectado - Recibiendo eventos en tiempo real');
+                console.log('SSE conectado exitosamente');
+                
+                // Iniciar timer de conexión
+                connectionTimer = setInterval(updateConnectionTime, 1000);
+            };
+            
+            eventSource.onerror = function(event) {
+                updateStatus('error', '❌ Error de conexión - Reintentando...');
+                console.error('Error SSE:', event);
+                
+                if (connectionTimer) {
+                    clearInterval(connectionTimer);
+                    connectionTimer = null;
+                }
+            };
+            
+            eventSource.onmessage = function(event) {
+                const eventData = {
+                    type: 'message',
+                    data: event.data,
+                    timestamp: Date.now()
+                };
+                events.push(eventData);
+                addEventToUI(eventData);
+                updateStats();
+            };
+            
+            // Escuchar eventos específicos
+            ['log', 'heartbeat', 'system', 'scraping_progress'].forEach(eventType => {
+                eventSource.addEventListener(eventType, function(event) {
+                    const eventData = {
+                        type: eventType,
+                        data: event.data,
+                        timestamp: Date.now()
+                    };
+                    events.push(eventData);
+                    addEventToUI(eventData);
+                    updateStats();
+                });
+            });
+        }
+        
+        function disconnect() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+            }
+            
+            if (connectionTimer) {
+                clearInterval(connectionTimer);
+                connectionTimer = null;
+            }
+            
+            connectionStartTime = null;
+            updateStatus('disconnected', '⚪ Desconectado');
+        }
+        
+        function clearEvents() {
+            events = [];
+            eventsContainer.innerHTML = '<p>Eventos limpiados.</p>';
+            updateStats();
+        }
+        
+        async function sendTestEvent() {
+            try {
+                const response = await fetch('http://localhost:3002/api/events/test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'log',
+                        level: 'info',
+                        message: `Test event desde UI - ${new Date().toLocaleTimeString()}`
+                    })
+                });
+                
+                if (response.ok) {
+                    console.log('Test event enviado exitosamente');
+                } else {
+                    console.error('Error enviando test event');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        async function sendHeartbeat() {
+            try {
+                const response = await fetch('http://localhost:3002/api/events/heartbeat', {
+                    method: 'POST'
+                });
+                
+                if (response.ok) {
+                    console.log('Heartbeat forzado exitosamente');
+                } else {
+                    console.error('Error forzando heartbeat');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        async function sendScrapingEvent() {
+            try {
+                const response = await fetch('http://localhost:3002/api/events/test', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'scraping',
+                        progress: Math.floor(Math.random() * 100),
+                        proxiesFound: Math.floor(Math.random() * 50),
+                        currentSource: 'test-source',
+                        status: 'progress'
+                    })
+                });
+                
+                if (response.ok) {
+                    console.log('Scraping event enviado exitosamente');
+                } else {
+                    console.error('Error enviando scraping event');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+        
+        // Exponer funciones para testing automatizado
+        window.getEvents = () => events;
+        window.getConnectionState = () => statusEl.textContent;
+        window.clearEvents = clearEvents;
+        window.connect = connect;
+        window.disconnect = disconnect;
+        
+        // Auto-conectar al cargar la página
+        window.addEventListener('load', () => {
+            setTimeout(connect, 1000);
+        });
+        
+        // Limpiar al cerrar la página
+        window.addEventListener('beforeunload', disconnect);
+    </script>
+</body>
+</html> 

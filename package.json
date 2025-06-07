@@ -12,6 +12,7 @@
     "build:packages": "bun run --filter='@scraper-proxies/*' build",
     "build:apps": "cd apps/frontend && bun run build && cd ../backend && bun run build",
     "dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
+    "dev:clean": "node scripts/kill-ports.js && bun run dev",
     "dev:frontend": "cd apps/frontend && bun run dev",
     "dev:backend": "cd apps/backend && bun run dev",
     "start": "concurrently \"bun run start:backend\" \"bun run start:frontend\"",
@@ -21,8 +22,15 @@
     "lint": "bun run --filter='apps/*' lint",
     "lint:fix": "bun run --filter='apps/*' lint:fix",
     "test": "bun run --filter='*' test",
+    "test:sse": "playwright test tests/sse",
+    "test:sse:ui": "playwright test tests/sse --ui",
+    "test:sse:headed": "playwright test tests/sse --headed",
+    "test:sse:debug": "playwright test tests/sse --debug",
+    "test:sse:report": "playwright show-report",
     "clean": "rm -rf apps/*/dist packages/*/dist apps/*/node_modules packages/*/node_modules",
-    "install:all": "bun install && bun run --filter='*' install"
+    "install:all": "bun install && bun run --filter='*' install",
+    "kill-ports": "node scripts/kill-ports.js",
+    "kill-port": "node scripts/kill-ports.js"
   },
   "dependencies": {
     "@playwright/test": "^1.52.0",
