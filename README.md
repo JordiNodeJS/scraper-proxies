@@ -846,24 +846,6 @@ cd scraper-proxies
 docker compose ps
 ```
 
-**URLs de producción:**
-- Frontend: http://your-server:3800
-- Backend API: http://your-server:3801
-
-**Comandos de mantenimiento:**
-
-```bash
-# Ver logs
-docker compose logs -f
-
-# Reiniciar servicios
-docker compose restart
-
-# Actualizar aplicación
-git pull
-./scripts/docker-deploy.sh --build
-```
-
 ### ⚡ Verificación de Deployment
 
 **Health Checks Automatizados:**
