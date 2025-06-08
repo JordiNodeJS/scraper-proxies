@@ -719,6 +719,7 @@ lsof -ti:4173 | xargs kill -9
 ```
 
 📖 **Documentación completa**: 
+- **[docs/DOCKERIZACION-LOCAL.md](docs/DOCKERIZACION-LOCAL.md)** - **Guía completa de dockerización local**
 - [docs/DOCKER-ENVIRONMENTS-SEPARATION.md](docs/DOCKER-ENVIRONMENTS-SEPARATION.md) - Nueva estructura separada
 - [docs/DOCKER-PRODUCTION-ONLY.md](docs/DOCKER-PRODUCTION-ONLY.md) - Documentación legacy
 
@@ -1183,6 +1184,13 @@ Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
 ## 📚 DOCUMENTACIÓN TÉCNICA COMPLETA
 
 ### 🐳 **Deployment y Producción**
+
+- **📖 [DOCKERIZACIÓN LOCAL - GUÍA COMPLETA](docs/DOCKERIZACION-LOCAL.md)**
+  - Proceso completo de dockerización en local
+  - Comandos de Docker y troubleshooting
+  - Comparación desarrollo nativo vs Docker
+  - Mejores prácticas y optimización de builds
+  - Scripts automatizados y verificación de servicios
 
 - **📖 [DOCKERIZACIÓN Y DESPLIEGUE AWS - GUÍA COMPLETA](docs/DOCKERIZACION-Y-DESPLIEGUE-AWS-COMPLETO.md)**
   - Arquitectura de contenedores con diagramas
