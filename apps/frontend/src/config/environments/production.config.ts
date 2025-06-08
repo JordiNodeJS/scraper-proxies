@@ -1,15 +1,15 @@
 /**
- * Configuración para entorno de PRODUCCIÓN DOCKER
- * Frontend: puerto 3080 (nginx)
- * Backend: puerto 3081 (Bun en container) vía proxy HTTPS
+ * Configuración para entorno de PRODUCCIÓN HTTP SIMPLE
+ * Frontend: puerto 3080 (acceso directo)
+ * Backend: puerto 3081 (acceso directo)
  */
 
 export const productionConfig = {
   environment: 'production' as const,
   
-  // API Configuration - USANDO HTTPS vía nginx proxy
+  // API Configuration - HTTP SIMPLE sin nginx proxy
   api: {
-    baseUrl: 'https://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com', // HTTPS sin puerto (443 por defecto)
+    baseUrl: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081', // HTTP directo al backend
     timeout: 30000, // 30 segundos
   },
   
@@ -41,11 +41,11 @@ export const productionConfig = {
     showConfigLogs: false,
   },
   
-  // URLs dinámicas (calculadas automáticamente) - TODAS HTTPS
+  // URLs dinámicas (calculadas automáticamente) - HTTP SIMPLE
   urls: {
-    frontend: 'https://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com',
-    backend: 'https://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com',
-    api: 'https://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com/api', // API vía nginx proxy
+    frontend: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3080',
+    backend: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081',
+    api: 'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081/api', // API directa al backend
   },
 } as const;
 

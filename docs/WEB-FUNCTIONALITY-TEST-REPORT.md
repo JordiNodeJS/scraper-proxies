@@ -55,7 +55,7 @@ curl -k "https://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com/api/test"
 **Síntoma**: 
 ```
 Failed to fetch
-❌ Backend no disponible. Verifica que el servidor esté ejecutándose en el puerto 3001.
+❌ Backend no disponible. Verifica que el servidor esté ejecutándose correctamente en configuración HTTP simple (puertos 3080/3081).
 ```
 
 **Causa**: El frontend está configurado para conectarse a `localhost:3001` en lugar del hostname correcto.
