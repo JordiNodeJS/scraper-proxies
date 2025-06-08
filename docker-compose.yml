@@ -1,5 +1,5 @@
-# Docker Compose para MVP Proxy Scraper
-# Optimizado para producción con networking y health checks
+# Docker Compose para MVP Proxy Scraper - CONFIGURACIÓN HTTP SIMPLE
+# Acceso directo: http://servidor:3080 (frontend) y http://servidor:3081 (backend)
 
 networks:
   proxy-scraper-network:
@@ -15,11 +15,10 @@ services:
     container_name: proxy-scraper-backend
     restart: unless-stopped
     ports:
-      - "3081:3001"
+      - "3081:3001"  # Backend accesible en puerto 3081
     environment:
       - NODE_ENV=production
-      - FRONTEND_URL=http://frontend
-      - CORS_ORIGIN=http://3.254.74.19:3080
+      - CORS_ORIGIN=http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3080
       - PORT=3001
     networks:
       - proxy-scraper-network
@@ -30,8 +29,8 @@ services:
       retries: 3
       start_period: 30s
     volumes:
-      # Solo para logs persistentes
       - backend_logs:/app/logs
+
   # ===== FRONTEND SERVICE =====
   frontend:
     build:
@@ -41,14 +40,14 @@ services:
     container_name: proxy-scraper-frontend
     restart: unless-stopped
     ports:
-      - "3080:80"
+      - "3080:80"  # Frontend accesible en puerto 3080
     environment:
-      - VITE_API_URL=http://3.254.74.19:3081
+      - VITE_API_URL=http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3081
       - NGINX_ENTRYPOINT_QUIET_LOGS=1
     networks:
       - proxy-scraper-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      test: ["CMD", "curl", "-f", "http://localhost/"]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -56,9 +55,6 @@ services:
     depends_on:
       backend:
         condition: service_healthy
-
-  # ===== PRODUCTION ONLY =====
-  # Uso: docker compose up -d
 
 volumes:
   backend_logs:

@@ -1,7 +1,7 @@
 /**
  * Configuración para entorno de PRODUCCIÓN DOCKER - Backend
  * Puerto: 3081 (Container)
- * CORS: localhost:3080 (Frontend en Docker) + HTTPS AWS
+ * CORS: HTTP SIMPLE - Sin HTTPS
  */
 
 export const productionConfig = {
@@ -13,16 +13,13 @@ export const productionConfig = {
     host: '0.0.0.0',
   },
   
-  // CORS Configuration - INCLUYE HTTPS PARA NGINX SSL
+  // CORS Configuration - SOLO HTTP SIMPLE
   cors: {
     origin: [
-      // HTTP - Para desarrollo local y Docker
+      // HTTP - Configuración simple sin HTTPS
       'http://localhost:3080', // Frontend en Docker local
-      'http://localhost:3800', // Compatibilidad con configuración anterior
       'http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com:3080', // Frontend en AWS HTTP
-      
-      // HTTPS - Para nginx SSL reverse proxy
-      'https://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com', // Frontend via nginx HTTPS
+      'http://3.254.74.19:3080', // IP directa
       
       process.env.CORS_ORIGIN, // Variable de entorno dinámica
     ].filter(Boolean), // Filtrar valores undefined/null
