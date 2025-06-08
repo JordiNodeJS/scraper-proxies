@@ -345,6 +345,20 @@ curl http://localhost:3001/api/test
 
 #### 🔧 Solución de Problemas
 
+**🔍 Script de Debug Completo:**
+
+```bash
+# Ejecutar diagnóstico completo
+./scripts/debug-docker-config.sh
+
+# Este script verifica:
+# - Archivos Docker Compose disponibles
+# - Configuración de puertos y URLs
+# - Contenedores activos
+# - IP local de la máquina
+# - Conectividad a todos los servicios
+```
+
 **Si el backend no inicia:**
 
 ```bash
@@ -540,6 +554,9 @@ docker compose -f docker-compose.local.yml restart
 
 # Parar servicios
 docker compose -f docker-compose.local.yml down
+
+# 🔍 DEBUG: Verificar configuración y conectividad
+./scripts/debug-docker-config.sh
 ```
 
 #### Para AWS:
@@ -561,6 +578,7 @@ docker compose -f docker-compose.aws.yml down
 
 | Aspecto | Local | AWS |
 |---------|-------|-----|
+| **Script** | `./scripts/docker-deploy-local.sh` | `./scripts/docker-deploy-aws.sh` |
 | **Archivo Config** | `docker-compose.local.yml` | `docker-compose.aws.yml` |
 | **Frontend Port** | 3800 | 3080 |
 | **Backend Port** | 3801 | 3081 |
@@ -568,7 +586,29 @@ docker compose -f docker-compose.aws.yml down
 | **Backend URL** | http://localhost:3801 | http://IP_PUBLICA:3081 |
 | **CORS Origin** | http://localhost:3800 | http://IP_PUBLICA:3080 |
 | **Contenedores** | `*-local` | `*-aws` |
-| **Auto-detección IP** | No necesaria | Sí (automática) |
+| **Auto-detección IP** | Sí (IP local de red) | Sí (IP pública) |
+| **Acceso desde red** | Otros PCs en LAN | Internet público |
+
+### ⚠️ Importante: Usar el Script Correcto
+
+**🏠 Para desarrollo/testing local:**
+```bash
+./scripts/docker-deploy-local.sh --build
+# ✅ Acceso: http://localhost:3800
+# ✅ También: http://TU_IP_LOCAL:3800 (desde otros PCs en tu red)
+```
+
+**☁️ Para servidores AWS/VPS:**
+```bash
+./scripts/docker-deploy-aws.sh --build
+# ✅ Acceso: http://IP_PUBLICA:3080 (desde internet)
+```
+
+**🔍 Si no estás seguro cuál usar:**
+```bash
+./scripts/debug-docker-config.sh
+# Te mostrará qué configuración tienes activa
+```
 
 ### 🧹 Comandos de Limpieza
 
@@ -595,6 +635,9 @@ docker compose -f docker-compose.aws.yml down --remove-orphans --volumes
 # Rebuild completo
 ./scripts/docker-deploy-aws.sh --build --clean
 ```
+
+# 🚀 SCRIPT AUTOMATIZADO PARA LIMPIAR TODO
+./scripts/docker-clean-all.sh
 
 #### Limpieza General del Sistema:
 ```bash
