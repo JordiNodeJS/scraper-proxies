@@ -387,6 +387,47 @@ apps/backend/src/config/environments/production.config.ts     # Backend producci
 - 🔄 **Hot Reload**: Cambios en configuración se reflejan inmediatamente
 - 🌐 **URLs Dinámicas**: Calcula automáticamente las URLs correctas
 
+## 🐳 DOCKERIZACIÓN Y DESPLIEGUE AWS
+
+### 📋 **Documentación Completa de Deployment**
+
+Para información detallada sobre dockerización, configuración de AWS, scripts de deployment y troubleshooting:
+
+**📖 [GUÍA COMPLETA DE DOCKERIZACIÓN Y DESPLIEGUE AWS](docs/DOCKERIZACION-Y-DESPLIEGUE-AWS-COMPLETO.md)**
+
+Esta documentación incluye:
+
+- 🏗️ **Arquitectura de Contenedores**: Diagramas y configuración completa
+- 🌐 **Setup AWS EC2**: Security Groups, instalaciones y configuración
+- 🚀 **Scripts Automatizados**: Deployment con auto-detección de IP
+- 🛡️ **Configuración de Seguridad**: Usuarios no-root, proxy reverso nginx
+- 🔧 **Comandos de Mantenimiento**: Monitoreo, logs y troubleshooting
+- 📊 **Métricas de Performance**: Benchmarks y optimizaciones
+
+### 🎯 **Estado Actual del Deployment**
+
+**✅ SISTEMA 100% OPERATIVO EN AWS**
+
+- **URL Producción**: `http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com`
+- **Frontend**: React 19 + nginx (74MB optimizado)
+- **Backend**: Bun + Express + Playwright (1.3GB con Chromium)
+- **Proxy Reverso**: Nginx configurado para URLs limpias
+- **Performance**: <3min deploy, <15s startup, 27 proxies en 1-2s
+
+### 🚀 **Comandos de Deployment Rápido**
+
+```bash
+# Deploy completo en AWS
+./scripts/docker-deploy-aws.sh --build
+
+# Monitoreo del sistema
+docker compose ps
+docker compose logs -f
+
+# Health checks
+curl http://ec2-3-254-74-19.eu-west-1.compute.amazonaws.com/health
+```
+
 ### 🛠️ Desarrollo Local - VERIFICADO Y FUNCIONAL ✅
 
 #### 🚀 Opción 1: Arranque Concurrente (Recomendado)
@@ -1139,11 +1180,83 @@ Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
 
 **Desarrollado con ❤️ usando Bun + React + TypeScript + Tailwind CSS + Playwright**
 
-### 📋 Documentación Técnica Completa
+## 📚 DOCUMENTACIÓN TÉCNICA COMPLETA
 
-- **🚀 Deployment Guide**: Secciones completas en este README
-- **📊 Testing Results**: Verificación Playwright completada
-- **📖 PRD Specifications**: Ver `docs/PRD.md`
-- **🔧 Development Setup**: Ver `.github/copilot-instructions.md`
-- **📈 Future Roadmap**: Ver `docs/MVP-PROXY-SCRAPER-ROADMAP.md`
-- **📝 Task Tracking**: Ver `docs/tasks/TASK-TRACKER-*.md`
+### 🐳 **Deployment y Producción**
+
+- **📖 [DOCKERIZACIÓN Y DESPLIEGUE AWS - GUÍA COMPLETA](docs/DOCKERIZACION-Y-DESPLIEGUE-AWS-COMPLETO.md)**
+  - Arquitectura de contenedores con diagramas
+  - Setup completo AWS EC2 + Security Groups
+  - Scripts automatizados de deployment
+  - Configuración de seguridad y proxy reverso nginx
+  - Comandos de mantenimiento y troubleshooting
+  - Métricas de performance y optimizaciones
+
+### 🏗️ **Arquitectura y Desarrollo**
+
+- **📋 [Especificaciones del Producto (PRD)](docs/PRD.md)**
+  - Requerimientos funcionales y técnicos
+  - Casos de uso empresariales
+  - Arquitectura del sistema
+
+- **🔧 [Instrucciones de Desarrollo](docs/CURSOR-RULES.md)**
+  - Reglas de codificación del proyecto
+  - Stack tecnológico y convenciones
+  - Patrones de implementación
+
+### 📊 **Testing y Validación**
+
+- **🧪 [Resultados de Testing Playwright](docs/PLAYWRIGHT-TESTING-SUCCESS.md)**
+  - Verificación completa del sistema
+  - Métricas de performance reales
+  - Validación de scraping funcional
+
+### 📈 **Planificación y Roadmap**
+
+- **🗺️ [Roadmap del Proyecto](docs/MVP-PROXY-SCRAPER-ROADMAP.md)**
+  - Fases de desarrollo completadas
+  - Próximas funcionalidades
+  - Evolución del sistema
+
+- **📝 [Task Tracking](docs/tasks/)**
+  - `INDEX-TASK-TRACKER-ORGANIZADO.md` - Índice principal
+  - `TASK-TRACKER-*.md` - Seguimiento detallado por fase
+  - Documentación de progreso y decisiones técnicas
+
+### 🔧 **Configuración y Setup**
+
+- **⚙️ [Configuración TypeScript](docs/CONFIGURACION-TYPESCRIPT-TESTING-EXITOSO.md)**
+  - Sistema de configuración unificada
+  - Auto-detección de entornos
+  - Eliminación de dependencia .env
+
+### 🎯 **Funcionalidades Específicas**
+
+- **🌙 [Paginación, Filtros y Modo Oscuro](docs/tasks/TASK-TRACKER-PAGINATION-FILTERS-DARKMODE.md)**
+  - Implementación de UI avanzada
+  - Sistema de paginación profesional
+  - Modo oscuro con persistencia
+
+- **📡 [Server-Sent Events](docs/tasks/P2-F2_TASK-TRACKER-SERVER-SENT-EVENTS.md)**
+  - Comunicación en tiempo real
+  - Sistema de logs live
+  - Arquitectura de eventos
+
+### 🚀 **Deployment Específico**
+
+- **🐳 [Docker Production Only](docs/DOCKER-PRODUCTION-ONLY.md)**
+  - Configuración simplificada para producción
+  - Scripts de deployment automatizados
+  - Optimizaciones de contenedores
+
+- **☁️ [Configuración AWS](docs/HTTP-PROXY-SETUP-SUCCESS.md)**
+  - Setup de proxy reverso HTTP
+  - Configuración de nginx
+  - URLs limpias sin puertos
+
+### 📋 **Índices y Referencias**
+
+- **📑 [Índice de Documentación](docs/tasks/INDEX-TASK-TRACKER-ORGANIZADO.md)**
+  - Organización completa de toda la documentación
+  - Referencias cruzadas entre documentos
+  - Estado de completitud por fase
