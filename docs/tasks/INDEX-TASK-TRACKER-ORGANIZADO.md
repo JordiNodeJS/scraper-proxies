@@ -198,6 +198,27 @@
 
 **🎯 Logros Principales:**
 
+---
+
+### **FASE 11: CONFIGURACIÓN HTTPS** 🚧 EN PROGRESO
+
+**Período:** Diciembre 2024 | **Duración:** ~2-3 horas
+
+| ID        | Archivo de Tracking                          | Enfoque                                   | Estado          |
+| --------- | -------------------------------------------- | ----------------------------------------- | --------------- |
+| **P3-F6** | `P3-F6_CONFIGURACION-HTTPS-LETSENCRYPT.md`  | HTTPS con Let's Encrypt + Nginx           | 🚧 IN PROGRESS |
+
+**🎯 Objetivos:**
+
+- 🚧 Migración completa HTTP → HTTPS
+- 🚧 Certificados SSL automáticos con Let's Encrypt  
+- 🚧 Nginx como proxy reverso con headers de seguridad
+- 🚧 Redirect automático HTTP → HTTPS
+- 🚧 Renovación automática de certificados
+- 🚧 Testing SSL Labs rating A
+
+**🎯 Logros Anteriores:**
+
 - ✅ Frontend Dockerfile: Multi-stage build con nginx (74MB)
 - ✅ Backend Dockerfile: Bun + Alpine + Playwright (1.3GB)
 - ✅ Docker Compose: Red personalizada + health checks
